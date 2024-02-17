@@ -1,0 +1,276 @@
+"use client"
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import LanguageIcon from '@mui/icons-material/Language';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useRouter } from 'next/navigation';
+const drawerWidth = 240;
+const navItems = [
+    {
+        label: "Top Stories",
+        path: "/top-stories",
+        icon: <img src="/top-stories.svg" />,
+    },
+    {
+        label: "Sports",
+        path: "/sports",
+        icon: <img src="/sports.svg" />,
+    },
+    {
+        label: "Business",
+        path: "/business",
+        icon: <img src="/business.svg" />,
+    },
+    {
+        label: "Entertainment",
+        path: "/entertainment",
+        icon: <img src="/entmt.svg" />,
+    },
+    {
+        label: "Opinion",
+        path: "/opinion",
+        icon: <img src="/opinion.svg" />,
+    },
+]
+const navItems2 = [
+    {
+        label: "Top Stories",
+        path: "/top-stories",
+        icon: <img src="/top-stories.svg" />,
+    },
+    {
+        label: "Sports",
+        path: "/sports",
+        icon: <img src="/sports.svg" />,
+    },
+    {
+        label: "Business",
+        path: "/business",
+        icon: <img src="/business.svg" />,
+    },
+    {
+        label: "Entertainment",
+        path: "/entertainment",
+        icon: <img src="/entmt.svg" />,
+    },
+    {
+        label: "Opinion",
+        path: "/opinion",
+        icon: <img src="/opinion.svg" />,
+    },
+]
+const openedMixin = ( theme ) => ( {
+    width: drawerWidth,
+    transition: theme.transitions.create( 'width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    } ),
+    overflowX: 'hidden',
+} );
+
+const closedMixin = ( theme ) => ( {
+    transition: theme.transitions.create( 'width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    } ),
+    overflowX: 'hidden',
+    width: `calc(${ theme.spacing( 7 ) } + 1px)`,
+    [ theme.breakpoints.up( 'sm' ) ]: {
+        width: `calc(${ theme.spacing( 8 ) } + 1px)`,
+    },
+} );
+
+const DrawerHeader = styled( 'div' )( ( { theme } ) => ( {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing( 0, 1 ),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+} ) );
+
+// const AppBar = styled( MuiAppBar, {
+//     shouldForwardProp: ( prop ) => prop !== 'open',
+// } )( ( { theme, open } ) => ( {
+//     zIndex: theme.zIndex.drawer + 1,
+//     transition: theme.transitions.create( [ 'width', 'margin' ], {
+//         easing: theme.transitions.easing.sharp,
+//         duration: theme.transitions.duration.leavingScreen,
+//     } ),
+//     ...( {
+//         marginLeft: drawerWidth,
+//         backgroundColor: "#FFFFFF",
+//         width: `100%`,
+//         // width: `calc(100% - ${ drawerWidth }px)`,
+//         transition: theme.transitions.create( [ 'width', 'margin' ], {
+//             easing: theme.transitions.easing.sharp,
+//             duration: theme.transitions.duration.enteringScreen,
+//         } ),
+//     } ),
+// } ) );
+
+const Drawer = styled( MuiDrawer, { shouldForwardProp: ( prop ) => prop !== 'open' } )(
+    ( { theme, open } ) => ( {
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        zIndex: 30,
+        ...( open && {
+            ...openedMixin( theme ),
+            '& .MuiDrawer-paper': openedMixin( theme ),
+        } ),
+        ...( !open && {
+            ...closedMixin( theme ),
+            '& .MuiDrawer-paper': closedMixin( theme ),
+        } ),
+    } ),
+);
+
+export default function Sidebar() {
+
+    const router = useRouter()
+    const [ open, setOpen ] = React.useState( true );
+
+
+    React.useEffect( () => {
+        window.addEventListener( 'resize', () => {
+            // console.log( 'window.innerWidth', window.innerWidth, typeof window.innerWidth )
+            if ( window.innerWidth <= 1000 ) {
+                // log( "bonjour" )
+                setOpen( false )
+            } else if ( window.innerWidth > 1000 ) {
+                setOpen( true )
+            }
+        } )
+        // console.log( 'window.innerWidth', window.innerWidth )
+
+    }, [] )
+
+
+    const handleDrawerOpen = () => {
+        setOpen( !open );
+    };
+
+    // const handleDrawerClose = () => {
+    //     setOpen( false );
+    // };
+
+    return (
+        <>
+            <CssBaseline />
+
+            <Drawer variant="permanent" open={ open } className=' relative '   >
+                <DrawerHeader>
+                    {/* <IconButton onClick={ handleDrawerOpen }>
+                        { !open ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
+                    </IconButton> */}
+                </DrawerHeader>
+                <Divider />
+                <Box className={ `py-8 px-6 flex ${ open ? "" : "justify-center" } items-center` } >
+                    { open ? <Typography variant="subtitle1" className='flex flex-col' gutterBottom fontWeight={ 700 } >
+                        Language & Region
+                        <span className='text-xs text-neutral-500 '>
+                            India (English)
+                        </span>
+                    </Typography> : <LanguageIcon /> }
+                </Box>
+                <Divider />
+                <Typography variant='h6' fontWeight={ 700 } display={ `flex` } justifyContent={ `space-between` } alignItems={ `center` }
+                    className='py-3 ps-4 pe-3'
+                >
+                    { open ? <>
+                        For You
+                        <span className=""><ExpandMoreIcon className='' /></span>
+
+                    </> : "" }
+                </Typography>
+                <List  >
+                    { open && <ListItemText
+                        primary="INDIA (ENGLISH)"
+                        primaryTypographyProps={ {
+                            fontSize: 12,
+                            fontWeight: 700,
+                            lineHeight: '20px',
+                            ml: '14px',
+                            color: '#9E9C9C'
+                        } }
+
+                    /> }
+                    { navItems?.map( ( el, index ) => (
+                        <ListItem key={ el.label } disablePadding sx={ { display: 'block', } } onClick={ () => {
+                            router.push( el.path )
+                        } }  >
+                            <ListItemButton
+                                sx={ {
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                } }
+                            >
+                                <ListItemIcon
+                                    sx={ {
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    } }
+                                >
+                                    { el.icon }
+                                </ListItemIcon>
+                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.label }</div>
+                            </ListItemButton>
+                        </ListItem>
+                    ) ) }
+                </List>
+                <Divider />
+                <List  >
+                    { open && <ListItemText
+                        primary="INDIA (HINDI)"
+                        primaryTypographyProps={ {
+                            fontSize: 12,
+                            fontWeight: 'bold',
+                            lineHeight: '20px',
+                            ml: '14px',
+                            color: '#9E9C9C'
+                        } }
+
+                    /> }
+                    { navItems2?.map( ( el, index ) => (
+                        <ListItem key={ el.label } disablePadding sx={ { display: 'block' } } onClick={ () => {
+                            router.push( el.path )
+                        } }  >
+                            <ListItemButton
+                                sx={ {
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                } }
+                            >
+                                <ListItemIcon
+                                    sx={ {
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    } }
+                                >
+                                    { el.icon }
+                                </ListItemIcon>
+                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.label }</div>
+                            </ListItemButton>
+                        </ListItem>
+                    ) ) }
+                </List>
+            </Drawer>
+        </>
+    );
+}
