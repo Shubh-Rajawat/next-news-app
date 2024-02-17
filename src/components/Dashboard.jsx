@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import SliderRow from './SliderRow'
+import NewsCard from './NewsCard'
 
 const Dashboard = () => {
     return (

@@ -14,61 +14,10 @@ import ListItemText from '@mui/material/ListItemText';
 import LanguageIcon from '@mui/icons-material/Language';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import Baseurl from '@/lib/constants/Baseurl';
 const drawerWidth = 240;
-const navItems = [
-    {
-        label: "Top Stories",
-        path: "/top-stories",
-        icon: <img src="/top-stories.svg" />,
-    },
-    {
-        label: "Sports",
-        path: "/sports",
-        icon: <img src="/sports.svg" />,
-    },
-    {
-        label: "Business",
-        path: "/business",
-        icon: <img src="/business.svg" />,
-    },
-    {
-        label: "Entertainment",
-        path: "/entertainment",
-        icon: <img src="/entmt.svg" />,
-    },
-    {
-        label: "Opinion",
-        path: "/opinion",
-        icon: <img src="/opinion.svg" />,
-    },
-]
-const navItems2 = [
-    {
-        label: "Top Stories",
-        path: "/top-stories",
-        icon: <img src="/top-stories.svg" />,
-    },
-    {
-        label: "Sports",
-        path: "/sports",
-        icon: <img src="/sports.svg" />,
-    },
-    {
-        label: "Business",
-        path: "/business",
-        icon: <img src="/business.svg" />,
-    },
-    {
-        label: "Entertainment",
-        path: "/entertainment",
-        icon: <img src="/entmt.svg" />,
-    },
-    {
-        label: "Opinion",
-        path: "/opinion",
-        icon: <img src="/opinion.svg" />,
-    },
-]
+
 const openedMixin = ( theme ) => ( {
     width: drawerWidth,
     transition: theme.transitions.create( 'width', {
@@ -137,11 +86,13 @@ const Drawer = styled( MuiDrawer, { shouldForwardProp: ( prop ) => prop !== 'ope
     } ),
 );
 
+
+
 export default function Sidebar() {
 
     const router = useRouter()
     const [ open, setOpen ] = React.useState( true );
-
+    const [ navdata, setNavdata ] = React.useState( false )
 
     React.useEffect( () => {
         window.addEventListener( 'resize', () => {
@@ -154,6 +105,17 @@ export default function Sidebar() {
             }
         } )
         // console.log( 'window.innerWidth', window.innerWidth )
+
+        axios.post( `${ Baseurl }sidebar_api` )
+            .then( ( res ) => {
+                console.log( "Sidebardata", res.data.data )
+                if ( res.data ) {
+                    setNavdata( res.data.data );
+                }
+            } )
+            .catch( ( err ) => {
+                console.log( "sidebar->>", err )
+            } )
 
     }, [] )
 
@@ -186,8 +148,8 @@ export default function Sidebar() {
                     </Typography> : <LanguageIcon /> }
                 </Box>
                 <Divider />
-                <Typography variant='h6' fontWeight={ 700 } display={ `flex` } justifyContent={ `space-between` } alignItems={ `center` }
-                    className='py-3 ps-4 pe-3'
+                <Typography variant='h4' fontWeight={ 700 } display={ `flex` } justifyContent={ `space-between` } alignItems={ `center` }
+                    className='py-3 ps-4 pe-3 font-bold'
                 >
                     { open ? <>
                         For You
@@ -207,9 +169,9 @@ export default function Sidebar() {
                         } }
 
                     /> }
-                    { navItems?.map( ( el, index ) => (
+                    { navdata && navdata?.map( ( el, index ) => (
                         <ListItem key={ el.label } disablePadding sx={ { display: 'block', } } onClick={ () => {
-                            router.push( el.path )
+                            router.push( el.name.toLowerCase().replace( ' ', '-' ) )
                         } }  >
                             <ListItemButton
                                 sx={ {
@@ -225,9 +187,9 @@ export default function Sidebar() {
                                         justifyContent: 'center',
                                     } }
                                 >
-                                    { el.icon }
+                                    <img src={ el?.img } alt='|' />
                                 </ListItemIcon>
-                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.label }</div>
+                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
                             </ListItemButton>
                         </ListItem>
                     ) ) }
@@ -245,9 +207,9 @@ export default function Sidebar() {
                         } }
 
                     /> }
-                    { navItems2?.map( ( el, index ) => (
+                    { navdata && navdata?.map( ( el, index ) => (
                         <ListItem key={ el.label } disablePadding sx={ { display: 'block' } } onClick={ () => {
-                            router.push( el.path )
+                            router.push( el.name.toLowerCase().replace( ' ', '-' ) )
                         } }  >
                             <ListItemButton
                                 sx={ {
@@ -263,9 +225,9 @@ export default function Sidebar() {
                                         justifyContent: 'center',
                                     } }
                                 >
-                                    { el.icon }
+                                    <img src={ el?.img } alt='|' />
                                 </ListItemIcon>
-                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.label }</div>
+                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
                             </ListItemButton>
                         </ListItem>
                     ) ) }

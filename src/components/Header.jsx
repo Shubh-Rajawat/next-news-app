@@ -26,7 +26,9 @@ const Header = () => {
                             </Stack>
                         </Box>
                     </Box>
-                    <Typography variant="h5" noWrap component="div" color={ `#000000` } className='font-[900] text-start  md:text-center md:col-span-1'  >
+                    <Typography variant="h5" noWrap component="div" color={ `#000000` } className='font-[900] text-start cursor-default  md:text-center md:col-span-1'
+
+                    >
                         NN <span className='text-[#ff6d20]' >Network</span>
                     </Typography>
                     <RightMenu />

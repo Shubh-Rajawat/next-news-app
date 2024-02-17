@@ -32,7 +32,6 @@ const NewsCard = () => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-
         </Card>
     )
 }

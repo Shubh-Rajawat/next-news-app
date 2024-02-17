@@ -89,11 +89,31 @@ const Searchmodal = ( { handleSearchClose } ) => {
                         Related search
                     </Typography>
                     <div className='flex flex-wrap gap-1'  >
-                        <Chip label="Top Stories" variant="outlined" className='  border  border-solid rounded-3xl border-black' />
-                        <Chip label="Sports" variant="outlined" className='  border  border-solid rounded-3xl border-black' />
-                        <Chip label="Business" variant="outlined" className='  border  border-solid rounded-3xl border-black' />
-                        <Chip label="Entertainment" variant="outlined" className='  border  border-solid rounded-3xl border-black' />
-                        <Chip label="Opinion" variant="outlined" className='  border  border-solid rounded-3xl border-black' />
+                        <Chip label="Top Stories" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                            onClick={ ( e ) => {
+                                setWords( "Top Stories" )
+                            } }
+                        />
+                        <Chip label="Sports" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                            onClick={ ( e ) => {
+                                setWords( "Sports" )
+                            } }
+                        />
+                        <Chip label="Business" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                            onClick={ ( e ) => {
+                                setWords( "Business" )
+                            } }
+                        />
+                        <Chip label="Entertainment" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                            onClick={ ( e ) => {
+                                setWords( "Entertainment" )
+                            } }
+                        />
+                        <Chip label="Opinion" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                            onClick={ ( e ) => {
+                                setWords( "Opinion" )
+                            } }
+                        />
                     </div>
                 </Box>
             </Box>
