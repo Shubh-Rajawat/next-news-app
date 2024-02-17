@@ -6,6 +6,7 @@ import RightMenu from './RightMenu';
 import Link from 'next/link';
 
 
+
 const Header = () => {
 
     return (
@@ -19,7 +20,7 @@ const Header = () => {
                     <Box className='hidden md:flex items-baseline justify-between px-10 ' >
                         <Box>
                             <Stack direction="row" spacing={ 2 }>
-                                <Link href="" className={ `main-link active-link` }>Catalog</Link>
+                                <Link href="/" className={ `main-link active-link` }>Catalog</Link>
                                 <Link href="" className={ `main-link` }>For You</Link>
                                 <Link href="" className={ `main-link` }>More</Link>
                             </Stack>

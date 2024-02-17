@@ -1,8 +1,11 @@
 const { createSlice } = require( "@reduxjs/toolkit" );
+import { getCookie } from 'cookies-next';
+const d = getCookie( 'user_data' );
+const data = d ? JSON.parse( d ) : null;
 
 const initialState = {
     userId: null,
-    userData: null,
+    userData: data ?? false,
 }
 
 const userdateSlice = createSlice( {
@@ -10,7 +13,7 @@ const userdateSlice = createSlice( {
     initialState,
     reducers: {
         setUserData( state, action ) {
-            console.log( action.payload )
+            state.userData = action.payload
         },
         setUserId( state, action ) {
             state.userId = action.payload;

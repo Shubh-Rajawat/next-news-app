@@ -22,7 +22,24 @@
 .MuiToolbar-root {
   display: grid !important;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 80px !important;
+  height: 60px !important;
+  align-items: end;
+}
+
+.mui-1tk1bks-MuiDivider-root {
+  margin: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  border-width: 1;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.12);
+  border-bottom-width: 0;
+  height: auto;
+  border-right-width: thin;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
 }
 
 .main-link {

@@ -1,6 +1,6 @@
 "use client"
-import { Box, Divider, Modal, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Avatar, Box, Divider, Modal, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,19 +12,35 @@ import Loginmodal from './modals/Loginmodal';
 import Signupmodal from './modals/Signupmodal';
 import CloseIcon from '@mui/icons-material/Close';
 import { ToastContainer } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { getCookie } from 'cookies-next';
+import { deleteCookie } from 'cookies-next';
+import { setUserData } from '@/lib/features/user/userdataSlice';
 
 const RightMenu = () => {
     const [ anchorEl, setAnchorEl ] = useState( null );
+    const [ anchorEl2, setAnchorEl2 ] = useState( null );
     const [ searchOpen, setSearchOpen ] = useState( false )
     const [ loginOpen, setLoginOpen ] = useState( false )
     const [ signupOpen, setSignupOpen ] = useState( false )
+    const { userData } = useAppSelector( state => state.userData )
+    const dispatch = useAppDispatch();
+    // console.log( "selector", userData )
     const open = Boolean( anchorEl );
+    const avatarOpen = Boolean( anchorEl2 );
     const handleClick = ( event ) => {
         setAnchorEl( event.currentTarget );
     };
     const handleClose = () => {
         setAnchorEl( null );
     };
+    const handleAvatarClick = ( event ) => {
+        setAnchorEl2( event.currentTarget );
+    };
+    const handleAvatarClose = () => {
+        setAnchorEl2( null );
+    };
+
     // for Search Modal
     const handleSearchOpen = () => setSearchOpen( true );
     const handleSearchClose = () => setSearchOpen( false );
@@ -43,10 +59,17 @@ const RightMenu = () => {
         handleLoginOpen();
         handleSignupClose();
     }
+    useEffect( () => {
+        if ( getCookie( 'user_data' ) ) {
+            const data = JSON.parse( getCookie( 'user_data' ) )
+            dispatch( setUserData( data ) )
+        }
+    }, [ getCookie( 'user_data' ) ] )
+
 
     return (
         <>
-            <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end ` }  >
+            { !userData ? <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end  ` }  >
                 <span href="" className={ `main-link cursor-pointer  ` } onClick={ handleLoginOpen }  >Login</span>
                 <Divider orientation="vertical" flexItem />
                 <span href="" className={ `main-link cursor-pointer ` } onClick={ handleSignupOpen } >Sign up</span>
@@ -54,7 +77,35 @@ const RightMenu = () => {
                 <button className='basic-button rounded-3xl text-sm p-2 cursor-pointer '  >
                     Work With Us
                 </button>
-            </Box >
+            </Box > :
+
+
+                <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end  ` }  >
+                    <Tooltip title={ userData?.firstname + " " + userData?.lastname } >
+                        <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase' >{ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] }</Avatar>
+                    </Tooltip>
+                    {/* <Menu
+                        id="basic-menu"
+                        anchorEl={ anchorEl2 }
+                        open={ avatarOpen }
+                        onClose={ handleAvatarClose }
+                        MenuListProps={ {
+                            'aria-labelledby': 'basic-button',
+                        } }
+                    >
+                        <MenuItem onClick={ async () => {
+                            await deleteCookie( 'user_data' )
+                            handleAvatarClose();
+                        } }>Logout</MenuItem>
+                    </Menu> */}
+                    <span className={ `main-link active-link cursor-pointer ` } onClick={ handleSearchOpen }  > <SearchIcon /> </span>
+                    <button className='basic-button rounded-3xl text-sm p-2 cursor-pointer '  >
+                        Work With Us
+                    </button>
+                </Box >
+
+
+            }
             {/* mobile dropdown start */ }
             <Box className="md:hidden  text-end "  >
                 <Tooltip title="More">

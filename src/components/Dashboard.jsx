@@ -5,7 +5,7 @@ import SliderRow from './SliderRow'
 const Dashboard = () => {
     return (
         <Box className="flex flex-col gap-5"  >
-            <SliderRow title={ 'Top News' } />
+            <SliderRow title={ 'Today News' } />
             <SliderRow title={ 'Top Stories' } />
         </Box>
     )

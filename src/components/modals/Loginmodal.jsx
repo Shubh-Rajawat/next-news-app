@@ -5,6 +5,11 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close';
 import Signupmodal from './Signupmodal';
+import { useAppDispatch } from '@/lib/hooks';
+import { setUserData } from '@/lib/features/user/userdataSlice';
+import axios from 'axios';
+import Baseurl from '@/lib/constants/Baseurl';
+import { setCookie } from 'cookies-next';
 const searchModalStyle = {
     position: 'absolute',
     top: '50%',
@@ -20,6 +25,14 @@ const searchModalStyle = {
 const Loginmodal = ( { handleLoginClose } ) => {
     const [ loadSignup, setLoadSignup ] = useState( false )
     const [ showPassword, setShowPassword ] = React.useState( false );
+    const dispatch = useAppDispatch();
+    const [ loading, setLoading ] = useState( false )
+    const [ error, setError ] = useState( false )
+    const [ errormsg, setErrormsg ] = useState( false )
+    const [ logindata, setLogindata ] = useState( {
+        email: "",
+        password: ""
+    } )
     const [ signupPage, setSignUppage ] = useState( false )
     const handleClickShowPassword = () => setShowPassword( ( show ) => !show );
     const handleMouseDownPassword = ( event ) => {
@@ -32,7 +45,43 @@ const Loginmodal = ( { handleLoginClose } ) => {
     const handleCloseSignup = () => {
         setSignUppage( false )
     }
+    const handleLoginSubmit = async ( e ) => {
+        e.preventDefault();
+        const formdata = new FormData();
+        formdata.append( "email", logindata.email );
+        formdata.append( "password", logindata.password );
+        try {
+            if ( logindata?.email && logindata?.password ) {
+                setError( false )
+                setLoading( true )
+                axios.post( `${ Baseurl }login`, formdata )
+                    .then( ( res ) => {
+                        // console.log( res?.data )
+                        if ( res.data ) {
+                            // console.log( "login successfull", res.data )
+                            dispatch( setUserData( res.data.user_data ) )
+                            setCookie( 'user_data', res.data.user_data )
+                            setLoading( false )
+                            handleLoginClose()
 
+                        }
+                    } ).catch( err => {
+                        setLoading( false );
+                        setError( true )
+                        setErrormsg( err?.response?.data?.message )
+                        console.log( "Api error", err )
+                    } )
+            } else {
+                setError( true )
+                setErrormsg( "* All fields Required" )
+            }
+        } catch ( err ) {
+            setError( true )
+            setLoading( false )
+            setErrormsg( err?.response?.data?.message )
+            console.error( 'Error:', err );
+        }
+    };
 
     return (
         <>
@@ -44,17 +93,23 @@ const Loginmodal = ( { handleLoginClose } ) => {
                         <Typography variant='h4' gutterBottom textAlign={ `center` } className='text-3xl font-bold mb-3'  >
                             Login
                         </Typography>
-                        <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ () => {
-                            e.preventDefault()
-                        } }  >
+                        { error && <span className='text-red-600 text-xs truncate ' >{ errormsg }</span> }
+                        <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ handleLoginSubmit }  >
                             <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
                                 <OutlinedInput placeholder="Email address" type={ 'email' }
+                                    value={ logindata.email } onChange={ ( e ) => {
+                                        setLogindata( { ...logindata, email: e.target.value } )
+                                    } }
                                     className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
 
                                 />
                             </FormControl>
                             <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
                                 <OutlinedInput placeholder="Password" type={ showPassword ? 'text' : 'password' }
+                                    value={ logindata.password }
+                                    onChange={ ( e ) => {
+                                        setLogindata( { ...logindata, password: e.target.value } )
+                                    } }
                                     className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
                                     endAdornment={
                                         <InputAdornment position="end">
@@ -83,8 +138,8 @@ const Loginmodal = ( { handleLoginClose } ) => {
                             </Box>
                             <span className='text-sm text-[#AAA9A9]' >By registering for a NN Network account, you agree
                                 to the <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Terms of Use</a> and <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Privacy Policy</a></span>
-                            <button className='basic-button rounded-3xl text-md mx-auto px-10 py-3 my-5 '  >
-                                Login
+                            <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-5 ${ loading ? "animate-pulse" : "" }` } type='submit' disabled={ loading }  >
+                                { loading ? "Loading..." : "Login" }
                             </button>
                         </form>
 

@@ -8,6 +8,7 @@ const inter = Inter( { subsets: [ "latin" ] } );
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import StoreProvider from "./StoreProvider";
+import Head from "next/head";
 
 export const metadata = {
   title: "NN Network",
@@ -17,6 +18,9 @@ export const metadata = {
 export default function RootLayout( { children } ) {
   return (
     <html lang="en">
+      {/* <Head>
+        <base href="https://urlsdemo.in/BJPnews" />
+      </Head> */}
       <body className={ `` } style={ {
         display: 'flex',
         height: '100%'

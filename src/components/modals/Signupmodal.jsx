@@ -7,7 +7,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Baseurl from '@/lib/constants/Baseurl';
 import axios from 'axios';
 import { useAppDispatch } from '@/lib/hooks';
-import { setUserId } from '@/lib/features/user/userdataSlice';
+import { setUserData, setUserId } from '@/lib/features/user/userdataSlice';
+import { setCookie } from 'cookies-next';
 
 
 const searchModalStyle = {
@@ -54,17 +55,18 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                 setLoading( true )
                 axios.post( `${ Baseurl }registeration-form`, formdata )
                     .then( ( res ) => {
-                        console.log( res.data )
-                        if ( res.data.user_id ) {
-                            console.log( "signup successfull" )
-                            dispatch( setUserId( res.data.user_id ) )
+                        // console.log( res?.data )
+                        if ( res.data.user_details ) {
+                            // console.log( "signup successfull" )
+                            dispatch( setUserData( res.data.user_details ) )
+                            setCookie( 'user_data', res.data.user_data )
                             setLoading( false )
                             handleSignupClose()
                         }
                     } ).catch( err => {
                         setLoading( false );
                         setError( true )
-                        setErrormsg( err.response.data.message )
+                        setErrormsg( err?.response?.data?.message )
                         console.log( "Api error", err )
                     } )
             } else {
@@ -145,7 +147,8 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                         </FormControl>
                         <span className='text-sm text-[#AAA9A9]' >By registering for a NN Network account, you agree
                             to the <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Terms of Use</a> and <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Privacy Policy</a></span>
-                        <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-4 ${ loading ? "animate-pulse" : "" } ` } type='submit'>
+                        <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-4 ${ loading ? "animate-pulse" : "" } ` }
+                            type='submit' disabled={ loading }   >
                             { loading ? "Loading..." : "Create New Account" }
                         </button>
 

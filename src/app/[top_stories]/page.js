@@ -1,14 +1,18 @@
-"use client"
+
 {/* eslint-disable-next-line react/no-unescaped-entities */ }
 
 import DrawerHeader from '@/components/DrawerHeader'
 import SliderRow from '@/components/SliderRow'
 import { Box } from '@mui/material'
-import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
-    const { top_stories } = useParams()
+
+
+
+
+const page = ( { params } ) => {
+    const { top_stories } = params
+
     return (
         <>
             <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] h-[100vh] '   >
