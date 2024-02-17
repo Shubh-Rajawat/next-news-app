@@ -10,14 +10,13 @@ import Image from 'next/image';
 
 const CategoryCard = () => {
     return (
-        <Card sx={ { maxWidth: 350, border: 0, boxShadow: 0, textAlign: "start" } } className='bg-inherit border-r border-gray-300'  >
+        <Card sx={ { maxWidth: 400, border: 0, boxShadow: 0, textAlign: "start" } } className='bg-inherit border-r border-gray-300'  >
             <CardActionArea className='' >
-
                 <CardContent>
-                    <Typography gutterBottom variant="h6" component="div" color={ `` } className='break-words'  >
+                    <Typography gutterBottom variant="h6" component="div" color={ `` } className='break-words my-1'  >
                         Hindustan Times
                     </Typography>
-                    <Typography gutterBottom variant="h1" className='font-bold md:w-52 lg:w-full   md:text-md lg:text-[20px] break-words '   >
+                    <Typography gutterBottom variant="h1" className='font-bold md:w-52 lg:w-full   md:text-md lg:text-[20px] break-words my-2'   >
                         Will win 370 seats’: PM at tri­bal out­reach event
                     </Typography>
                     <span className='text-sm text-[#FF6D20]'  >12 Feb 2024</span>
@@ -33,8 +32,10 @@ const CategoryCard = () => {
                             className='  '
                         />
                     </div>
-                    <Typography gutterBottom variant="body2" className='text-gray-500 mt-4 break-words px-2'   >
+                    <Typography gutterBottom variant="body2" className='text-gray-500  break-words px-2 my-4'   >
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        and scrambled it to make a type specimen book.
                     </Typography>
                     <button className='basic-button rounded-3xl text-sm p-2 px-5 cursor-pointer my-3 '  >
                         Read More
