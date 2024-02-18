@@ -95,14 +95,19 @@ export default function Sidebar() {
     const [ navdata, setNavdata ] = React.useState( false )
 
     React.useEffect( () => {
+        if ( window.innerWidth <= 1000 ) {
+            
+            setOpen( false )
+        } 
         window.addEventListener( 'resize', () => {
             // console.log( 'window.innerWidth', window.innerWidth, typeof window.innerWidth )
             if ( window.innerWidth <= 1000 ) {
-                // log( "bonjour" )
+                
                 setOpen( false )
-            } else if ( window.innerWidth > 1000 ) {
-                setOpen( true )
-            }
+            } 
+            // else if ( window.innerWidth > 1000 ) {
+            //     setOpen( true )
+            // }
         } )
         // console.log( 'window.innerWidth', window.innerWidth )
 
@@ -170,7 +175,7 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.label } disablePadding sx={ { display: 'block', } } onClick={ () => {
+                        <ListItem key={ el.name } disablePadding sx={ { display: 'block', } } onClick={ () => {
                             router.push( el.name.toLowerCase().replace( ' ', '-' ) )
                         } }  >
                             <ListItemButton
@@ -208,7 +213,7 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.label } disablePadding sx={ { display: 'block' } } onClick={ () => {
+                        <ListItem key={ el.name } disablePadding sx={ { display: 'block' } } onClick={ () => {
                             router.push( el.name.toLowerCase().replace( ' ', '-' ) )
                         } }  >
                             <ListItemButton
