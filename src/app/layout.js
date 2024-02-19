@@ -18,9 +18,9 @@ export const metadata = {
 export default function RootLayout( { children } ) {
   return (
     <html lang="en">
-      <body className={ `` } style={ {
+      <body className={ `bg-[#F0F2F5]` } style={ {
         display: 'flex',
-        height: '100%'
+        height: '100%',
       } }  >
         <StoreProvider>
           <AppRouterCacheProvider options={ { enableCssLayer: true } }  >

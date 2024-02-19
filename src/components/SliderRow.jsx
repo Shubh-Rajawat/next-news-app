@@ -2,25 +2,34 @@
 import React from 'react'
 import Slider from "react-slick";
 import NewsCard from './NewsCard';
-import { Box } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
+let skeletonItems = Array.from( { length: 4 } ).fill( 1 )
 
-let items = Array.from( { length: 12 } ).fill( 1 )
-
-const SliderRow = ( props ) => {
+const SliderRow = ( { title, newsItems } ) => {
     var settings = {
+        centerMode: false,
         dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToScroll: 1,
         initialSlide: 0,
-        arrows: true,
+        arrows: newsItems?.length > 4 ? true : false,
         responsive: [
+            {
+                breakpoint: 1500,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: false,
+                    dots: false
+                }
+            },
             {
                 breakpoint: 1300,
                 settings: {
-                    slidesToShow: 2.2,
-                    slidesToScroll: 2.2,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
                     infinite: false,
                     dots: false
                 }
@@ -28,8 +37,8 @@ const SliderRow = ( props ) => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3.3,
-                    slidesToScroll: 3.3,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
                     infinite: false,
                     dots: false
                 }
@@ -37,8 +46,8 @@ const SliderRow = ( props ) => {
             {
                 breakpoint: 840,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 2.5,
+                    slidesToScroll: 1.5,
                     infinite: false,
                     dots: false
                 }
@@ -46,9 +55,16 @@ const SliderRow = ( props ) => {
             {
                 breakpoint: 730,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: 2.5,
+                    slidesToScroll: 1.5,
                     initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 580,
+                settings: {
+                    slidesToShow: 1.5,
+                    slidesToScroll: 1.5
                 }
             },
             {
@@ -60,21 +76,44 @@ const SliderRow = ( props ) => {
             }
         ]
     };
+    console.log( "newsItems", newsItems )
     return (
         <>
-            <Box className="text-[30px] font-[700] capitalize"  >
-                { props.title }
+            { title ? <Box className="text-[30px] font-[700] capitalize"  >
+                { newsItems?.length ? title : "" }
             </Box>
-            <div className="slider-container">
-                <Slider { ...settings }>
+                :
+                <Box className="text-[30px] font-[700] capitalize"  >
+                    <Skeleton width="60px" />
+                </Box>
+            }
+            <div className="slider-container" >
+                { newsItems ? <Slider { ...settings } >
                     {
-                        items?.map( ( item, index ) => {
+                        newsItems?.map( ( item, index ) => {
                             return (
-                                <NewsCard key={ index } />
+                                <NewsCard key={ index } data={ item } />
                             )
                         } )
+
                     }
                 </Slider>
+                    :
+                    <Slider { ...settings } >
+                        { skeletonItems?.map( ( item, index ) => {
+                            return (
+                                <Box key={ index }>
+                                    <Skeleton variant="rectangular" width={ 310 } height={ 210 } />
+                                    <Box sx={ { pt: 0.5 } }>
+                                        <Skeleton width="60%" />
+                                        <Skeleton width="40%" />
+                                    </Box>
+                                </Box>
+                            )
+                        } ) }
+                    </Slider>
+
+                }
             </div>
         </>
     )

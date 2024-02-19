@@ -16,6 +16,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
+import { useAppDispatch } from '@/lib/hooks';
+
 const drawerWidth = 240;
 
 const openedMixin = ( theme ) => ( {
@@ -95,16 +97,16 @@ export default function Sidebar() {
     const [ navdata, setNavdata ] = React.useState( false )
 
     React.useEffect( () => {
-        if ( window.innerWidth <= 1000 ) {
-            
+        if ( window.innerWidth <= 800 ) {
+
             setOpen( false )
-        } 
+        }
         window.addEventListener( 'resize', () => {
             // console.log( 'window.innerWidth', window.innerWidth, typeof window.innerWidth )
-            if ( window.innerWidth <= 1000 ) {
-                
+            if ( window.innerWidth <= 800 ) {
+
                 setOpen( false )
-            } 
+            }
             // else if ( window.innerWidth > 1000 ) {
             //     setOpen( true )
             // }
@@ -176,7 +178,8 @@ export default function Sidebar() {
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
                         <ListItem key={ el.name } disablePadding sx={ { display: 'block', } } onClick={ () => {
-                            router.push( el.name.toLowerCase().replace( ' ', '-' ) )
+                            // localStorage.setItem( 'termId', el.id );
+                            router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
                         } }  >
                             <ListItemButton
                                 sx={ {
@@ -214,7 +217,8 @@ export default function Sidebar() {
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
                         <ListItem key={ el.name } disablePadding sx={ { display: 'block' } } onClick={ () => {
-                            router.push( el.name.toLowerCase().replace( ' ', '-' ) )
+
+                            router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
                         } }  >
                             <ListItemButton
                                 sx={ {

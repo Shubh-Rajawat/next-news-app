@@ -6,6 +6,7 @@ const data = d ? JSON.parse( d ) : null;
 const initialState = {
     userId: null,
     userData: data ?? false,
+    termId: null,
 }
 
 const userdateSlice = createSlice( {
@@ -19,9 +20,13 @@ const userdateSlice = createSlice( {
             state.userId = action.payload;
             // console.log( "from Redux ID", action.payload )
         },
+        setTermId( state, action ) {
+            state.termId = action.payload;
+            // console.log( "from Redux ID", action.payload )
+        },
     }
 } )
 
-export const { setUserData, setUserId } = userdateSlice.actions
+export const { setUserData, setUserId, setTermId } = userdateSlice.actions
 const userReducer = userdateSlice.reducer;
 export default userReducer

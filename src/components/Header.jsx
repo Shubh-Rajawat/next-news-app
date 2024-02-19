@@ -4,10 +4,14 @@ import Toolbar from '@mui/material/Toolbar';
 import { Box, Stack, Typography } from '@mui/material';
 import RightMenu from './RightMenu';
 import Link from 'next/link';
+import LeftMenu from './LeftMenu';
+
+
 
 
 
 const Header = () => {
+
 
     return (
         <>
@@ -18,15 +22,9 @@ const Header = () => {
             } } >
                 <Toolbar >
                     <Box className='hidden md:flex items-baseline justify-between px-10 ' >
-                        <Box>
-                            <Stack direction="row" spacing={ 2 }>
-                                <Link href="/" className={ `main-link active-link` }>Catalog</Link>
-                                <Link href="" className={ `main-link` }>For You</Link>
-                                <Link href="" className={ `main-link` }>More</Link>
-                            </Stack>
-                        </Box>
+                        <LeftMenu />
                     </Box>
-                    <Link href={"/"} color={ `#000000` } className='font-[900] text-start cursor-default text-xl  md:text-center md:col-span-1'
+                    <Link href={ "/" } color={ `#000000` } className='font-[900] text-start cursor-default text-xl  md:text-center md:col-span-1'
 
                     >
                         NN <span className='text-[#ff6d20]' >Network</span>

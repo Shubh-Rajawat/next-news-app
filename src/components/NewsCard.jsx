@@ -5,23 +5,24 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, Skeleton } from '@mui/material';
 import Image from 'next/image';
-const NewsCard = () => {
+const NewsCard = ( { data } ) => {
     return (
-        <Card sx={ { maxWidth: 350, border: 0, boxShadow: 0, } } className='bg-inherit'  >
-            <CardActionArea className='' >
-                <div className='text-center sm:w-48   md:w-52   lg:w-full px-2 ' >
+        <Card sx={ { border: 0, boxShadow: 0, width: '100%', maxHeight: "300px" } } className='bg-inherit'  >
+            <CardActionArea className='px-2 flex flex-col justify-between' >
+                <div className='text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[360px]  overflow-hidden rounded-xl' >
                     <Image
                         draggable="false"
-                        height={ 200 }
-                        width={ 320 }
-                        src="/modiji.png"
+                        height={ 210 }
+                        width={ 360 }
+                        src={ data?.img }
                         alt="NN Network"
                         placeholder='blur'
                         blurDataURL='Loading...'
-                        className='mx-auto  '
+                        className=' '
                     />
+
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="body2" component="div" color={ `#FF6D20` } className='break-words'  >
