@@ -11,7 +11,7 @@ const NewsCard = ( { data } ) => {
     return (
         <Card sx={ { border: 0, boxShadow: 0, width: '100%', maxHeight: "300px" } } className='bg-inherit'  >
             <CardActionArea className='px-2 flex flex-col justify-between' >
-                <div className='text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[360px]  overflow-hidden rounded-xl' >
+                <div className='m-1 text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[310px] xl:w-[360px]  overflow-hidden rounded-xl' >
                     <Image
                         draggable="false"
                         height={ 210 }
