@@ -22,7 +22,6 @@ const NewsCard = ( { data } ) => {
                         blurDataURL='Loading...'
                         className=' '
                     />
-
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="body2" component="div" color={ `#FF6D20` } className='break-words'  >

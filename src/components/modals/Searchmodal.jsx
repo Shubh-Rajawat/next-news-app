@@ -10,6 +10,8 @@ import StopSharpIcon from '@mui/icons-material/StopSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setUserData } from '@/lib/features/user/userdataSlice';
+import axios from 'axios';
+import Baseurl from '@/lib/constants/Baseurl';
 const searchModalStyle = {
     position: 'absolute',
     top: '50%',
@@ -42,6 +44,24 @@ const Searchmodal = ( { handleSearchClose } ) => {
     useEffect( () => {
         setWords( transcript )
     }, [ transcript ] )
+
+
+
+    const handleSearchSubmit = ( e ) => {
+        e.preventDefault();
+        try {
+            axios.post( `${ Baseurl }search_api` )
+                .then( ( res ) => {
+                    console.log( "Search", res.data )
+                } )
+                .catch( ( err ) => {
+                    console.log( "SearchErr", err )
+                } )
+        } catch ( error ) {
+            console.log( error )
+        }
+    }
+
     return (
         <>
             <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl relative "  >
