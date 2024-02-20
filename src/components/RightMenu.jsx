@@ -209,6 +209,9 @@ const RightMenu = () => {
                 onClose={ handleLoginClose }
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                BackdropProps={ {
+                    onClick: () => { },
+                } }
 
             >
                 <Loginmodal handleLoginClose={ handleLoginClose } handleSignupClose={ handleSignupClose } />

@@ -1,10 +1,10 @@
 
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-const inter = Inter( { subsets: [ "latin" ] } );
+// const inter = Inter( { subsets: [ "latin" ] } );
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import StoreProvider from "./StoreProvider";

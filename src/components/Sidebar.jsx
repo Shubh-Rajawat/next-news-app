@@ -115,13 +115,13 @@ export default function Sidebar() {
 
         axios.post( `${ Baseurl }sidebar_api` )
             .then( ( res ) => {
-                console.log( "Sidebardata", res.data.data )
+                // console.log( "Sidebardata", res.data.data )
                 if ( res.data ) {
                     setNavdata( res.data.data );
                 }
             } )
             .catch( ( err ) => {
-                console.log( "sidebar->>", err )
+                // console.log( "sidebar->>", err )
             } )
 
     }, [] )
@@ -177,15 +177,16 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.name } disablePadding sx={ { display: 'block', } } onClick={ () => {
-                            // localStorage.setItem( 'termId', el.id );
-                            router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
-                        } }  >
+                        <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
                             <ListItemButton
                                 sx={ {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
+                                } }
+                                onClick={ () => {
+                                    // localStorage.setItem( 'termId', el.id );
+                                    router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
                                 } }
                             >
                                 <ListItemIcon
@@ -216,15 +217,16 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.name } disablePadding sx={ { display: 'block' } } onClick={ () => {
-
-                            router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
-                        } }  >
+                        <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
                             <ListItemButton
                                 sx={ {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
+                                } }
+                                onClick={ () => {
+
+                                    router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
                                 } }
                             >
                                 <ListItemIcon

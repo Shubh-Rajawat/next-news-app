@@ -14,7 +14,7 @@ import React from 'react'
 
 const page = ( { params } ) => {
     const { top_stories, term_id } = params
-    console.log( "ParentParams", params )
+    // console.log( "ParentParams", params )
     return (
         <>
             <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] h-[100vh] '   >

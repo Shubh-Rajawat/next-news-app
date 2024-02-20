@@ -76,7 +76,7 @@ const CategorySlider = ( props ) => {
         } )
             .then( ( res ) => {
                 setCategoryData( res.data )
-                console.log( "categoryapi", res.data )
+                // console.log( "categoryapi", res.data )
             } )
             .catch( ( err ) => {
                 console.log( err )

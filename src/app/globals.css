@@ -88,6 +88,21 @@ main {
   padding: 16.5px 14px;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]:focus {
+  outline-color: #FF6D20;
+}
+
 @media only screen and (max-width: 1024px) {}
 
 @media only screen and (max-width: 768px) {

@@ -76,7 +76,7 @@ const SliderRow = ( { title, newsItems } ) => {
             }
         ]
     };
-    console.log( "newsItems", newsItems )
+    // console.log( "newsItems", newsItems )
     return (
         <>
             { title ? <Box className="text-[30px] font-[700] capitalize"  >

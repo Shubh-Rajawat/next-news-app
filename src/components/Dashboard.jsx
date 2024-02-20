@@ -13,11 +13,13 @@ const Dashboard = () => {
         try {
             axios.post( `${ Baseurl }home_api` ).then( ( res ) => {
                 setApiData( res.data );
-                console.log( res.data );
+                // console.log( res.data );
             } )
-
+                .catch( ( err ) => {
+                    console.log( err )
+                } )
         } catch ( error ) {
-            console.log( error )
+            console.log( error );
         }
     }, [] )
     return (
@@ -28,4 +30,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Dashboard;
