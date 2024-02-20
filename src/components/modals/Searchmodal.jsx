@@ -27,7 +27,7 @@ const searchModalStyle = {
 const Searchmodal = ( { handleSearchClose } ) => {
 
 
-    const [ words, setWords ] = useState( "what" )
+    const [ words, setWords ] = useState( "" )
     const {
         transcript,
         interimTranscript,
@@ -39,7 +39,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
     } = useSpeechRecognition();
 
     if ( !browserSupportsSpeechRecognition ) {
-        return <span>Browser doesn't support speech recognition.</span>;
+        console.log( "Browser doesn't support speech recognition." )
     }
     useEffect( () => {
         setWords( transcript )
@@ -67,7 +67,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
             <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl relative "  >
                 <CloseIcon className=' absolute top-2 cursor-pointer right-2' onClick={ handleSearchClose } />
                 <Box className=""   >
-                    <Typography variant='h4' gutterBottom textAlign={ `center` }   >
+                    <Typography variant='h4' gutterBottom textAlign={ `center` } className='text-3xl font-bold mb-5'   >
                         Search
                     </Typography>
                     <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ ( e ) => {
