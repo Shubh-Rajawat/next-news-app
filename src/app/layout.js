@@ -21,6 +21,7 @@ export default function RootLayout( { children } ) {
       <body className={ `bg-[#F0F2F5]` } style={ {
         display: 'flex',
         height: '100%',
+        width: '100%'
       } }  >
         <StoreProvider>
           <AppRouterCacheProvider options={ { enableCssLayer: true } }  >

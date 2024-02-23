@@ -10,7 +10,7 @@ import Image from 'next/image';
 const NewsCard = ( { data } ) => {
     return (
         <Card sx={ { border: 0, boxShadow: 0, width: '100%', maxHeight: "300px" } } className='bg-inherit'  >
-            <CardActionArea className='px-2 flex flex-col justify-between' >
+            <CardActionArea className='px-2 flex flex-col justify-between items-start' >
                 <div className='m-1 text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[310px] xl:w-[360px]  overflow-hidden rounded-xl' >
                     <Image
                         draggable="false"
@@ -25,10 +25,10 @@ const NewsCard = ( { data } ) => {
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="body2" component="div" color={ `#FF6D20` } className='break-words'  >
-                        "Hindustan Times (Delhi)
+                        { data?.news_name }
                     </Typography>
                     <Typography gutterBottom variant="h1" className='font-bold md:w-52 lg:w-full  sm:text-sm  md:text-md lg:text-lg break-words '   >
-                        Will win 370 seats’: PM at tri­bal out­reach event
+                        { data?.title }
                     </Typography>
                 </CardContent>
             </CardActionArea>

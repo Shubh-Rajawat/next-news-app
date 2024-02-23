@@ -11,7 +11,7 @@ import Searchmodal from './modals/Searchmodal';
 import Loginmodal from './modals/Loginmodal';
 import Signupmodal from './modals/Signupmodal';
 import CloseIcon from '@mui/icons-material/Close';
-import { ToastContainer } from 'react-toastify';
+
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { getCookie } from 'cookies-next';
 import { deleteCookie } from 'cookies-next';
@@ -41,15 +41,16 @@ const RightMenu = () => {
         setAnchorEl2( null );
     };
 
-    // for Search Modal
+    // for Search Modal----
     const handleSearchOpen = () => setSearchOpen( true );
     const handleSearchClose = () => setSearchOpen( false );
-    // for login modal
+    // for login modal---
     const handleLoginOpen = () => {
 
         setLoginOpen( true )
     };
     const handleLoginClose = () => setLoginOpen( false );
+    // for signup modal----
     const handleSignupOpen = () => {
         setSignupOpen( true )
     };
@@ -228,7 +229,7 @@ const RightMenu = () => {
                 <Signupmodal handleCloseSignup={ handleCloseSignup } handleSignupClose={ handleSignupClose } />
             </Modal>
             {/* signup modal end */ }
-            <ToastContainer />
+
         </>
 
     )

@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setUserData } from '@/lib/features/user/userdataSlice';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
+import { useRouter } from 'next/navigation';
 const searchModalStyle = {
     position: 'absolute',
     top: '50%',
@@ -25,9 +26,10 @@ const searchModalStyle = {
     p: 4,
 };
 const Searchmodal = ( { handleSearchClose } ) => {
-
-
+    const router = useRouter()
+    const { categories } = useAppSelector( ( state ) => state.categories )
     const [ words, setWords ] = useState( "" )
+    const [ searchTermid, setSearchTermid ] = useState( null )
     const {
         transcript,
         interimTranscript,
@@ -46,20 +48,24 @@ const Searchmodal = ( { handleSearchClose } ) => {
     }, [ transcript ] )
 
 
-
     const handleSearchSubmit = ( e ) => {
         e.preventDefault();
-        try {
-            axios.post( `${ Baseurl }search_api` )
-                .then( ( res ) => {
-                    console.log( "Search", res.data )
-                } )
-                .catch( ( err ) => {
-                    console.log( "SearchErr", err )
-                } )
-        } catch ( error ) {
-            console.log( error )
+        if ( words ) {
+            localStorage.setItem( "searchId", JSON.stringify( searchTermid ) );
+            router.push( `/search-for/${ words.replace( " ", "-" ) }` )
+            handleSearchClose();
+            // axios.post( `${ Baseurl }search_api`, {
+            //     term_id: searchTermid,
+            //     search: words
+            // } )
+            //     .then( ( res ) => {
+            //         console.log( "Search Data ->>", res.data )
+            //     } )
+            //     .catch( ( err ) => {
+            //         console.log( "SearchErr", err )
+            //     } )
         }
+
     }
 
     return (
@@ -70,9 +76,8 @@ const Searchmodal = ( { handleSearchClose } ) => {
                     <Typography variant='h4' gutterBottom textAlign={ `center` } className='text-3xl font-bold mb-5'   >
                         Search
                     </Typography>
-                    <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ ( e ) => {
-                        e.preventDefault()
-                    } }  >
+                    <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ handleSearchSubmit }  >
+                        {/* pending-task:- make the mic Icon visible only if isMicrophoneAvailable state is true*/ }
                         <FormControl sx={ { width: '1' } } >
                             <OutlinedInput placeholder="Search" value={ words } onChange={ ( e ) => {
                                 setWords( e.target.value )
@@ -105,16 +110,23 @@ const Searchmodal = ( { handleSearchClose } ) => {
                 </Box>
 
                 <Box className="">
-                    <Typography variant='subtitle1' gutterBottom className='font-semibold'    >
-                        Related search
+                    <Typography variant='subtitle1' gutterBottom className='font-semibold my-2 '    >
+                        { categories && "Select category" }
                     </Typography>
                     <div className='flex flex-wrap gap-1'  >
-                        <Chip label="Top Stories" variant="outlined" className='  border  border-solid rounded-3xl border-black'
-                            onClick={ ( e ) => {
-                                setWords( "Top Stories" )
-                            } }
-                        />
-                        <Chip label="Sports" variant="outlined" className='  border  border-solid rounded-3xl border-black'
+                        {
+                            categories && categories?.map( ( item, index ) => {
+                                return (
+                                    <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ searchTermid == item?.id ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
+                                        onClick={ ( e ) => {
+                                            setSearchTermid( item?.id )
+                                        } }
+                                    />
+                                )
+                            } )
+                        }
+
+                        {/* <Chip label="Sports" variant="outlined" className='  border  border-solid rounded-3xl border-black'
                             onClick={ ( e ) => {
                                 setWords( "Sports" )
                             } }
@@ -133,7 +145,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
                             onClick={ ( e ) => {
                                 setWords( "Opinion" )
                             } }
-                        />
+                        /> */}
                     </div>
                 </Box>
             </Box>

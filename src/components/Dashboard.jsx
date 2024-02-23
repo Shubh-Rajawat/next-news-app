@@ -2,7 +2,7 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import SliderRow from './SliderRow'
-import NewsCard from './NewsCard'
+// import NewsCard from './NewsCard'
 import axios from 'axios'
 import Baseurl from '@/lib/constants/Baseurl'
 

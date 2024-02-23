@@ -466,7 +466,6 @@ const Loginmodal = ( { handleLoginClose } ) => {
                                         </Box>
                                     </Box>
 
-
                     }
                 </Box>
 

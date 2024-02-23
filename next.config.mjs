@@ -2,7 +2,7 @@
 const nextConfig = {
   // basePath: "/BJPnews",
   images: {
-    domains: ["urlsdemo.in"],
+    domains: ["urlsdemo.com"],
   },
 };
 

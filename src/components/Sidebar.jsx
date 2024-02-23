@@ -18,6 +18,8 @@ import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
 import { useAppDispatch } from '@/lib/hooks';
 
+import { setCategories } from '@/lib/features/categories/categorySlice';
+
 const drawerWidth = 240;
 
 const openedMixin = ( theme ) => ( {
@@ -95,10 +97,9 @@ export default function Sidebar() {
     const router = useRouter()
     const [ open, setOpen ] = React.useState( true );
     const [ navdata, setNavdata ] = React.useState( false )
-
+    const dispatch = useAppDispatch();
     React.useEffect( () => {
         if ( window.innerWidth <= 800 ) {
-
             setOpen( false )
         }
         window.addEventListener( 'resize', () => {
@@ -118,6 +119,7 @@ export default function Sidebar() {
                 // console.log( "Sidebardata", res.data.data )
                 if ( res.data ) {
                     setNavdata( res.data.data );
+                    dispatch( setCategories( res.data.data ) )
                 }
             } )
             .catch( ( err ) => {
@@ -138,7 +140,6 @@ export default function Sidebar() {
     return (
         <>
             <CssBaseline />
-
             <Drawer variant="permanent" open={ open } className=' relative '   >
                 <DrawerHeader>
                     {/* <IconButton onClick={ handleDrawerOpen }>
@@ -176,32 +177,36 @@ export default function Sidebar() {
                         } }
 
                     /> }
-                    { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
-                            <ListItemButton
-                                sx={ {
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                } }
-                                onClick={ () => {
-                                    // localStorage.setItem( 'termId', el.id );
-                                    router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
-                                } }
-                            >
-                                <ListItemIcon
+                    { navdata && navdata?.map( ( el, index ) => {
+                        const slug = el.name.toLowerCase().replace( ' ', '-' );
+                        return (
+                            <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
+                                <ListItemButton
                                     sx={ {
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
+                                    } }
+                                    onClick={ () => {
+                                        // localStorage.setItem( 'termId', el.id );
+                                        router.push( `/${ el.id }/${ slug }` )
                                     } }
                                 >
-                                    <img src={ el?.img } alt='|' />
-                                </ListItemIcon>
-                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
-                            </ListItemButton>
-                        </ListItem>
-                    ) ) }
+                                    <ListItemIcon
+                                        sx={ {
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        } }
+                                    >
+                                        <img src={ el?.img } alt='|' />
+                                    </ListItemIcon>
+                                    <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
+                                </ListItemButton>
+                            </ListItem>
+                        )
+                    }
+                    ) }
                 </List>
                 <Divider />
                 <List  >
@@ -216,32 +221,35 @@ export default function Sidebar() {
                         } }
 
                     /> }
-                    { navdata && navdata?.map( ( el, index ) => (
-                        <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
-                            <ListItemButton
-                                sx={ {
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                } }
-                                onClick={ () => {
-
-                                    router.push( `/${ el.id }/${ el.name.toLowerCase().replace( ' ', '-' ) }` )
-                                } }
-                            >
-                                <ListItemIcon
+                    { navdata && navdata?.map( ( el, index ) => {
+                        const slug = el.name.toLowerCase().replace( ' ', '-' );
+                        return (
+                            <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
+                                <ListItemButton
                                     sx={ {
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
+                                    } }
+                                    onClick={ () => {
+                                        router.push( `/${ el.id }/${ slug }` )
                                     } }
                                 >
-                                    <img src={ el?.img } alt='|' />
-                                </ListItemIcon>
-                                <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
-                            </ListItemButton>
-                        </ListItem>
-                    ) ) }
+                                    <ListItemIcon
+                                        sx={ {
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        } }
+                                    >
+                                        <img src={ el?.img } alt='|' />
+                                    </ListItemIcon>
+                                    <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
+                                </ListItemButton>
+                            </ListItem>
+                        )
+                    }
+                    ) }
                 </List>
             </Drawer>
         </>

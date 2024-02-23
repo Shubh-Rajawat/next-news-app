@@ -11,7 +11,6 @@ import Image from 'next/image';
 const CategoryCard = ( { data } ) => {
     return (
         <Card sx={ { maxWidth: 400, border: 0, boxShadow: 0, textAlign: "start" } } className=' bg-inherit border-r border-gray-300'  >
-
             <CardContent className='' >
                 <Typography gutterBottom variant="h6" component="div" color={ `` } className='break-words my-1'  >
                     Hindustan Times
