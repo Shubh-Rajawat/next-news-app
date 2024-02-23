@@ -105,7 +105,7 @@ const SearchCard = ( { data } ) => {
                                 </div>
                                 <div class="content-center">
                                     <figure>
-                                        <img src="/Narendra%20Modi%20images.png" alt="" />
+                                        <img src="/Narendra-Modi-images.png" alt="" />
                                         <figcaption >A crowd of vis­it­ors at the 37th Sura­jkund Inter­na­tional Crafts Mela in
                                             Faridabad on Sunday. On the 17th and final day of the fair, domestic and for­eign artistes
                                             cap­tiv­ated the audi­ence with their per­form­ances.</figcaption>

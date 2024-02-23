@@ -8,7 +8,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useTransform, useScroll } from "framer-motion";
-// import HorizontalScroll from 'react-scroll-horizontal'
+
 import Slider from "react-slick";
 
 
