@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react'
 import Slider from "react-slick";
 import NewsCard from './NewsCard';
-import { Box, Skeleton } from '@mui/material';
+import { Backdrop, Box, CircularProgress, Skeleton } from '@mui/material';
 let skeletonItems = Array.from( { length: 4 } ).fill( 1 )
 
 const SliderRow = ( { title, newsItems } ) => {
@@ -90,13 +90,10 @@ const SliderRow = ( { title, newsItems } ) => {
 
     return (
         <>
-            { title ? <Box className="text-[30px] font-[700] capitalize"  >
+            { <Box className="text-[30px] font-[700] capitalize"  >
                 { newsItems?.length ? title : "" }
             </Box>
-                :
-                <Box className="text-[30px] font-[700] capitalize"  >
-                    <Skeleton width="60px" />
-                </Box>
+
             }
             <div className="slider-container text-start" onWheel={ ( e ) => {
                 if ( e.deltaY > 0 ) {
@@ -115,19 +112,25 @@ const SliderRow = ( { title, newsItems } ) => {
                     }
                 </Slider>
                     :
-                    <Slider { ...settings } ref={ sliderRef } >
-                        { skeletonItems?.map( ( item, index ) => {
-                            return (
-                                <Box key={ index }>
-                                    <Skeleton variant="rectangular" width={ 310 } height={ 210 } />
-                                    <Box sx={ { pt: 0.5 } }>
-                                        <Skeleton width="60%" />
-                                        <Skeleton width="40%" />
-                                    </Box>
-                                </Box>
-                            )
-                        } ) }
-                    </Slider>
+                    <Backdrop
+                        sx={ { color: '#fff', zIndex: ( theme ) => theme.zIndex.drawer + 1 } }
+                        open={ !newsItems }
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
+                    // <Slider { ...settings } ref={ sliderRef } >
+                    //     { skeletonItems?.map( ( item, index ) => {
+                    //         return (
+                    //             <Box key={ index }>
+                    //                 <Skeleton variant="rectangular" width={ 310 } height={ 210 } />
+                    //                 <Box sx={ { pt: 0.5 } }>
+                    //                     <Skeleton width="60%" />
+                    //                     <Skeleton width="40%" />
+                    //                 </Box>
+                    //             </Box>
+                    //         )
+                    //     } ) }
+                    // </Slider>
 
                 }
             </div>

@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+// import { CardActionArea } from '@mui/material';
 import Image from 'next/image';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
@@ -14,6 +14,7 @@ const SearchCard = ( { data } ) => {
     const [ readID, setReadID ] = useState( null );
     const [ postData, setPostData ] = useState( null )
     const [ readMoreLoader, setReadmoreLoader ] = useState( false )
+    console.log( "SearchCard", data )
     const openPost = ( id ) => {
         setReadmoreLoader( true );
         axios.post( `${ Baseurl }single_post_api`, {
@@ -36,10 +37,12 @@ const SearchCard = ( { data } ) => {
             { readID !== data?.id ?
                 <CardContent className=' w-[320px] md:w-[360px]  ' >
                     <Typography gutterBottom variant="h6" component="div" color={ `` } className='break-words my-1'  >
-                        Hindustan Times
+                        {/* Hindustan Times */ }
+                        { data?.news_name }
                     </Typography>
                     <Typography gutterBottom variant="h1" className='font-bold md:w-52 lg:w-full cursor-pointer  md:text-md lg:text-[20px] break-words my-2'   >
-                        Will win 370 seats’: PM at tri­bal out­reach event
+                        {/* Will win 370 seats': PM at tribal outreach event */ }
+                        { data?.title }
                     </Typography>
                     <span className='text-sm text-[#FF6D20]'  >{ data?.date }</span>
                     <div className='my-3 text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[300px] xl:w-[320px] overflow-hidden rounded-xl ' >
@@ -56,10 +59,11 @@ const SearchCard = ( { data } ) => {
                     </div>
                     <Typography gutterBottom variant="body2" className='text-gray-500  break-words px-2 my-4'   >
                         {
-                            `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            `.substring( 0, 520 ) + ".."
+                            // `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            // Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
+                            // `.substring( 0, 520 ) + ".."
                         }
+                        { data?.content.substring( 0, 520 ) + ".." }
                     </Typography>
                     <span className={ `basic-button rounded-3xl text-sm p-2 px-5 cursor-pointer my-3 ${ readMoreLoader ? "animate-pulse" : "" }` } onClick={ () => {
                         openPost( data?.id )
@@ -94,21 +98,21 @@ const SearchCard = ( { data } ) => {
                                         <span class="name"><bdi>BHASKAR HARI SHARMA</bdi> with agency inputs</span>
                                     </div>
                                     <div class="para break-words">
-                                        <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
-                                            in Chand­igarh on Sunday. Mean­while, in a bid to mount pres­sure on the BJP-ruled Centre to
-                                            accept their demands, the Samy­ukta Kisan Morcha (SKM) announced that from Tues­day it will
-                                            protest out­side the res­id­ences of BJP lead­ers in Pun­jab.</p>
-                                        <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
-                                            in Chand­igarh on Sunday. Mean­while, in a bid to mount pres­sure on the BJP-ruled Centre to
-                                            accept their demands, the Samy­ukta Kisan Morcha (SKM) </p>
+                                        <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
+                                            in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
+                                            accept their demands, the Samyukta Kisan Morcha (SKM) announced that from Tuesday it will
+                                            protest outside the residences of BJP leaders in Punjab.</p>
+                                        <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
+                                            in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
+                                            accept their demands, the Samyukta Kisan Morcha (SKM)</p>
                                     </div>
                                 </div>
                                 <div class="content-center">
                                     <figure>
                                         <img src="/Narendra-Modi-images.png" alt="" />
-                                        <figcaption >A crowd of vis­it­ors at the 37th Sura­jkund Inter­na­tional Crafts Mela in
-                                            Faridabad on Sunday. On the 17th and final day of the fair, domestic and for­eign artistes
-                                            cap­tiv­ated the audi­ence with their per­form­ances.</figcaption>
+                                        <figcaption >A crowd of visitors at the 37th Surajkund International Crafts Mela in
+                                            Faridabad on Sunday. On the 17th and final day of the fair, domestic and foreign artistes
+                                            captivated the audience with their performances.</figcaption>
                                     </figure>
                                 </div>
                                 <div class="content-right">
@@ -232,3 +236,4 @@ const SearchCard = ( { data } ) => {
 }
 
 export default SearchCard;
+

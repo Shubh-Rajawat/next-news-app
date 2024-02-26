@@ -1,11 +1,10 @@
 {/* eslint-disable-next-line react/no-unescaped-entities */ }
-
 import React from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+// import { CardActionArea } from '@mui/material';
 import Image from 'next/image';
 
 const CategoryCard = ( { data } ) => {
@@ -28,14 +27,14 @@ const CategoryCard = ( { data } ) => {
                         alt="NN Network"
                         placeholder='blur'
                         blurDataURL='Loading...'
-                        className='  '
+                        className=' '
                     />
                 </div>
                 <Typography gutterBottom variant="body2" className='text-gray-500  break-words px-2 my-4'   >
                     {
                         `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            and scrambled it to make a type specimen book.`.substring( 0, 380 ) + ".."
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        and scrambled it to make a type specimen book.`.substring( 0, 380 ) + ".."
                     }
                 </Typography>
                 <span className=' basic-button rounded-3xl text-sm p-2 px-5 cursor-pointer my-3 '  >

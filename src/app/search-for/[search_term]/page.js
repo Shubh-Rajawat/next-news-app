@@ -21,9 +21,6 @@ const page = ( { params } ) => {
     // const scrollRef = useRef();
     const sliderRef = useRef();
 
-
-
-
     useEffect( () => {
         if ( !params.search_term ) {
             router.push( "/" )
@@ -144,6 +141,24 @@ const page = ( { params } ) => {
     const handleTouchEnd = () => {
         setStartX( null );
     };
+    // functions for scroll-X with cursor
+    const handleStart = ( event ) => {
+        if ( event.type === 'touchstart' ) {
+            setStartX( event.touches[ 0 ].clientX );
+        } else {
+            setStartX( event.clientX );
+        }
+    };
+
+    const handleMove = ( event ) => {
+        if ( !startX ) return;
+        const x = event.clientX - startX;
+        scrollContainerRef.current.scrollLeft -= x;
+    };
+
+    const handleEnd = () => {
+        setStartX( null );
+    };
     return (
         <>
             {/* <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 4 } } className={ `bg-[#F0F2F5] px-0 w-full overflow-y-hidden` } >
@@ -180,12 +195,14 @@ const page = ( { params } ) => {
                 onTouchStart={ handleTouchStart }
                 onTouchMove={ handleTouchMove }
                 onTouchEnd={ handleTouchEnd }
+                onMouseDown={ handleStart }
+                onMouseMove={ handleMove }
+                onMouseUp={ handleEnd }
+                onMouseLeave={ handleEnd }
             >
                 <DrawerHeader />
                 <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
-                    ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll'
-
-                >
+                    ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
                     { cardData.map( index => (
                         <Grid key={ index }>
                             <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
@@ -196,7 +213,5 @@ const page = ( { params } ) => {
         </>
     )
 }
-
-
 
 export default page

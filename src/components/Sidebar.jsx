@@ -162,7 +162,6 @@ export default function Sidebar() {
                     { open ? <>
                         For You
                         <span className=""><ExpandMoreIcon className='' /></span>
-
                     </> : "" }
                 </Typography>
                 <List  >
@@ -219,7 +218,6 @@ export default function Sidebar() {
                             ml: '14px',
                             color: '#9E9C9C'
                         } }
-
                     /> }
                     { navdata && navdata?.map( ( el, index ) => {
                         const slug = el.name.toLowerCase().replace( ' ', '-' );

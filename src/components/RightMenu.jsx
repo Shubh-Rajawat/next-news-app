@@ -78,13 +78,13 @@ const RightMenu = () => {
                 <button className='basic-button rounded-3xl text-sm p-2 cursor-pointer '  >
                     Work With Us
                 </button>
-            </Box > :
-
-
+            </Box >
+                :
                 <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end  ` }  >
                     <Tooltip title={ userData?.firstname + " " + userData?.lastname } >
                         <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase' >{ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] }</Avatar>
                     </Tooltip>
+
                     {/* <Menu
                         id="basic-menu"
                         anchorEl={ anchorEl2 }
@@ -104,8 +104,6 @@ const RightMenu = () => {
                         Work With Us
                     </button>
                 </Box >
-
-
             }
             {/* mobile dropdown start */ }
             <Box className="md:hidden  text-end "  >
@@ -196,11 +194,8 @@ const RightMenu = () => {
                 open={ searchOpen }
                 onClose={ handleSearchClose }
                 aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-
+                aria-describedby="modal-modal-description" >
                 <Searchmodal handleSearchClose={ handleSearchClose } />
-
             </Modal>
             {/* Search Modal end */ }
 

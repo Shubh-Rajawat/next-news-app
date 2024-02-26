@@ -109,7 +109,10 @@ input[type=number]:focus {
   overflow: visible !important;
 }
 
-
+.slick-prev,
+.slick-next {
+  top: 45% !important;
+}
 
 @media only screen and (max-width: 1024px) {}
 
@@ -117,6 +120,11 @@ input[type=number]:focus {
   .MuiToolbar-root {
     height: 50px !important;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .slick-prev,
+  .slick-next {
+    top: 35% !important;
   }
 }
 

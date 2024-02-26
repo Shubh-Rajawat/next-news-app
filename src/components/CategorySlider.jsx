@@ -7,8 +7,7 @@ import CategoryCard from './CategoryCard';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
 
-
-let skeletonItems = Array.from( { length: 4 } ).fill( 1 )
+// let skeletonItems = Array.from( { length: 4 } ).fill( 1 )
 
 var settings = {
     dots: false,
@@ -86,7 +85,8 @@ const CategorySlider = ( props ) => {
     return (
         <>
             <Box className="text-[30px] font-[700] capitalize"  >
-                { categoryData?.top_title ? categoryData?.top_title : <Skeleton width="160px" /> }
+                {/* categoryData?.top_title ? categoryData?.top_title : <Skeleton width="160px" />  */ }
+                { categoryData?.top_title }
             </Box>
             <div className="slider-container">
                 { categoryData ?
@@ -101,22 +101,6 @@ const CategorySlider = ( props ) => {
                     </Slider>
                     :
                     <>
-                        {/* <Box sx={ { maxWidth: 300, border: 0, boxShadow: 0, textAlign: "start" } } className="ms-5 md:ms-10" >
-                                <Box sx={ { pt: 0.5 } }>
-                                    <Skeleton width="40%" />
-                                    <Skeleton width="60%" />
-                                    <Skeleton width="20%" />
-                                </Box>
-                            <Skeleton variant="rectangular" width={ 300 } height={ 210 } />
-                                <Box sx={ { pt: 0.5 } }>
-                                    <Skeleton width="60%" />
-                                    <Skeleton width="60%" />
-                                    <Skeleton width="60%" />
-                                    <Skeleton width="60%" />
-                                    <Skeleton width="60%" />
-                                </Box>
-                            <Skeleton width="40px" />
-                        </Box> */}
                         <Backdrop
                             sx={ { color: '#fff', zIndex: ( theme ) => theme.zIndex.drawer + 1 } }
                             open={ !categoryData }
