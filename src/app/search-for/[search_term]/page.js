@@ -10,12 +10,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { motion, useTransform, useScroll } from "framer-motion";
 
 import Slider from "react-slick";
+import MobileNewsCard from '@/components/mobile/MobileNewsCard'
 
 
 const cards = Array.from( { length: 9 } ).fill( 1 )
 const page = ( { params } ) => {
     const router = useRouter();
     const [ searchData, setSearchData ] = useState( null )
+    const [ screenWidth, setScreenWidth ] = useState( 1500 )
     console.log( "newpage", params )
     const searchId = JSON.parse( localStorage.getItem( "searchId" ) );
     // const scrollRef = useRef();
@@ -38,6 +40,13 @@ const page = ( { params } ) => {
                 } )
         }
     }, [ params?.search_term ] )
+
+    useEffect( () => {
+        if ( window.innerWidth <= 600 ) {
+            console.log( "hola", window.innerWidth )
+            setScreenWidth( window.innerWidth )
+        }
+    }, [] )
 
     // const numSlidesToShow = Math.min( searchData?.length, 4 );
     var settings = {
@@ -119,7 +128,7 @@ const page = ( { params } ) => {
         ]
     };
 
-    const cardData = Array.from( { length: 15 }, ( _, i ) => i + 1 );
+    const cardData = Array.from( { length: 12 }, ( _, i ) => i + 1 );
     const handleScroll = ( event ) => {
         const container = event.currentTarget;
         const x = event.deltaY * 5;
@@ -191,7 +200,7 @@ const page = ( { params } ) => {
                     </div>
                 </section>
             </Box> */}
-            <Container maxWidth="xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] overflow-y-hidden'
+            { screenWidth > 600 ? <Container maxWidth="xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] overflow-y-hidden'
                 onTouchStart={ handleTouchStart }
                 onTouchMove={ handleTouchMove }
                 onTouchEnd={ handleTouchEnd }
@@ -203,13 +212,25 @@ const page = ( { params } ) => {
                 <DrawerHeader />
                 <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
                     ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
-                    { cardData.map( index => (
+                    { cardData.map( ( item, index ) => (
                         <Grid key={ index }>
                             <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
                         </Grid>
                     ) ) }
                 </Grid>
             </Container>
+                :
+                <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
+                    <DrawerHeader />
+                    <Stack spacing={ 1 }>
+                        { cardData.map( ( item, index ) => (
+                            <div className="" key={ index }>
+                                <MobileNewsCard data={ searchData && searchData?.top_news[ 0 ] } />
+                            </div>
+                        ) ) }
+                    </Stack>
+                </Container>
+            }
         </>
     )
 }

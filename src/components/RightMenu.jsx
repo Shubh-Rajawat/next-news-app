@@ -169,18 +169,27 @@ const RightMenu = () => {
                     <MenuItem onClick={ handleClose }>
                         More
                     </MenuItem>
-                    <MenuItem onClick={ () => {
-                        handleLoginOpen()
-                        handleClose()
-                    } }>
-                        Login
-                    </MenuItem>
-                    <MenuItem onClick={ () => {
-                        handleSignupOpen()
-                        handleClose()
-                    } }>
-                        Signup
-                    </MenuItem>
+                    { !userData ?
+                        <>
+                            <MenuItem onClick={ () => {
+                                handleLoginOpen()
+                                handleClose()
+                            } }>
+                                Login
+                            </MenuItem>
+                            <MenuItem onClick={ () => {
+                                handleSignupOpen()
+                                handleClose()
+                            } }>
+                                Signup
+                            </MenuItem>
+                        </>
+                        :
+                        <MenuItem>
+                            Logout
+                        </MenuItem>
+
+                    }
                     {/* <Divider /> */ }
                     <MenuItem onClick={ handleClose }>
                         Work With Us
@@ -208,7 +217,6 @@ const RightMenu = () => {
                 BackdropProps={ {
                     onClick: () => { },
                 } }
-
             >
                 <Loginmodal handleLoginClose={ handleLoginClose } handleSignupClose={ handleSignupClose } />
             </Modal>
