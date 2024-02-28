@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
-import staticImage from "../../public/Narendra-Modi-images.png"
+
 
 const CategoryCard = ( { data } ) => {
     console.log( "CategoryData --->>", data )
