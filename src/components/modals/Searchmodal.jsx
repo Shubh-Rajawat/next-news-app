@@ -52,7 +52,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
         e.preventDefault();
         if ( words ) {
             localStorage.setItem( "searchId", JSON.stringify( searchTermid ) );
-            router.push( `/search-for/${ words.replace( " ", "-" ) }` )
+            router.push( `/search-for/${ words.replaceAll( " ", "-" ) }` )
             handleSearchClose();
             // axios.post( `${ Baseurl }search_api`, {
             //     term_id: searchTermid,

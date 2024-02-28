@@ -177,7 +177,7 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata?.map( ( el, index ) => {
-                        const slug = el.name.toLowerCase().replace( ' ', '-' );
+                        const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
                                 <ListItemButton
@@ -220,7 +220,7 @@ export default function Sidebar() {
                         } }
                     /> }
                     { navdata && navdata?.map( ( el, index ) => {
-                        const slug = el.name.toLowerCase().replace( ' ', '-' );
+                        const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
                                 <ListItemButton

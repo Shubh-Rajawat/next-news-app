@@ -31,7 +31,7 @@ const page = ( { params } ) => {
                     <Box className="flex flex-col h-full"  >
                         {/* <SliderRow title={ top_stories.replace( '-', " " ) } />
                         <SliderRow title={ '' } /> */}
-                        <CategorySlider title={ top_stories.replace( '-', " " ) } termId={ term_id } />
+                        <CategorySlider title={ top_stories.replaceAll( '-', " " ) } termId={ term_id } />
                     </Box>
                 </Box>
             </Box>

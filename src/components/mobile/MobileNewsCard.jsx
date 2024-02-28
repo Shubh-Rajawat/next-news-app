@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 const MobileNewsCard = ( { data } ) => {
     const router = useRouter()
-    const slug = data?.title?.replace( " ", "-" );
+    const slug = data?.title?.replaceAll( " ", "-" );
     console.log( "mobile card->>>", data );
 
 
