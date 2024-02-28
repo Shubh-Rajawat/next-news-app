@@ -24,10 +24,9 @@ const Header = () => {
                     <Box className='hidden md:flex items-baseline justify-between px-10 ' >
                         <LeftMenu />
                     </Box>
-                    <Link href={ "/" } color={ `#000000` } className='font-[900] text-start cursor-default text-xl  md:text-center md:col-span-1'
-
+                    <Link href={ "/" } color={ `#000000` } className='font-[900] text-start  text-xl cursor-default md:text-center md:col-span-1'
                     >
-                        NN <span className='text-[#ff6d20]' >Network</span>
+                        <span className='cursor-pointer' > NN </span><span className='text-[#ff6d20] cursor-pointer' >Network</span>
                     </Link>
                     <RightMenu />
                 </Toolbar>
@@ -38,4 +37,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default Header;

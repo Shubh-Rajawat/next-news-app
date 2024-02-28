@@ -200,25 +200,26 @@ const page = ( { params } ) => {
                     </div>
                 </section>
             </Box> */}
-            { screenWidth > 600 ? <Container maxWidth="xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] overflow-y-hidden'
-                onTouchStart={ handleTouchStart }
-                onTouchMove={ handleTouchMove }
-                onTouchEnd={ handleTouchEnd }
-                onMouseDown={ handleStart }
-                onMouseMove={ handleMove }
-                onMouseUp={ handleEnd }
-                onMouseLeave={ handleEnd }
-            >
-                <DrawerHeader />
-                <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
-                    ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
-                    { cardData.map( ( item, index ) => (
-                        <Grid key={ index }>
-                            <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
-                        </Grid>
-                    ) ) }
-                </Grid>
-            </Container>
+            { screenWidth > 600 ?
+                <Container maxWidth="xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] overflow-y-hidden'
+                    onTouchStart={ handleTouchStart }
+                    onTouchMove={ handleTouchMove }
+                    onTouchEnd={ handleTouchEnd }
+                    onMouseDown={ handleStart }
+                    onMouseMove={ handleMove }
+                    onMouseUp={ handleEnd }
+                    onMouseLeave={ handleEnd }
+                >
+                    <DrawerHeader />
+                    <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
+                        ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
+                        { cardData.map( ( item, index ) => (
+                            <Grid key={ index }>
+                                <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
+                            </Grid>
+                        ) ) }
+                    </Grid>
+                </Container>
                 :
                 <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
                     <DrawerHeader />

@@ -19,6 +19,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+
+nextjs-portal {
+  display: none;
+}
+
 .MuiToolbar-root {
   display: grid !important;
   grid-template-columns: 1fr 1fr 1fr;
@@ -260,7 +265,7 @@ p.side-note::before {
 
 .news-slider {
   display: flex;
-  width: calc(200vw - 40px);
+  width: 200vw;
   gap: 20px;
 }
 

@@ -23,12 +23,12 @@ const MobileNewsCard = ( { data } ) => {
     return (
         <Card className='w-full'>
             <CardActionArea>
-                <div className='my-3 text-center max-h-44 sm:w-full  md:max-h-44 px-1 overflow-hidden' >
+                <div className=' text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden' >
                     <Image
                         draggable="false"
                         height={ 400 }
                         width={ 520 }
-                        src="/Narendra-modi-images.png"
+                        src={ data?.img }
                         alt="NN Network"
                         placeholder='blur'
                         blurDataURL='Loading...'

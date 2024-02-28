@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { getCookie } from 'cookies-next';
 import { deleteCookie } from 'cookies-next';
 import { setUserData } from '@/lib/features/user/userdataSlice';
+import { useRouter } from 'next/navigation';
 
 const RightMenu = () => {
     const [ anchorEl, setAnchorEl ] = useState( null );
@@ -24,6 +25,7 @@ const RightMenu = () => {
     const [ loginOpen, setLoginOpen ] = useState( false )
     const [ signupOpen, setSignupOpen ] = useState( false )
     const { userData } = useAppSelector( state => state.userData )
+    const router = useRouter();
     const dispatch = useAppDispatch();
     // console.log( "selector", userData )
     const open = Boolean( anchorEl );
@@ -82,7 +84,7 @@ const RightMenu = () => {
                 :
                 <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end  ` }  >
                     <Tooltip title={ userData?.firstname + " " + userData?.lastname } >
-                        <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase' >{ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] }</Avatar>
+                        <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase' children={ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] } />
                     </Tooltip>
 
                     {/* <Menu
@@ -160,7 +162,10 @@ const RightMenu = () => {
                     } }>
                         Search
                     </MenuItem>
-                    <MenuItem onClick={ handleClose }>
+                    <MenuItem onClick={ () => {
+                        router.push( '/' )
+                        handleClose()
+                    } }>
                         Catalog
                     </MenuItem>
                     <MenuItem onClick={ handleClose }>
@@ -188,7 +193,6 @@ const RightMenu = () => {
                         <MenuItem>
                             Logout
                         </MenuItem>
-
                     }
                     {/* <Divider /> */ }
                     <MenuItem onClick={ handleClose }>
