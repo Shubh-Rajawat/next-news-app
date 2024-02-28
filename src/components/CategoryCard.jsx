@@ -306,11 +306,11 @@ const CategoryCard = ( { data } ) => {
                                     <div class="para break-words">
                                         <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
                                             in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
-                                            accept their demands, the Samyukta Kisan Morcha (SKM) announced that from Tuesday it will
+                                            announced that from Tuesday it will
                                             protest outside the residences of BJP leaders in Punjab.</p>
                                         <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
                                             in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
-                                            accept their demands, the Samyukta Kisan Morcha (SKM)</p>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="content-center">
@@ -330,7 +330,7 @@ const CategoryCard = ( { data } ) => {
                                         <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
                                             in Chand­igarh on Sunday. Mean­while, in a bid to mount.</p>
                                         <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
-                                            in Chand­igarh on Sunday. Mean­while Centre held the fourth round Mean­while, in a bid to mount </p>
+                                            in Chand­igarh on Sunday. </p>
                                     </div>
                                 </div>
                             </div>
@@ -403,7 +403,7 @@ const CategoryCard = ( { data } ) => {
                                             <div class="comment-content">
                                                 <input type="text" placeholder="Write a comment..." />
                                                 <img class="user-icon" src="/user.svg" alt="" />
-                                                <div class="icon-box">
+                                                <div class="icon-box mb-1">
                                                     <div class="icon-item">
                                                         <img src="/speek.png" alt="" />
                                                         <span>Listen</span>
@@ -426,7 +426,7 @@ const CategoryCard = ( { data } ) => {
                                                     </div>
                                                 </div>
                                                 <div class="newspaper">
-                                                    <img src="/newspaper.png" alt="" />
+                                                    <img src="/newspaper.png" alt="" className='mx-auto' />
                                                 </div>
                                             </div>
                                         </div>

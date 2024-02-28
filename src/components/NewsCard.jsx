@@ -12,16 +12,30 @@ const NewsCard = ( { data } ) => {
         <Card sx={ { border: 0, boxShadow: 0, width: '100%', maxHeight: "300px" } } className='bg-inherit'  >
             <CardActionArea className='px-2 flex flex-col justify-between items-start' >
                 <div className='m-1 text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[310px] xl:w-[360px]  overflow-hidden rounded-xl' >
-                    <Image
-                        draggable="false"
-                        height={ 210 }
-                        width={ 360 }
-                        src={ data?.img }
-                        alt="NN Network"
-                        placeholder='blur'
-                        blurDataURL='Loading...'
-                        className=' '
-                    />
+                    { data?.img ?
+                        <Image
+                            draggable="false"
+                            height={ 210 }
+                            width={ 360 }
+                            src={ data?.img }
+                            alt="NN Network"
+                            placeholder='blur'
+                            blurDataURL='Loading...'
+                            className=' '
+                        />
+                        :
+                        <Image
+                            draggable="false"
+                            height={ 210 }
+                            width={ 360 }
+                            src="/placeholder.jpg"
+                            alt="NN Network"
+                            placeholder='blur'
+                            blurDataURL='Loading...'
+                            className=' '
+                        />
+
+                    }
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="body2" component="div" color={ `#FF6D20` } className='break-words'  >

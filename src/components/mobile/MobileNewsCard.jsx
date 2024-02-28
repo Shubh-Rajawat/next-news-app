@@ -24,16 +24,29 @@ const MobileNewsCard = ( { data } ) => {
         <Card className='w-full'>
             <CardActionArea>
                 <div className=' text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden' >
-                    <Image
-                        draggable="false"
-                        height={ 400 }
-                        width={ 520 }
-                        src={ data?.img }
-                        alt="NN Network"
-                        placeholder='blur'
-                        blurDataURL='Loading...'
-                        className=''
-                    />
+                    { data?.img ?
+                        <Image
+                            draggable="false"
+                            height={ 400 }
+                            width={ 520 }
+                            src={ data?.img }
+                            alt="NN Network"
+                            placeholder='blur'
+                            blurDataURL='Loading...'
+                            className=''
+                        />
+                        :
+                        <Image
+                            draggable="false"
+                            height={ 400 }
+                            width={ 520 }
+                            src="/placeholder.jpg"
+                            alt="NN Network"
+                            placeholder='blur'
+                            blurDataURL='Loading...'
+                            className=''
+                        />
+                    }
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" className='font-semibold'  >

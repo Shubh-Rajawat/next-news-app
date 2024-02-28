@@ -131,7 +131,6 @@ const SliderRow = ( { title, newsItems } ) => {
                     //         )
                     //     } ) }
                     // </Slider>
-
                 }
             </div>
         </>

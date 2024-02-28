@@ -46,16 +46,29 @@ const SearchCard = ( { data } ) => {
                     </Typography>
                     <span className='text-sm text-[#FF6D20]'  >{ data?.date }</span>
                     <div className='my-3 text-center max-h-44 sm:w-full sm:max-h-32  md:w-52 md:max-h-44  lg:w-[300px] xl:w-[320px] overflow-hidden rounded-xl ' >
-                        <Image
-                            draggable="false"
-                            height={ 400 }
-                            width={ 520 }
-                            src={ data?.img }
-                            alt="NN Network"
-                            placeholder='blur'
-                            blurDataURL='Loading...'
-                            className='  '
-                        />
+                        { data?.img ?
+                            <Image
+                                draggable="false"
+                                height={ 400 }
+                                width={ 520 }
+                                src={ data?.img }
+                                alt="NN Network"
+                                placeholder='blur'
+                                blurDataURL='Loading...'
+                                className='  '
+                            />
+                            :
+                            <Image
+                                draggable="false"
+                                height={ 400 }
+                                width={ 520 }
+                                src="/placeholder.jpg"
+                                alt="NN Network"
+                                placeholder='blur'
+                                blurDataURL='Loading...'
+                                className='  '
+                            />
+                        }
                     </div>
                     <Typography gutterBottom variant="body2" className='text-gray-500  break-words px-2 my-4'   >
                         {
@@ -100,11 +113,11 @@ const SearchCard = ( { data } ) => {
                                     <div class="para break-words">
                                         <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
                                             in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
-                                            accept their demands, the Samyukta Kisan Morcha (SKM) announced that from Tuesday it will
+                                            announced that from Tuesday it will
                                             protest outside the residences of BJP leaders in Punjab.</p>
                                         <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
                                             in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the BJP-ruled Centre to
-                                            accept their demands, the Samyukta Kisan Morcha (SKM)</p>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="content-center">
@@ -124,7 +137,7 @@ const SearchCard = ( { data } ) => {
                                         <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
                                             in Chand­igarh on Sunday. Mean­while, in a bid to mount.</p>
                                         <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
-                                            in Chand­igarh on Sunday. Mean­while Centre held the fourth round Mean­while, in a bid to mount </p>
+                                            in Chand­igarh on Sunday. </p>
                                     </div>
                                 </div>
                             </div>

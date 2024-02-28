@@ -324,7 +324,7 @@ p.side-note::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 10px 40px;
+  margin: 20px 10px 20px;
 }
 
 .comment-content .icon-item {
