@@ -50,10 +50,10 @@ const MobileNewsCard = ( { data } ) => {
                 </div>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" className='font-semibold'  >
-                        Hindustan Times
+                        { data?.news_name }
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut commodi vitae fugit, magni delectus error sapiente. Commodi alias fugit enim...
+                        { data?.content.substring( 0, 150 ) + ".." }
                     </Typography>
                 </CardContent>
                 <CardActions>
