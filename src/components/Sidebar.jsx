@@ -165,8 +165,8 @@ export default function Sidebar() {
                     </> : "" }
                 </Typography>
                 <List  >
-                    { open && <ListItemText
-                        primary="INDIA (ENGLISH)"
+                    { open && <ListItemText className='uppercase'
+                        primary={ navdata[ 0 ]?.name }
                         primaryTypographyProps={ {
                             fontSize: 12,
                             fontWeight: 700,
@@ -176,7 +176,7 @@ export default function Sidebar() {
                         } }
 
                     /> }
-                    { navdata && navdata?.map( ( el, index ) => {
+                    { navdata && navdata[ 0 ]?.child_category?.map( ( el, index ) => {
                         const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
@@ -209,8 +209,8 @@ export default function Sidebar() {
                 </List>
                 <Divider />
                 <List  >
-                    { open && <ListItemText
-                        primary="INDIA (HINDI)"
+                    { open && <ListItemText className='uppercase'
+                        primary={ navdata[ 1 ]?.name }
                         primaryTypographyProps={ {
                             fontSize: 12,
                             fontWeight: 'bold',
@@ -219,7 +219,7 @@ export default function Sidebar() {
                             color: '#9E9C9C'
                         } }
                     /> }
-                    { navdata && navdata?.map( ( el, index ) => {
+                    { navdata && navdata[ 1 ]?.child_category?.map( ( el, index ) => {
                         const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >

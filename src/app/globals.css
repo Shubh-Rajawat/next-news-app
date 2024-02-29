@@ -19,10 +19,10 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-
+/* 
 nextjs-portal {
   display: none;
-}
+} */
 
 .MuiToolbar-root {
   display: grid !important;

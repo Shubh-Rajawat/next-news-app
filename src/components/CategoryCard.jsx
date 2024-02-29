@@ -39,7 +39,6 @@ const CategoryCard = ( { data } ) => {
 
     return (
 
-
         <Card sx={ { minHeight: "calc( 100vh - 140px )", border: 0, boxShadow: 0, textAlign: "start" } } className={ `select-none h-full flex flex-col items-center justify-center w-full  bg-inherit border-r  border-gray-300` }   >
             { readID !== data?.id ?
                 <CardContent className=' w-[320px] md:w-[360px]  ' >
@@ -127,7 +126,7 @@ const CategoryCard = ( { data } ) => {
                                             alt="NN Network"
                                             placeholder='blur'
                                             blurDataURL='Loading...'
-                                            className='  '
+                                            className=''
                                         />
                                         <figcaption >A crowd of visitors at the 37th Surajkund International Crafts Mela in
                                             Faridabad on Sunday. On the 17th and final day of the fair, domestic and foreign artistes
@@ -136,12 +135,12 @@ const CategoryCard = ( { data } ) => {
                                 </div>
                                 <div class="content-right">
                                     <div class="para break-words">
-                                        <p>The Centre held the fourth round of talks with the lead­ers of protest­ing.</p>
-                                        <p class="side-note">The Centre held the fourth round of talks with the lead­ers of protest­ing
-                                            farm­ers’ uni­ons in Chand­igarh on Sunday. Mean­while, in a bid to mount pres­sure on the
+                                        <p>The Centre held the fourth round of talks with the leaders of protesting.</p>
+                                        <p class="side-note">The Centre held the fourth round of talks with the leaders of protesting
+                                            farmers’ unions in Chandigarh on Sunday. Meanwhile, in a bid to mount pressure on the
                                             BJP-ruled Centre</p>
-                                        <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
-                                            in Chand­igarh on Sunday. Mean­while, in a bid to mount.</p>
+                                        <p>The Centre held the fourth round of talks with the leaders of protesting farmers’ unions
+                                            in Chandigarh on Sunday. Meanwhile, in a bid to mount.</p>
                                         {/* <p>The Centre held the fourth round of talks with the lead­ers of protest­ing farm­ers’ uni­ons
                                             in Chand­igarh on Sunday. </p> */}
                                     </div>
