@@ -12,7 +12,7 @@ const HomeCard = ( { data } ) => {
                         <Typography gutterBottom variant="body2" component="div" color={ `` } className='break-words my-1 text-[#FF6D20]'  >
                             { data?.news_name }
                         </Typography>
-                        <Typography gutterBottom variant="h1" className='font-bold  md:text-lg lg:text-[28px] my-2 break-words'   >
+                        <Typography gutterBottom variant="h1" className='lg:w-[600px] md:w-[400px] font-bold  md:text-lg lg:text-[28px] my-2 break-words'   >
                             { data?.title }
                         </Typography>
                         <Typography gutterBottom variant="h3" className='lg:w-[600px] md:w-[400px] text-lg my-2 break-words'   >

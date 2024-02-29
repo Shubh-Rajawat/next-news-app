@@ -119,7 +119,7 @@ export default function Sidebar() {
                 // console.log( "Sidebardata", res.data.data )
                 if ( res.data ) {
                     setNavdata( res.data.data );
-                    dispatch( setCategories( res.data.data ) )
+                    dispatch( setCategories( [ ...res.data.data[ 0 ]?.child_category ] ) )
                 }
             } )
             .catch( ( err ) => {
