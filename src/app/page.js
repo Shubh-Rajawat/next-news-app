@@ -81,7 +81,7 @@ export default function Home() {
 
   return (
     screenWidth > 768 ?
-      <Container maxWidth="2xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 0 } } className='h-[100vh - 90px] bg-[#F0F2F5] overflow-y-hidden'
+      <Container maxWidth="2xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 0 } } className='  h-[100vh - 90px] bg-[#F0F2F5] overflow-y-hidden'
         onTouchStart={ handleTouchStart }
         onTouchMove={ handleTouchMove }
         onTouchEnd={ handleTouchEnd }
