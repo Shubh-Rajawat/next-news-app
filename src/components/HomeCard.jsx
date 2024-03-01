@@ -1,8 +1,10 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import axios from 'axios';
+import Baseurl from '@/lib/constants/Baseurl';
 
 
 
@@ -16,6 +18,27 @@ function renderMarkdownToHTML( markdown ) {
 }
 const HomeCard = ( { data } ) => {
     console.log( "cardhome-", data )
+    const [ readID, setReadID ] = useState( null );
+    const [ postData, setPostData ] = useState( null )
+    const [ readMoreLoader, setReadmoreLoader ] = useState( false )
+
+    const openPost = ( id ) => {
+        setReadmoreLoader( true );
+        axios.post( `${ Baseurl }single_post_api`, {
+            post_id: id
+        } )
+            .then( ( res ) => {
+                console.log( "arrow function called", res.data )
+                setReadID( res.data.id )
+                setPostData( res.data )
+                setReadmoreLoader( false );
+            } )
+            .catch( ( err ) => {
+                console.log( err )
+                setReadmoreLoader( false );
+            } )
+    }
+
     return (
         <Container maxWidth="lg" sx={ { overflow: 'hidden', pl: 0, pr: 0 } } className=' pt-1 lg:pt-4 bg-[#F0F2F5] overflow-y-hidden w-fit py-1 lg:py-3' >
             <Box className='relative flex gap-6'  >
@@ -66,7 +89,9 @@ const HomeCard = ( { data } ) => {
                     </div> */}
                     <div className="flex flex-col gap-3 flex-wrap relative" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content ) } ></div>
                 </Box>
-                <ArrowForwardIcon className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]' />
+                <ArrowForwardIcon className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
+
+                />
             </Box>
         </Container>
     )

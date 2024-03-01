@@ -7,6 +7,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Baseurl from '@/lib/constants/Baseurl'
 import axios from 'axios'
 
+function renderMarkdownToHTML( markdown ) {
+    return { __html: markdown };
+}
+
+
 const page = ( { params } ) => {
     const [ postData, setPostData ] = useState( false );
     const [ loading, setLoading ] = useState( false );
@@ -41,14 +46,14 @@ const page = ( { params } ) => {
                 <Box>
                     <Box as="div" className="flex items-baseline justify-between flex-wrap" >
                         <Typography gutterBottom variant="h5" component="div" className='font-semibold text-[#FF6D20] '  >
-                            { postData?.news_name }
+                            { postData?.news_paper_name }
                         </Typography>
                         <Typography gutterBottom variant="body2" component="div" className=''  >
                             { postData?.date }
                         </Typography>
                     </Box>
 
-                    <div className='my-3 text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden rounded-lg' >
+                    <div className='my-3 text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden rounded-lg mb-3' >
                         <Image
                             draggable="false"
                             height={ 400 }
@@ -60,7 +65,7 @@ const page = ( { params } ) => {
                             className=''
                         />
                     </div>
-                    <Typography gutterBottom variant="h5" component="div" className='font-semibold'  >
+                    <Typography gutterBottom variant="h5" component="div" className='font-semibold leading-[38px]'  >
                         { postData?.title }
                     </Typography>
                     {
@@ -68,8 +73,8 @@ const page = ( { params } ) => {
                         postData?.content.split( "\r\n\r\n" ).map( ( item, i ) => {
                             return (
                                 <>
-                                    <p key={ i } className='my-3' >{ item }</p>
-                                    <hr className='w-full' />
+                                    <p key={ i } className='my-3' dangerouslySetInnerHTML={ renderMarkdownToHTML( item ) } ></p>
+
                                 </>
                             )
                         } )

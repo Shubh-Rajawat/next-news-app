@@ -8,6 +8,11 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+
+function renderMarkdownToHTML( markdown ) {
+    return { __html: markdown };
+}
+
 const MobileNewsCard = ( { data } ) => {
     const router = useRouter()
     const slug = data?.title?.replaceAll( " ", "-" );
@@ -49,12 +54,10 @@ const MobileNewsCard = ( { data } ) => {
                     }
                 </div>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" className='font-semibold'  >
-                        { data?.news_name }
+                    <Typography gutterBottom variant="subtitle1" component="div" className='font-semibold truncate'  >
+                        { data?.news_paper_name }
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        { data?.content.substring( 0, 150 ) + ".." }
-                    </Typography>
+                    <Typography variant="body2" color="text.secondary" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content.substring( 0, 150 ) + ".." ) } ></Typography>
                 </CardContent>
                 <CardActions>
                     <Button size="small" color="primary" className='text-sm font-semibold text-[#FF6D20] ms-3'

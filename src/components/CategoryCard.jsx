@@ -17,8 +17,6 @@ const CategoryCard = ( { data } ) => {
     const [ postData, setPostData ] = useState( null )
     const [ readMoreLoader, setReadmoreLoader ] = useState( false )
 
-
-
     const openPost = ( id ) => {
         setReadmoreLoader( true );
         axios.post( `${ Baseurl }single_post_api`, {
