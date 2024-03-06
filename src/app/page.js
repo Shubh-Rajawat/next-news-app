@@ -1,7 +1,6 @@
 "use client"
 import DrawerHeader from "@/components/DrawerHeader";
 import Dashboard from "@/components/Dashboard";
-import HomeSection from '@/components/HomeSection';
 import { Box, Container, Grid, Stack } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import HomeCard from "@/components/HomeCard";
@@ -21,7 +20,7 @@ export default function Home() {
   const [ apiData, setApiData ] = useState( null )
   const handleScroll = ( event ) => {
     const container = event.currentTarget;
-    const x = event.deltaY * 10;
+    const x = event.deltaY * 7;
     container.scrollLeft += x;
   };
 
@@ -81,7 +80,7 @@ export default function Home() {
 
   return (
     screenWidth > 768 ?
-      <Container maxWidth="2xl" sx={ { overflow: 'hidden', flexGrow: 1, pl: 0 } } className='h-[100vh - 90px] bg-[#F0F2F5] overflow-y-hidden py-1 md:py-2 lg:py-4'
+      <Container maxWidth="2xl" sx={ { overflow: 'hidden', flexGrow: 1, pl: 0, py: 0 } } className='h-[100vh - 90px] bg-[#F0F2F5] overflow-y-hidden pt-1 md:pt-2 lg:pt-4'
         onTouchStart={ handleTouchStart }
         onTouchMove={ handleTouchMove }
         onTouchEnd={ handleTouchEnd }
@@ -90,25 +89,23 @@ export default function Home() {
         onMouseUp={ handleEnd }
         onMouseLeave={ handleEnd }
       >
+
         <DrawerHeader />
-        <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
+        <div style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
           ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll overflow-y-hidden select-none transition-transform
-          ease-in-out h-min
+          ease-in-out h-min flex flex-nowrap gap-0
           ' >
           {
             apiData?.top_news?.map( ( item, index ) => {
               return (
-                <Grid key={ item?.id } className="h-min" >
+                <div key={ item?.id } className="h-min w-max" >
                   <HomeCard data={ item } />
-                </Grid>
+                </div>
               )
             } )
           }
-          {/* <div className="grid place-items-center ">
-            <span className="ms-6  basic-button font-bold text-xl flex gap-1 items-center px-4 rounded-full ">More <ArrowForwardIcon className='' /></span>
-          </div> */}
-        </Grid>
-      </Container>
+        </div>
+      </Container >
       :
       <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
         <DrawerHeader />

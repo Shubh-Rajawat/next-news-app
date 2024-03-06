@@ -358,3 +358,34 @@ p.side-note::before {
   line-height: 1.6;
   /* Set line height for readability */
 }
+
+
+.newspaper-columns {
+  /* column-count: 2; */
+  column-gap: 20px;
+}
+
+.newspaper-content {
+  break-inside: avoid;
+}
+
+
+.scroll-section-outer {
+  overflow: hidden;
+}
+
+.scroll-section-inner {
+  height: max-content;
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.scroll-section {
+  height: 90vh;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

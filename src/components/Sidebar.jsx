@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
 import { useAppDispatch } from '@/lib/hooks';
-
+import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // saved icon
 import { setCategories } from '@/lib/features/categories/categorySlice';
 
 const drawerWidth = 240;
@@ -248,6 +248,32 @@ export default function Sidebar() {
                         )
                     }
                     ) }
+                </List>
+                <Divider />
+                <List>
+                    <ListItem disablePadding sx={ { display: 'block' } }   >
+                        <ListItemButton
+                            sx={ {
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            } }
+                            onClick={ () => {
+                                router.push( "/saved" )
+                            } }
+                        >
+                            <ListItemIcon
+                                sx={ {
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                } }
+                            >
+                                <BookmarkOutlinedIcon />
+                            </ListItemIcon>
+                            <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >Saved</div>
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
         </>

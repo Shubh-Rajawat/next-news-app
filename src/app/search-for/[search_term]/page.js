@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useTransform, useScroll } from "framer-motion";
 
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import MobileNewsCard from '@/components/mobile/MobileNewsCard'
 
 

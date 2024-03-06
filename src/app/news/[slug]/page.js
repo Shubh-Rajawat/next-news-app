@@ -36,7 +36,7 @@ const page = ( { params } ) => {
     }, [] )
 
     return (
-        <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 1, pr: 1 } } className='bg-[#F0F2F5] h-full '   >
+        <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 1, pr: 1 } } className='bg-[#F0F2F5] h-full md:p-20 '   >
             <DrawerHeader />
             { loading ?
                 <Box className="h-[60vh] flex justify-center items-center">
@@ -44,7 +44,7 @@ const page = ( { params } ) => {
                 </Box>
                 :
                 <Box>
-                    <Box as="div" className="flex items-baseline justify-between flex-wrap" >
+                    <Box as="div" className="flex items-baseline justify-between flex-wrap md:pe-32  " >
                         <Typography gutterBottom variant="h5" component="div" className='font-semibold text-[#FF6D20] '  >
                             { postData?.news_paper_name }
                         </Typography>
@@ -53,7 +53,7 @@ const page = ( { params } ) => {
                         </Typography>
                     </Box>
 
-                    <div className='my-3 text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden rounded-lg mb-3' >
+                    <div className='my-3 text-center max-h-full sm:w-full md:max-h-full  md:mb-10 md:mt-6 rounded-lg mb-3' >
                         <Image
                             draggable="false"
                             height={ 400 }
@@ -62,23 +62,25 @@ const page = ( { params } ) => {
                             alt="NN Network"
                             placeholder='blur'
                             blurDataURL='Loading...'
-                            className=''
+                            className='mx-auto '
                         />
                     </div>
-                    <Typography gutterBottom variant="h5" component="div" className='font-semibold leading-[38px]'  >
+                    <Typography gutterBottom variant="h5" component="div" className='font-semibold leading-[38px] md:text-center'  >
                         { postData?.title }
                     </Typography>
-                    {
-                        postData?.content &&
-                        postData?.content.split( "\r\n\r\n" ).map( ( item, i ) => {
-                            return (
-                                <>
-                                    <p key={ i } className='my-3' dangerouslySetInnerHTML={ renderMarkdownToHTML( item ) } ></p>
+                    <div className=" w-full md:w-3/4 md:mx-auto md:text-lg md:leading-8 leading-6">
+                        {
+                            postData?.content &&
+                            postData?.content.split( "\r\n\r\n" ).map( ( item, i ) => {
+                                return (
+                                    <>
+                                        <p key={ i } className='my-3' dangerouslySetInnerHTML={ renderMarkdownToHTML( item ) } ></p>
 
-                                </>
-                            )
-                        } )
-                    }
+                                    </>
+                                )
+                            } )
+                        }
+                    </div>
                 </Box> }
         </Box>
     )

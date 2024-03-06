@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import NewsCard from './NewsCard';
 import { Backdrop, Box, CircularProgress, Container, Grid, Skeleton, Stack } from '@mui/material';
 import CategoryCard from './CategoryCard';
