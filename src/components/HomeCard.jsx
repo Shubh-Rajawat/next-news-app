@@ -51,7 +51,6 @@ const HomeCard = ( { data } ) => {
     }
 
 
-
     return (
         <div className='border-l-2  max-h-[90svh] pt-1 lg:pt-2 bg-[#F0F2F5] w-max overflow-y-hidden py-1 lg:py-3' >
             <Box className='relative flex gap-6 px-3'  >
@@ -89,7 +88,7 @@ const HomeCard = ( { data } ) => {
                             </div>
                         </div>
                         <Typography gutterBottom variant="body2" component="div" color={ `` } className='break-words my-1'  >
-                            { data?.date } <span className='ms-4' >{ data?.reporter_name }</span>
+                            { data?.date } { " " } <span className="text-gray-700 ms-2">{ data?.time } </span><span className='ms-4' >{ data?.reporter_name }</span>
                         </Typography>
                     </div>
                     <figure className=''  >
