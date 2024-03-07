@@ -21,8 +21,8 @@ const MobileNewsCard = ( { data } ) => {
 
 
     const openPost = ( id ) => {
-        localStorage.setItem( "postID", id )
-        router.push( `/news/${ slug }` )
+        // localStorage.setItem( "postID", id )
+        router.push( `/news/${ id }/${ slug }` )
     }
 
     return (

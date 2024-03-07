@@ -211,14 +211,18 @@ const page = ( { params } ) => {
                     onMouseLeave={ handleEnd }
                 >
                     <DrawerHeader />
-                    <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
+                    { searchData?.top_news?.length ? <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
                         ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
                         { cardData.map( ( item, index ) => (
                             <Grid key={ index }>
                                 <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
                             </Grid>
                         ) ) }
-                    </Grid>
+                    </Grid> :
+                        <div className="grid place-items-center w-full">
+                            No Articles Found
+                        </div>
+                    }
                 </Container>
                 :
                 <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>

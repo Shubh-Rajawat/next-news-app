@@ -16,13 +16,13 @@ const page = ( { params } ) => {
     const [ postData, setPostData ] = useState( false );
     const [ loading, setLoading ] = useState( false );
     console.log( "singlepost ->>", params.slug )
-    const postID = localStorage.getItem( "postID" );
-    console.log( "bonjour", postID );
+    // const postID = localStorage.getItem( "postID" );
+    // console.log( "bonjour", postID );
 
     useEffect( () => {
         setLoading( true );
         axios.post( `${ Baseurl }single_post_api`, {
-            post_id: postID
+            post_id: +params?.slug[ 0 ]
         } )
             .then( ( res ) => {
                 console.log( "read more called", res.data )
