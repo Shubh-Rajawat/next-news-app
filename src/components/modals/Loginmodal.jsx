@@ -24,7 +24,7 @@ const searchModalStyle = {
     boxShadow: 24,
     p: 4,
 };
-const Loginmodal = ( { handleLoginClose } ) => {
+const Loginmodal = ( { handleLoginClose, handleSignupClose, handleSignupOpen } ) => {
     const [ activeIndex, setActiveIndex ] = useState( 0 );
     // for login activeIndex = 0;
     // for send otp activeIndex =  1;
@@ -245,7 +245,7 @@ const Loginmodal = ( { handleLoginClose } ) => {
     return (
         <>
 
-            { signupPage ? <Signupmodal loadSignup={ loadSignup } handleCloseSignup={ handleCloseSignup } /> :
+            { signupPage ? <Signupmodal loadSignup={ loadSignup } handleCloseSignup={ handleCloseSignup } handleSignupClose={ handleSignupClose } /> :
                 <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl"  >
                     <CloseIcon className=' absolute top-2 cursor-pointer right-2' onClick={ handleLoginClose } />
                     { activeIndex === 0 ?
@@ -336,7 +336,10 @@ const Loginmodal = ( { handleLoginClose } ) => {
                                     />
                                 </Box>
                                 <Typography variant='body1' gutterBottom className='font-[400] text-lg text-center mt-3'    >
-                                    You don't have an account? <span className='text-[#ff6d20] cursor-pointer select-none ' onClick={ handleOpenSignup } >Sign up</span>
+                                    You don't have an account? <span className='text-[#ff6d20] cursor-pointer select-none ' onClick={ () => {
+                                        handleLoginClose();
+                                        handleSignupOpen();
+                                    } } >Sign up</span>
                                 </Typography>
                             </Box>
                         </Box> :

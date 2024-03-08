@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -10,8 +10,9 @@ import VolumeMuteIcon from '@mui/icons-material/VolumeMute'; // no waves
 import VolumeOffIcon from '@mui/icons-material/VolumeOff'; // speaker not available
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'; //unsaved icon
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // saved icon
-
-
+import { useAppSelector } from '@/lib/hooks';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
 
 function renderMarkdownToHTML( markdown, fullrender ) {
     if ( fullrender ) {
@@ -25,30 +26,64 @@ function renderMarkdownToHTML( markdown, fullrender ) {
         }
     }
 }
+
 const HomeCard = ( { data } ) => {
-    console.log( "cardhome-", data )
-    const [ readID, setReadID ] = useState( null );
-    const [ postData, setPostData ] = useState( null )
-    const [ readMoreLoader, setReadmoreLoader ] = useState( false )
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={ () => { setToast( false ) } }
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+    // console.log( "cardhome-", data )
+    // const [ readID, setReadID ] = useState( null );
+    // const [ postData, setPostData ] = useState( null )
+    // const [ readMoreLoader, setReadmoreLoader ] = useState( false )
     const [ readMore, setReadMore ] = useState( false )
     const [ saved, setSaved ] = useState( false )
+    const { userData } = useAppSelector( ( state ) => state?.userData )
+    const [ toast, setToast ] = useState( false );
+    // console.log( "save", userData )
 
-    const openPost = ( id ) => {
-        setReadmoreLoader( true );
-        axios.post( `${ Baseurl }single_post_api`, {
-            post_id: id
-        } )
-            .then( ( res ) => {
-                console.log( "arrow function called", res.data )
-                setReadID( res.data.id )
-                setPostData( res.data )
-                setReadmoreLoader( false );
+    const handleSave = () => {
+        if ( userData ) {
+            axios.post( `${ Baseurl }save_post/add`, {
+                post_id: data?.id,
+                user_id: userData?.ID
+
+            } ).then( ( res ) => {
+                console.log( "SavePost=>>", res?.data )
+                setSaved( res.data.success )
             } )
-            .catch( ( err ) => {
-                console.log( err )
-                setReadmoreLoader( false );
-            } )
+                .catch( ( err ) => {
+                    console.log( err )
+                } )
+        } else {
+            setToast( true )
+        }
     }
+
+    // const openPost = ( id ) => {
+    //     setReadmoreLoader( true );
+    //     axios.post( `${ Baseurl }single_post_api`, {
+    //         post_id: id
+    //     } )
+    //         .then( ( res ) => {
+    //             console.log( "arrow function called", res.data )
+    //             setReadID( res.data.id )
+    //             setPostData( res.data )
+    //             setReadmoreLoader( false );
+    //         } )
+    //         .catch( ( err ) => {
+    //             console.log( err )
+    //             setReadmoreLoader( false );
+    //         } )
+    // }
 
 
     return (
@@ -79,11 +114,11 @@ const HomeCard = ( { data } ) => {
                                     } } /> }
                                 { saved ?
                                     <BookmarkOutlinedIcon className=' cursor-pointer' onClick={ () => {
-                                        setSaved( false )
+                                        handleSave();
                                     } } />
                                     :
                                     <BookmarkBorderOutlinedIcon className=' cursor-pointer' onClick={ () => {
-                                        setSaved( true )
+                                        handleSave();
                                     } } /> }
                             </div>
                         </div>
@@ -134,6 +169,14 @@ const HomeCard = ( { data } ) => {
                 } } className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
                 />
             </Box>
+            <Snackbar
+                anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+                open={ toast }
+                autoHideDuration={ 3000 }
+                onClose={ () => setToast( false ) }
+                message="Login To Start Your Collection"
+                action={ action }
+            />
         </div>
     )
 }

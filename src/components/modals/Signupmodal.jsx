@@ -59,7 +59,7 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                         if ( res.data.user_details ) {
                             // console.log( "signup successfull" )
                             dispatch( setUserData( res.data.user_details ) )
-                            setCookie( 'user_data', res.data.user_data )
+                            setCookie( 'user_data', res.data.user_details )
                             setLoading( false )
                             handleSignupClose()
                         }

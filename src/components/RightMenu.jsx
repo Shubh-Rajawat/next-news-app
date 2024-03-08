@@ -222,7 +222,7 @@ const RightMenu = () => {
                     onClick: () => { },
                 } }
             >
-                <Loginmodal handleLoginClose={ handleLoginClose } handleSignupClose={ handleSignupClose } />
+                <Loginmodal handleLoginClose={ handleLoginClose } handleSignupClose={ handleSignupClose } handleSignupOpen={ handleSignupOpen } />
             </Modal>
             {/* login modal end */ }
 

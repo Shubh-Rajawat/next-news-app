@@ -25,7 +25,7 @@ const page = ( { params } ) => {
             post_id: +params?.slug[ 0 ]
         } )
             .then( ( res ) => {
-                console.log( "read more called", res.data )
+                // console.log( "read more called", res.data )
                 setPostData( res.data );
                 setLoading( false );
             } )

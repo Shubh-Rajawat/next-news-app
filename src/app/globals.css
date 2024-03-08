@@ -19,10 +19,10 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-/* 
+
 nextjs-portal {
   display: none;
-} */
+}
 
 .MuiToolbar-root {
   display: grid !important;
@@ -389,3 +389,12 @@ p.side-note::before {
   justify-content: center;
   align-items: center;
 }
+
+/* Toast css */
+.mui-1eqdgzv-MuiPaper-root-MuiSnackbarContent-root {
+  background-color: #FF6D20;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Toast css */
