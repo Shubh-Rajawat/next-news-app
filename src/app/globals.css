@@ -392,9 +392,9 @@ p.side-note::before {
 
 /* Toast css */
 .mui-1eqdgzv-MuiPaper-root-MuiSnackbarContent-root {
-  background-color: #FF6D20;
-  color: #fff;
-  font-weight: 600;
+  background-color: #FF6D20 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
 }
 
 /* Toast css */
