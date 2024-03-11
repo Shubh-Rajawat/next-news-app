@@ -14,6 +14,7 @@ const userdateSlice = createSlice( {
     initialState,
     reducers: {
         setUserData( state, action ) {
+            -``
             state.userData = action.payload
         },
         setUserId( state, action ) {

@@ -13,9 +13,6 @@ import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 
 
-
-
-
 const page = ( { params } ) => {
     const { top_stories, term_id } = params
     // console.log( "ParentParams", params )
@@ -102,7 +99,7 @@ const page = ( { params } ) => {
                     ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll overflow-y-hidden select-none transition-transform
           ease-in-out h-min
           ' >
-                    {
+                    { categoryData?.top_news?.length ?
                         categoryData?.top_news?.map( ( item, index ) => {
                             return (
                                 <Grid key={ item?.id } className="h-min" >
@@ -110,6 +107,10 @@ const page = ( { params } ) => {
                                 </Grid>
                             )
                         } )
+                        :
+                        <div className="grid place-items-center w-full h-full">
+                            No Articles Found
+                        </div>
                     }
                     {/* <div className="grid place-items-center ">
             <span className="ms-6  basic-button font-bold text-xl flex gap-1 items-center px-4 rounded-full ">More <ArrowForwardIcon className='' /></span>
@@ -117,11 +118,11 @@ const page = ( { params } ) => {
                 </Grid>
             </Container>
             :
-            <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
+            <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, px: 1 } } className='bg-[#F0F2F5]'>
                 <DrawerHeader />
                 <Stack spacing={ 1 }>
                     { categoryData?.top_news?.map( ( item, index ) => (
-                        <div className="" key={ index }>
+                        <div className="mr-2" key={ index }>
                             <MobileNewsCard data={ item } />
                         </div>
                     ) ) }

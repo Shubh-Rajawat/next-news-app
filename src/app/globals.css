@@ -20,9 +20,9 @@
 }
 
 
-nextjs-portal {
+/* nextjs-portal {
   display: none;
-}
+} */
 
 .MuiToolbar-root {
   display: grid !important;
@@ -81,6 +81,24 @@ main {
   margin: auto;
 }
 
+/* share modal */
+.makeStyles-copyIcon-7 {
+  color: #fff !important;
+}
+
+.makeStyles-iconContainer-3 {
+  text-align: center !important;
+}
+
+.makeStyles-container-1 {
+  padding: 2px !important;
+}
+
+.mui-4r1iwe:focus-visible {
+  outline: none !important;
+}
+
+/* share modal */
 .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
   border-width: 0;
 }
