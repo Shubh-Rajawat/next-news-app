@@ -20,9 +20,9 @@
 }
 
 
-/* nextjs-portal {
+nextjs-portal {
   display: none;
-} */
+}
 
 .MuiToolbar-root {
   display: grid !important;
@@ -82,11 +82,13 @@ main {
 }
 
 /* share modal */
-.makeStyles-copyIcon-7 {
+.makeStyles-copyIcon-7,
+.jss7 {
   color: #fff !important;
 }
 
-.makeStyles-iconContainer-3 {
+.makeStyles-iconContainer-3,
+.jss3 {
   text-align: center !important;
 }
 
@@ -94,7 +96,9 @@ main {
   padding: 2px !important;
 }
 
-.mui-4r1iwe:focus-visible {
+.mui-4r1iwe:focus-visible,
+.jss5 {
+  border: none !important;
   outline: none !important;
 }
 
@@ -416,3 +420,44 @@ p.side-note::before {
 }
 
 /* Toast css */
+
+
+
+/* Smooth scroller */
+
+
+.panel pre.prettyprint {
+  font-size: 20px;
+  text-align: left;
+  width: auto;
+  font-weight: normal;
+  margin: 10px;
+  border: none;
+}
+
+.prettyprint .linenums {
+  padding: 0;
+  list-style: none;
+}
+
+.prettyprint ol li {
+  background-color: black;
+}
+
+.panel.red .prettyprint .linenums>li:nth-child(n+7):nth-child(-n+9),
+.panel.gray .prettyprint .linenums>li:nth-child(10),
+.panel.purple .prettyprint .linenums>li:nth-child(4),
+.panel.green .prettyprint .linenums>li:nth-child(n+6):nth-child(-n+10) {
+  background-color: #222;
+}
+
+
+
+
+.container {
+  width: max-content;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}

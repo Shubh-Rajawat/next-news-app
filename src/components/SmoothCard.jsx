@@ -59,7 +59,7 @@ const rootShareStyle = {
 };
 
 
-const HomeCard = ( { data } ) => {
+const SmoothCard = ( { data } ) => {
 
     const action = (
         <React.Fragment>
@@ -241,4 +241,4 @@ const HomeCard = ( { data } ) => {
     )
 }
 
-export default HomeCard 
+export default SmoothCard 

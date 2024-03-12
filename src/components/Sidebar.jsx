@@ -140,7 +140,7 @@ export default function Sidebar() {
     return (
         <>
             <CssBaseline />
-            <Drawer variant="permanent" open={ open } className=' relative '   >
+            <Drawer variant="permanent" open={ open } className=' relative hide-scroll'   >
                 <DrawerHeader>
                     {/* <IconButton onClick={ handleDrawerOpen }>
                         { !open ? <ChevronRightIcon /> : <ChevronLeftIcon /> }

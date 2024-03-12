@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import StoreProvider from "./StoreProvider";
+import Script from "next/script";
 
 
 export const metadata = {
@@ -30,6 +31,11 @@ export default function RootLayout( { children } ) {
             { children }
           </AppRouterCacheProvider>
         </StoreProvider>
+        <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></Script>
+
+        <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></Script>
+
+
       </body>
     </html>
   );
