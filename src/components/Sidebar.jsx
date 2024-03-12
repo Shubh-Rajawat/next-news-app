@@ -140,14 +140,14 @@ export default function Sidebar() {
     return (
         <>
             <CssBaseline />
-            <Drawer variant="permanent" open={ open } className=' relative hide-scroll'   >
+            <Drawer variant="permanent" open={ open } className=' relative '   >
                 <DrawerHeader>
                     {/* <IconButton onClick={ handleDrawerOpen }>
                         { !open ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
                     </IconButton> */}
                 </DrawerHeader>
                 <Divider />
-                <Box className={ `py-8 px-6 flex ${ open ? "" : "justify-center" } items-center` } >
+                <Box className={ `py-8 px-6 flex ${ open ? "" : "justify-center" } items-center` }  >
                     { open ? <Typography variant="subtitle1" className='flex flex-col' gutterBottom fontWeight={ 700 } >
                         Language & Region
                         <span className='text-xs text-neutral-500 '>
