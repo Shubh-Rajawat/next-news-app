@@ -177,7 +177,7 @@ export default function Sidebar() {
 
                     /> }
                     { navdata && navdata[ 0 ]?.child_category?.map( ( el, index ) => {
-                        const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
+                        const slug = el.name.toLowerCase().replace( /[^a-zA-Z\s]/g, ' ' ).replace( /\s+/g, '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block', } }   >
                                 <ListItemButton
@@ -220,7 +220,7 @@ export default function Sidebar() {
                         } }
                     /> }
                     { navdata && navdata[ 1 ]?.child_category?.map( ( el, index ) => {
-                        const slug = el.name.toLowerCase().replaceAll( ' ', '-' );
+                        const slug = el.name.toLowerCase().replace( /[^a-zA-Z\s]/g, ' ' ).replace( /\s+/g, '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
                                 <ListItemButton

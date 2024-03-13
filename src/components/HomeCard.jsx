@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import { ShareSocial } from 'react-share-social'
 
-
+// This component is responsive for *768px* //
 
 
 function renderMarkdownToHTML( markdown, fullrender ) {
@@ -191,7 +191,7 @@ const HomeCard = ( { data } ) => {
                     { readMore ? <div className={ `h-[88svh] ` } >
                         {/* <p className=" w-[1200px] text-[16px] grid grid-flow-col  grid-rows-3 gap-2 md:text-[18px] h-[88svh] " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, true ) } >
                     </p> */}
-                        <p className=" w-[1200px] text-[16px] grid grid-flow-col grid-rows-2 break-inside-avoid-column gap-2  md:text-[18px] max-h-[88svh] " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
+                        <p className=" w-[1200px] text-[16px] grid grid-flow-col grid-rows-2 break-inside-avoid-column gap-2  md:text-[18px] max-h-[88svh] font-normal" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
                         </p>
                         {/* <div className="flex flex-col gap-3 flex-wrap" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } ></div> */ }
                     </div>
@@ -213,14 +213,14 @@ const HomeCard = ( { data } ) => {
                     } } className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
                     />
                 </Box>
-                <Snackbar
+                {/* <Snackbar
                     anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                     open={ toast }
                     autoHideDuration={ 3000 }
                     onClose={ () => setToast( false ) }
                     message="Login To Start Your Collection"
                     action={ action }
-                />
+                /> */}
             </div>
             <Modal
                 open={ shareOpen }
