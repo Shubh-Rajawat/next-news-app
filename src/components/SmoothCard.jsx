@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import { ShareSocial } from 'react-share-social'
 
-
+// This component is responsive for *768px* //
 
 
 function renderMarkdownToHTML( markdown, fullrender ) {
@@ -129,9 +129,9 @@ const SmoothCard = ( { data } ) => {
     return (
         <>
             <div className='border-l-2  max-h-[90svh] h-[90vh] pt-1 lg:pt-2 bg-[#F0F2F5] w-max overflow-y-hidden py-1 lg:py-3 slide' >
-                <Box className='relative flex gap-6 px-3'  >
+                <Box className='relative flex gap-6 px-3 h-full'  >
                     <Box item className="" >
-                        <div className=" flex flex-col gap-1">
+                        <div className=" flex flex-col gap-3">
                             <Typography gutterBottom variant="h6" component="div" color={ `` } className='break-words my-1 text-[#FF6D20]'  >
                                 { data?.news_paper_name } <span className='text-sm italic' >(curtesy)</span>
                             </Typography>
@@ -188,39 +188,33 @@ const SmoothCard = ( { data } ) => {
                             </div>
                         </figure>
                     </Box>
-                    { readMore ? <div className={ `h-[88svh] ` } >
+                    { readMore ? <div className={ ` w-[1200px] text-[16px] md:text-[18px] font-normal newspaper-structure` } dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
                         {/* <p className=" w-[1200px] text-[16px] grid grid-flow-col  grid-rows-3 gap-2 md:text-[18px] h-[88svh] " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, true ) } >
                     </p> */}
-                        <p className=" w-[1200px] text-[16px] grid grid-flow-col grid-rows-2 break-inside-avoid-column gap-2  md:text-[18px] max-h-[88svh] " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
-                        </p>
+                        {/* <p className="  text-[16px] md:text-[18px] max-h-[88svh] font-normal"  >
+                        </p> */}
                         {/* <div className="flex flex-col gap-3 flex-wrap" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } ></div> */ }
                     </div>
-                        : <div className={ `h-[88svh] ` } >
-                            <p className="w-[600px] text-[16px]  md:text-[18px] flex flex-col gap-2 leading-8 " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
-                                {
-                                    // data?.content.split( "\n" ).map( ( item, index ) => {
-                                    //     return (
-                                    // <p dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, false ) }  ></p>
-                                    //     )
-                                    // } )
-                                }
+                        : <div className={ `h-[88vh] ` } >
+                            <p className="w-[550px] text-[16px]  md:text-[18px] flex flex-col gap-2 leading-8 " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
+
                             </p>
                             {/* <div className="flex flex-col gap-3 flex-wrap" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } ></div> */ }
                         </div>
                     }
-                    <ArrowForwardIcon onClick={ () => {
+                    { !readMore && <ArrowForwardIcon onClick={ () => {
                         setReadMore( true )
                     } } className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
-                    />
+                    /> }
                 </Box>
-                <Snackbar
+                {/* <Snackbar
                     anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                     open={ toast }
                     autoHideDuration={ 3000 }
                     onClose={ () => setToast( false ) }
                     message="Login To Start Your Collection"
                     action={ action }
-                />
+                /> */}
             </div>
             <Modal
                 open={ shareOpen }

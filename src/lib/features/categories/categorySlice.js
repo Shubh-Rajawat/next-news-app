@@ -6,7 +6,7 @@ const initialState = {
 }
 
 const categorySlice = createSlice( {
-    name: 'userdata',
+    name: 'category',
     initialState,
     reducers: {
         setCategories( state, action ) {

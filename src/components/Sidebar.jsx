@@ -16,9 +16,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Baseurl from '@/lib/constants/Baseurl';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // saved icon
 import { setCategories } from '@/lib/features/categories/categorySlice';
+import { toggleOpen } from '@/lib/features/drawer/drawerSlice';
 
 const drawerWidth = 240;
 
@@ -95,8 +96,13 @@ const Drawer = styled( MuiDrawer, { shouldForwardProp: ( prop ) => prop !== 'ope
 export default function Sidebar() {
 
     const router = useRouter()
-    const [ open, setOpen ] = React.useState( true );
+    // const [ open, setOpen ] = React.useState( true );
     const [ navdata, setNavdata ] = React.useState( false )
+    const { open } = useAppSelector( state => state.drawerOpen )
+    console.log( "OPEN", open )
+    const setOpen = ( action ) => {
+        dispatch( toggleOpen( action ) )
+    }
     const dispatch = useAppDispatch();
     React.useEffect( () => {
         if ( window.innerWidth <= 800 ) {
@@ -105,7 +111,6 @@ export default function Sidebar() {
         window.addEventListener( 'resize', () => {
             // console.log( 'window.innerWidth', window.innerWidth, typeof window.innerWidth )
             if ( window.innerWidth <= 800 ) {
-
                 setOpen( false )
             }
             // else if ( window.innerWidth > 1000 ) {
@@ -140,7 +145,7 @@ export default function Sidebar() {
     return (
         <>
             <CssBaseline />
-            <Drawer variant="permanent" open={ open } className=' relative '   >
+            <Drawer variant="permanent" open={ open } className=' relative'   >
                 <DrawerHeader>
                     {/* <IconButton onClick={ handleDrawerOpen }>
                         { !open ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
