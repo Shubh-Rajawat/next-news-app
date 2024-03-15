@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // saved icon
 import { setCategories } from '@/lib/features/categories/categorySlice';
 import { toggleOpen } from '@/lib/features/drawer/drawerSlice';
+import { setLoginToast } from '@/lib/features/post/toastSlice';
 
 const drawerWidth = 240;
 
@@ -94,7 +95,7 @@ const Drawer = styled( MuiDrawer, { shouldForwardProp: ( prop ) => prop !== 'ope
 
 
 export default function Sidebar() {
-
+    const { userData } = useAppSelector( state => state.userData )
     const router = useRouter()
     // const [ open, setOpen ] = React.useState( true );
     const [ navdata, setNavdata ] = React.useState( false )
@@ -156,7 +157,7 @@ export default function Sidebar() {
                     { open ? <Typography variant="subtitle1" className='flex flex-col' gutterBottom fontWeight={ 700 } >
                         Language & Region
                         <span className='text-xs text-neutral-500 '>
-                            India (English)
+                            India (Hindi)
                         </span>
                     </Typography> : <LanguageIcon /> }
                 </Box>
@@ -264,7 +265,11 @@ export default function Sidebar() {
                                 px: 2.5,
                             } }
                             onClick={ () => {
-                                router.push( "/saved" )
+                                if ( userData ) {
+                                    router.push( "/saved" )
+                                } else {
+                                    dispatch( setLoginToast( true ) )
+                                }
                             } }
                         >
                             <ListItemIcon

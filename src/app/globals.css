@@ -368,24 +368,24 @@ p.side-note::before {
   box-shadow: 0px 0px 10px #00000020;
 }
 
-.newspaper {
+/* .newspaper {
   column-count: 2;
-  /* Split content into two columns */
+  
   column-gap: 40px;
-  /* Add gap between columns */
+  
   font-family: Georgia, serif;
-  /* Use a serif font for a newspaper-like feel */
+
   font-size: 16px;
-  /* Set font size */
+
   line-height: 1.6;
-  /* Set line height for readability */
+
 }
 
 
 .newspaper-columns {
-  /* column-count: 2; */
+
   column-gap: 20px;
-}
+} */
 
 .newspaper-content {
   break-inside: avoid;

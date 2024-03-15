@@ -190,7 +190,9 @@ const RightMenu = () => {
                             </MenuItem>
                         </>
                         :
-                        <MenuItem>
+                        <MenuItem onClick={ () => {
+                            deleteCookie( "user_data" )
+                        } } >
                             Logout
                         </MenuItem>
                     }

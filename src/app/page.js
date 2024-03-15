@@ -1,60 +1,86 @@
 "use client"
 import DrawerHeader from "@/components/DrawerHeader";
 import Dashboard from "@/components/Dashboard";
-import { Box, Container, Grid, Stack } from '@mui/material'
+import { Box, Container, Grid, IconButton, Snackbar, Stack } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import HomeCard from "@/components/HomeCard";
 import axios from "axios";
 import Baseurl from "@/lib/constants/Baseurl";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import MobileNewsCard from "@/components/mobile/MobileNewsCard";
+import SmoothCard from "@/components/SmoothCard";
+//
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import Draggable from "gsap/dist/Draggable"
+import ScrollTrigger from "gsap/dist/ScrollTrigger"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setLoginToast } from "@/lib/features/post/toastSlice";
+import CloseIcon from '@mui/icons-material/Close';
 
+gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
 
 export default function Home() {
-
+  const dispatch = useAppDispatch();
+  const { loginToast } = useAppSelector( state => state.loginToast )
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={ () => { dispatch( setLoginToast( false ) ) } }
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   //  Scrolling functions
-  const scrollContainerRef = useRef( null );
-  const [ startX, setStartX ] = useState( null );
+
+
   const [ apiData, setApiData ] = useState( null )
-  const handleScroll = ( event ) => {
-    const container = event.currentTarget;
-    const x = event.deltaY * 7;
-    container.scrollLeft += x;
-  };
+  const slider = useRef( null )
 
-  const handleTouchStart = ( event ) => {
-    setStartX( event.touches[ 0 ].clientX );
-  };
+  useGSAP( () => {
+    console.log( "slider.current.offsetWidth", slider.current.offsetWidth )
+    const sections = gsap.utils.toArray( "slider-section" )
+    // Scrolling with wheel
+    let tl = gsap.timeline( {
+      defaults: {
+        ease: "power3.out"
+      },
+      scrollTrigger: {
+        trigger: slider.current,
+        pin: true,
+        scrub: 1,
 
-  const handleTouchMove = ( event ) => {
-    if ( !startX ) return;
-    const x = event.touches[ 0 ].clientX - startX;
-    scrollContainerRef.current.scrollLeft -= x;
-  };
+        end: () => "+=" + slider.current.offsetWidth
 
-  const handleTouchEnd = () => {
-    setStartX( null );
-  };
-  // functions for scroll-X with cursor
-  const handleStart = ( event ) => {
-    if ( event.type === 'touchstart' ) {
-      setStartX( event.touches[ 0 ].clientX );
-    } else {
-      setStartX( event.clientX );
-    }
-  };
+      }
+    } )
+    tl.to( slider.current, {
+      // xPercent: -100,
+      translateX: -slider.current.offsetWidth
+    } )
+    // Scrolling with wheel
+    // Dragging
 
-  const handleMove = ( event ) => {
-    if ( !startX ) return;
-    const x = ( event.clientX - startX ) * 1.5;
-    scrollContainerRef.current.scrollLeft -= x;
-  };
+    // Draggable.create( slider.current, {
+    //     type: "x",
+    //     // edgeResistance: 0.65,
+    //     bounds: {
+    //         minX: -slider.current.offsetWidth,
+    //         maxX: 0
+    //     }
+    // } );
 
-  const handleEnd = () => {
-    setStartX( null );
-  };
+    // Dragging
+
+  }, { dependencies: [ slider, apiData ], revertOnUpdate: true } )
+
+
 
   // scrolling functions end
   const [ screenWidth, setScreenWidth ] = useState( 1500 )
@@ -80,32 +106,29 @@ export default function Home() {
 
   return (
     screenWidth > 768 ?
-      <Container maxWidth="2xl" sx={ { overflow: 'hidden', flexGrow: 1, pl: 0, py: 0 } } className='h-[100vh - 90px] bg-[#F0F2F5] overflow-y-hidden pt-1 md:pt-2 lg:pt-4'
-        onTouchStart={ handleTouchStart }
-        onTouchMove={ handleTouchMove }
-        onTouchEnd={ handleTouchEnd }
-        onMouseDown={ handleStart }
-        onMouseMove={ handleMove }
-        onMouseUp={ handleEnd }
-        onMouseLeave={ handleEnd }
-      >
-
-        <DrawerHeader />
-        <div style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
-          ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll overflow-y-hidden select-none transition-transform
-          ease-in-out h-min flex flex-nowrap gap-0
-          ' >
-          {
-            apiData?.top_news?.map( ( item, index ) => {
+      <>
+        <Container maxWidth="2xl" sx={ { flexGrow: 1 } } className='h-[calc(100vh - 90px)] hide-scroll w-full pl-0'>
+          <div className="smooth-slider flex flex-nowrap h-full w-max hide-scroll " ref={ slider }  >
+            <DrawerHeader />
+            { apiData?.top_news.map( ( item, index ) => {
               return (
-                <div key={ item?.id } className="h-min w-max" >
-                  <HomeCard data={ item } />
-                </div>
+                <section className="pt-20 slider-section h-[98vh] w-max flex justify-center items-center text-lg  border-r-2" key={ index } >
+                  <SmoothCard data={ item } />
+                </section>
               )
-            } )
-          }
-        </div>
-      </Container >
+            } ) }
+
+          </div>
+          <Snackbar
+            anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+            open={ loginToast }
+            autoHideDuration={ 3000 }
+            onClose={ () => dispatch( setLoginToast( false ) ) }
+            message="Login To Start Your Collection"
+            action={ action }
+          />
+        </Container>
+      </>
       :
       <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
         <DrawerHeader />

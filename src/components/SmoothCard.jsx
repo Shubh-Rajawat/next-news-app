@@ -10,11 +10,12 @@ import VolumeMuteIcon from '@mui/icons-material/VolumeMute'; // no waves
 import VolumeOffIcon from '@mui/icons-material/VolumeOff'; // speaker not available
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'; //unsaved icon
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // saved icon
-import { useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import { ShareSocial } from 'react-share-social'
+import { setLoginToast } from '@/lib/features/post/toastSlice';
 
 // This component is responsive for *768px* //
 
@@ -61,29 +62,17 @@ const rootShareStyle = {
 
 const SmoothCard = ( { data } ) => {
 
-    const action = (
-        <React.Fragment>
-            <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={ () => { setToast( false ) } }
-            >
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </React.Fragment>
-    );
-
     // const [ readID, setReadID ] = useState( null );
     // const [ postData, setPostData ] = useState( null )
     // const [ readMoreLoader, setReadmoreLoader ] = useState( false )
+    const dispatch = useAppDispatch();
     const slug = data?.title?.replaceAll( " ", "-" );
     const [ readMore, setReadMore ] = useState( false )
-    const [ saved, setSaved ] = useState( false )
+    const [ saved, setSaved ] = useState( data.save_post ?? false )
     const { userData } = useAppSelector( ( state ) => state?.userData )
     const [ toast, setToast ] = useState( false );
     const [ shareOpen, setShareOpen ] = useState( false );
-    // console.log( "save", userData )
+    console.log( "save", saved, data.save_postsss )
 
     const handleSave = () => {
         if ( userData ) {
@@ -99,7 +88,7 @@ const SmoothCard = ( { data } ) => {
                     console.log( err )
                 } )
         } else {
-            setToast( true )
+            dispatch( setLoginToast( true ) )
         }
     }
 
@@ -207,14 +196,7 @@ const SmoothCard = ( { data } ) => {
                     } } className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
                     /> }
                 </Box>
-                {/* <Snackbar
-                    anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
-                    open={ toast }
-                    autoHideDuration={ 3000 }
-                    onClose={ () => setToast( false ) }
-                    message="Login To Start Your Collection"
-                    action={ action }
-                /> */}
+
             </div>
             <Modal
                 open={ shareOpen }
