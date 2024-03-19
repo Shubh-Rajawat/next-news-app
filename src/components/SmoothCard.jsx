@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import { ShareSocial } from 'react-share-social'
 import { setLoginToast } from '@/lib/features/post/toastSlice';
+import { setRead_id } from '@/lib/features/post/readSlice';
 
 // This component is responsive for *768px* //
 
@@ -61,18 +62,15 @@ const rootShareStyle = {
 
 
 const SmoothCard = ( { data } ) => {
-
-    // const [ readID, setReadID ] = useState( null );
-    // const [ postData, setPostData ] = useState( null )
-    // const [ readMoreLoader, setReadmoreLoader ] = useState( false )
     const dispatch = useAppDispatch();
     const slug = data?.title?.replaceAll( " ", "-" );
     const [ readMore, setReadMore ] = useState( false )
     const [ saved, setSaved ] = useState( data.save_post ?? false )
     const { userData } = useAppSelector( ( state ) => state?.userData )
+    const { read_id } = useAppSelector( state => state?.read_id )
     const [ toast, setToast ] = useState( false );
     const [ shareOpen, setShareOpen ] = useState( false );
-    console.log( "save", saved, data.save_postsss )
+    // console.log( "save", saved, data.save_postsss )
 
     const handleSave = () => {
         if ( userData ) {
@@ -193,6 +191,7 @@ const SmoothCard = ( { data } ) => {
                     }
                     { !readMore && <ArrowForwardIcon onClick={ () => {
                         setReadMore( true )
+                        dispatch( setRead_id( data?.id ) )
                     } } className='cursor-pointer text-[#FF6D20] font-bold absolute -bottom-0  right-2 bg-[#F0F2F5] rounded-full  text-[35px]'
                     /> }
                 </Box>

@@ -23,6 +23,7 @@ const page = () => {
     const [ screenWidth, setScreenWidth ] = useState( 1500 )
     const { loginToast } = useAppSelector( state => state.loginToast )
     const { userData } = useAppSelector( ( state ) => state?.userData )
+    const { read_id } = useAppSelector( state => state?.read_id )
     const dispatch = useAppDispatch();
     const action = (
         <React.Fragment>
@@ -49,7 +50,6 @@ const page = () => {
                 trigger: slider.current,
                 pin: true,
                 scrub: 1,
-
                 end: () => "+=" + slider.current.offsetWidth
 
             }
@@ -59,20 +59,10 @@ const page = () => {
             translateX: -slider.current.offsetWidth
         } )
         // Scrolling with wheel
-        // Dragging
-
-        // Draggable.create( slider.current, {
-        //     type: "x",
-        //     // edgeResistance: 0.65,
-        //     bounds: {
-        //         minX: -slider.current.offsetWidth,
-        //         maxX: 0
-        //     }
-        // } );
-
-        // Dragging
 
     }, { dependencies: [ slider, apiData ], revertOnUpdate: true } )
+
+
 
     useEffect( () => {
         if ( window.innerWidth <= 768 ) {
@@ -104,8 +94,6 @@ const page = () => {
                             </section>
                         )
                     } ) }
-
-
                 </div>
                 <Snackbar
                     anchorOrigin={ { vertical: 'top', horizontal: 'left' } }

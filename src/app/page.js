@@ -22,6 +22,7 @@ gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
 
 export default function Home() {
+  const { userData } = useAppSelector( ( state ) => state?.userData )
   const dispatch = useAppDispatch();
   const { loginToast } = useAppSelector( state => state.loginToast )
   const action = (
@@ -91,7 +92,9 @@ export default function Home() {
     }
 
     try {
-      axios.post( `${ Baseurl }home_api` ).then( ( res ) => {
+      axios.post( `${ Baseurl }home_api`, {
+        user_id: userData?.ID
+      } ).then( ( res ) => {
         setApiData( res.data );
         console.log( "HomePage", res.data.top_news );
       } )
