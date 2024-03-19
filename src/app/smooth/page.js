@@ -134,11 +134,11 @@ export default function Home() {
                                 </section>
                             )
                         } ) }
-                        { apiData?.top_news.length > 0 && <section className="group cursor-pointer pt-20 slider-section h-[98vh] w-[300px] flex flex-col justify-center items-center text-xl font-bold text-gray-700  border-r-2" >
+                        <section className="group cursor-pointer pt-20 slider-section h-[98vh] w-[300px] flex flex-col justify-center items-center text-xl font-bold text-gray-700  border-r-2" >
                             More News <ArrowForwardIcon className='cursor-pointer text-[#FF6D20] font-bold  bg-[#F0F2F5] rounded-full  text-[35px]
                              group-hover:scale-110'
                             />
-                        </section> }
+                        </section>
                     </div>
                     <Snackbar
                         anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
