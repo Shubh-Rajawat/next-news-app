@@ -83,9 +83,9 @@ const RightMenu = () => {
             </Box >
                 :
                 <Box textAlign={ `center` } className={ `md:flex  gap-2  lg:gap-5 text-[16px] items-center hidden justify-end  ` }  >
-                    <Tooltip title={ userData?.firstname + " " + userData?.lastname } >
-                        <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase'  >{ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] }</Avatar>
-                    </Tooltip>
+                    {/* <Tooltip title={ userData?.firstname + " " + userData?.lastname } > */ }
+                    <Avatar sx={ { bgcolor: "#FF6D20" } } className='uppercase'  >{ userData?.firstname[ 0 ] + userData?.lastname[ 0 ] }</Avatar>
+                    {/* </Tooltip> */ }
 
                     {/* <Menu
                         id="basic-menu"

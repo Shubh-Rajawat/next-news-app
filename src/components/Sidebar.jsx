@@ -100,7 +100,7 @@ export default function Sidebar() {
     // const [ open, setOpen ] = React.useState( true );
     const [ navdata, setNavdata ] = React.useState( false )
     const { open } = useAppSelector( state => state.drawerOpen )
-    console.log( "OPEN", open )
+    // console.log( "OPEN", open )
     const setOpen = ( action ) => {
         dispatch( toggleOpen( action ) )
     }

@@ -2,10 +2,13 @@ import React from 'react';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Box, Stack, Typography } from '@mui/material';
-import RightMenu from './RightMenu';
+// import RightMenu from './RightMenu';
 import Link from 'next/link';
 import LeftMenu from './LeftMenu';
+import dynamic from 'next/dynamic'
 
+
+const NoSSR = dynamic( () => import( './RightMenu' ), { ssr: false } )
 
 
 
@@ -28,7 +31,7 @@ const Header = () => {
                     >
                         <span className='cursor-pointer' > NN </span><span className='text-[#ff6d20] cursor-pointer' >Network</span>
                     </Link>
-                    <RightMenu />
+                    <NoSSR />
                 </Toolbar>
             </MuiAppBar>
 
