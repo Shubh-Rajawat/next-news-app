@@ -87,15 +87,15 @@ export default function Home() {
             }
         } )
         tl.to( slider.current, {
-            // xPercent: -95,
-            translateX: -sliderWidth
+            xPercent: -95,
+            // translateX: -sliderWidth
         } )
         // Scrolling with wheel
 
         return () => {
             tl.kill();
         };
-    }, { dependencies: [ apiData, slider, pagination, count, sliderWidth ], revertOnUpdate: true } )
+    }, { dependencies: [ apiData, slider, pagination, count ], revertOnUpdate: true } )
 
 
 
