@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, IconButton, Modal, Typography } from '@mui/material'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import axios from 'axios';
 import Baseurl, { appUrl } from '@/lib/constants/Baseurl';
@@ -112,6 +112,11 @@ const SmoothCard = ( { data } ) => {
     //         } )
     // }
 
+    useEffect( () => {
+        if ( read_id == null ) {
+            setReadMore( false )
+        }
+    }, [ read_id ] )
 
     return (
         <>

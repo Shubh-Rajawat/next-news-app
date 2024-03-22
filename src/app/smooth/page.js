@@ -204,7 +204,6 @@ export default function Home() {
                         action={ action }
                     />
                 </Container>
-
             </>
             :
             <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>

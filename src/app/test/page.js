@@ -2,7 +2,7 @@
 import DrawerHeader from "@/components/DrawerHeader";
 import Dashboard from "@/components/Dashboard";
 import { Box, Container, Grid, IconButton, Snackbar, Stack, Backdrop, CircularProgress } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import HomeCard from "@/components/HomeCard";
 import axios from "axios";
 import Baseurl from "@/lib/constants/Baseurl";
@@ -18,6 +18,7 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setLoginToast } from "@/lib/features/post/toastSlice";
 import CloseIcon from '@mui/icons-material/Close';
+import { setRead_id } from "@/lib/features/post/readSlice";
 
 gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
@@ -50,69 +51,25 @@ export default function Home() {
 
     //  Scrolling functions
 
-
     const [ apiData, setApiData ] = useState( [] )
     const slider = useRef( null )
 
-
-
-    const [ sliderWidth, setSliderWidth ] = useState();
+    const [ sliderWidth, setSliderWidth ] = useState( 1000 );
     const [ startPoint, setStartPoint ] = useState( -0.0001 );
 
     function getNewOffset() {
-        return "+=" + sliderWidth + "px";
+        if ( sliderWidth > 1000 ) {
+            return "+=" + sliderWidth + "px";
+        } else {
+            return "+=6500px"
+        }
     }
-
-    useGSAP( () => {
-        // console.log("slider.current.offsetWidth", slider.current.offsetWidth)
-        const sections = gsap.utils.toArray( "slider-section" )
-        setSliderWidth( slider.current.offsetWidth )
-        // Scrolling with wheel
-        let tl = gsap.timeline( {
-            defaults: {
-                ease: "power3.out",
-                // duration: 4
-            },
-            scrollTrigger: {
-                trigger: slider.current,
-                pin: true,
-                scrub: 1,
-                start: startPoint,
-                invalidateOnRefresh: true,
-                end: () => getNewOffset(),
-                onUpdate: ( self ) => {
-                    console.log( self.progress )
-                }
-
-            }
-        } )
-        tl.to( slider.current, {
-            xPercent: -95,
-            // translateX: -sliderWidth
-        } )
-        // Scrolling with wheel
-
-        return () => {
-            tl.kill();
-        };
-    }, { dependencies: [ apiData, slider, pagination, count ], revertOnUpdate: true } )
-
-
-
-
-    useEffect( () => {
-        setSliderWidth( sliderWidth + 600 )
-        ScrollTrigger.refresh();
-    }, [ read_id ] )
-
+    const [ screenWidth, setScreenWidth ] = useState( 1500 )
 
     // scrolling functions end
 
-
-
-    const [ screenWidth, setScreenWidth ] = useState( 1500 )
-
     useEffect( () => {
+
         if ( window.innerWidth <= 768 ) {
             setScreenWidth( window.innerWidth )
         }
@@ -121,41 +78,78 @@ export default function Home() {
         formData.append( 'user_id', userData?.ID ?? '' )
         formData.append( 'page', pagination?.page )
         formData.append( 'per_page', pagination?.perPage )
-        try {
-            axios.post( `${ Baseurl }home_api`, formData ).then( ( res ) => {
-                // if (pagination?.page != 1) {
-                //     setPreviousNews([...previousNews, ...apiData])
-                // }else{
-
-                // }
-                setTotalPages( res?.data?.total_pages )
-                if ( previousNews?.length > 0 ) {
-                    setPreviousNews( [ ...previousNews, ...res?.data?.top_news ] )
+        const fetchData = async () => {
+            try {
+                const response = await axios.post( `${ Baseurl }home_api`, formData );
+                const responseData = response.data;
+                setApiData( responseData.top_news );
+                setTotalPages( responseData.total_pages );
+                ScrollTrigger.refresh( { safe: true } );
+                if ( previousNews.length > 0 ) {
+                    setPreviousNews( [ ...previousNews, ...responseData.top_news ] );
+                } else {
+                    setPreviousNews( responseData.top_news );
                 }
-                else {
-                    setPreviousNews( res?.data?.top_news )
+            } catch ( error ) {
+                console.error( "Error fetching data:", error );
+            }
+        };
 
-                }
-                setApiData( res?.data?.top_news );
-                // else {
-                //     setApiData([...apiData, ...res?.data?.top_news]);
+        fetchData(); // Fetch API data
 
-                // }
-                // setApiData(res.data);
-                // console.log("HomePage>>>", res.data.top_news);
-            } )
-                .catch( ( err ) => {
-                    console.log( err )
-                } )
-        } catch ( error ) {
-            console.log( error );
-        }
+        // Clean up function
+        return () => {
+            // Add cleanup code if necessary
+        };
+
     }, [ pagination ] )
 
 
-    console.log( "previo", previousNews )
-    console.log( "apidaaa", apiData )
-    console.log( "count", count )
+    useGSAP( () => {
+        const sections = gsap.utils.toArray( "slider-section" )
+        setSliderWidth( slider.current.offsetWidth )
+        // Scrolling with wheel
+        let tl = gsap.timeline( {
+            defaults: {
+                ease: "power3.out",
+                duration: 4
+            },
+            scrollTrigger: {
+                trigger: slider.current,
+                pin: true,
+                scrub: 1,
+                start: 0,
+                invalidateOnRefresh: true,
+                end: () => getNewOffset(),
+                onRefresh: () => {
+                    console.log( "sliderWidth", sliderWidth )
+                }
+
+            }
+        } )
+
+        tl.to( slider.current, {
+            // translateX: -sliderWidth,
+            xPercent: -95,
+        } )
+        // Scrolling with wheel
+        return () => {
+            tl.kill();
+        };
+    }, { dependencies: [ apiData, slider.current ?? slider, pagination, count ], revertOnUpdate: true } )
+
+
+    useEffect( () => {
+        if ( read_id ) {
+            setSliderWidth( sliderWidth + 600 )
+        }
+        ScrollTrigger.refresh( { safe: true } );
+    }, [ read_id ] )
+
+
+    // console.log( "previo", previousNews )
+    // console.log( "apidaaa", apiData )
+    // console.log( "read_id", read_id )
 
     return (
         screenWidth > 768 ?
@@ -173,14 +167,12 @@ export default function Home() {
                             Previous News <ArrowBackIcon className='cursor-pointer text-[#FF6D20] font-bold  bg-[#F0F2F5] rounded-full  text-[35px]
                              group-hover:scale-110' onClick={ () => {
                                     // console.log("clicked")
-
+                                    dispatch( setRead_id( null ) );
                                     setApiData( previousNews?.slice( pagination?.perPage * ( count - 1 ) - pagination?.perPage, pagination?.perPage * ( count - 1 ) ) )
                                     // console.log("data app", pagination?.perPage  (count - 1) - pagination?.perPage, pagination?.perPage  (count - 1))
                                     // console.log("jjjj", apiData?.top_news)
 
                                     setcount( count - 1 )
-
-
                                 } }
                             />
                         </section> }
@@ -195,6 +187,7 @@ export default function Home() {
                         { totalPages != count && <section className="group cursor-pointer pt-20 slider-section h-[98vh] w-[300px] flex flex-col justify-center items-center text-xl font-bold text-gray-700  border-r-2" >
                             More News <ArrowForwardIcon className='cursor-pointer text-[#FF6D20] font-bold  bg-[#F0F2F5] rounded-full  text-[35px]
                              group-hover:scale-110' onClick={ () => {
+                                    dispatch( setRead_id( null ) );
                                     if ( count < pagination?.page ) {
                                         setApiData( previousNews?.slice( pagination?.perPage * ( count + 1 ) - pagination?.perPage, pagination?.perPage * ( count + 1 ) ) )
 
@@ -207,6 +200,7 @@ export default function Home() {
                             />
                         </section> }
                     </div>
+
                     <Snackbar
                         anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                         open={ loginToast }
