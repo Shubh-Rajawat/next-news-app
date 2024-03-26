@@ -99,7 +99,7 @@ export default function Home() {
 
         // Clean up function
         return () => {
-            // Add cleanup code if necessary
+            ScrollTrigger.refresh( { safe: true } );
         };
 
     }, [ pagination ] )

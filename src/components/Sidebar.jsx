@@ -226,7 +226,7 @@ export default function Sidebar() {
                         } }
                     /> }
                     { navdata && navdata[ 1 ]?.child_category?.map( ( el, index ) => {
-                        const slug = el.name.toLowerCase().replace( /[^a-zA-Z\s]/g, ' ' ).replace( /\s+/g, '-' );
+                        const slug = el.name.toLowerCase().replace( /[^a-zA-Z\s\u0900-\u097F]/g, ' ' ).replace( /\s+/g, '-' );
                         return (
                             <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
                                 <ListItemButton
