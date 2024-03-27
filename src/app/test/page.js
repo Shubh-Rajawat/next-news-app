@@ -73,7 +73,6 @@ export default function Home() {
         if ( window.innerWidth <= 768 ) {
             setScreenWidth( window.innerWidth )
         }
-
         const formData = new FormData();
         formData.append( 'user_id', userData?.ID ?? '' )
         formData.append( 'page', pagination?.page )
@@ -106,36 +105,38 @@ export default function Home() {
 
 
     useGSAP( () => {
-        const sections = gsap.utils.toArray( "slider-section" )
-        setSliderWidth( slider.current.offsetWidth )
-        // Scrolling with wheel
-        let tl = gsap.timeline( {
-            defaults: {
-                ease: "power3.out",
-                duration: 4
-            },
-            scrollTrigger: {
-                trigger: slider.current,
-                pin: true,
-                scrub: 1,
-                start: 0,
-                invalidateOnRefresh: true,
-                end: () => getNewOffset(),
-                onRefresh: () => {
-                    console.log( "sliderWidth", sliderWidth )
+        if ( window.innerWidth > 748 ) {
+            const sections = gsap.utils.toArray( "slider-section" )
+            setSliderWidth( slider.current.offsetWidth )
+            // Scrolling with wheel
+            let tl = gsap.timeline( {
+                defaults: {
+                    ease: "power3.out",
+                    duration: 4
+                },
+                scrollTrigger: {
+                    trigger: slider.current,
+                    pin: true,
+                    scrub: 1,
+                    start: 0,
+                    invalidateOnRefresh: true,
+                    end: () => getNewOffset(),
+                    onRefresh: () => {
+                        console.log( "sliderWidth", sliderWidth )
+                    }
+
                 }
+            } )
 
-            }
-        } )
-
-        tl.to( slider.current, {
-            // translateX: -sliderWidth,
-            xPercent: -95,
-        } )
-        // Scrolling with wheel
-        return () => {
-            tl.kill();
-        };
+            tl.to( slider.current, {
+                // translateX: -sliderWidth,
+                xPercent: -95,
+            } )
+            // Scrolling with wheel
+            return () => {
+                tl.kill();
+            };
+        }
     }, { dependencies: [ apiData, slider.current ?? slider, pagination, count ], revertOnUpdate: true } )
 
 
@@ -222,6 +223,14 @@ export default function Home() {
                         </div>
                     ) ) }
                 </Stack>
+                <Snackbar
+                    anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
+                    open={ loginToast }
+                    autoHideDuration={ 3000 }
+                    onClose={ () => dispatch( setLoginToast( false ) ) }
+                    message="Login To Start Your Collection"
+                    action={ action }
+                />
             </Container>
 
     );

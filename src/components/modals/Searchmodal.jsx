@@ -21,7 +21,6 @@ const searchModalStyle = {
     width: 400,
     bgcolor: 'background.paper',
     border: '0px ',
-
     boxShadow: 24,
     p: 4,
 };
@@ -115,7 +114,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
                     </Typography>
                     <div className='flex flex-wrap gap-1'  >
                         {
-                            categories && categories?.map( ( item, index ) => {
+                            categories && categories[ 0 ]?.child_category?.map( ( item, index ) => {
                                 return (
                                     <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ searchTermid == item?.id ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
                                         onClick={ ( e ) => {

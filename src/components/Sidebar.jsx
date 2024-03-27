@@ -21,6 +21,9 @@ import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined'; // save
 import { setCategories } from '@/lib/features/categories/categorySlice';
 import { toggleOpen } from '@/lib/features/drawer/drawerSlice';
 import { setLoginToast } from '@/lib/features/post/toastSlice';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+
+
 
 const drawerWidth = 240;
 
@@ -125,7 +128,7 @@ export default function Sidebar() {
                 // console.log( "Sidebardata", res.data.data )
                 if ( res.data ) {
                     setNavdata( res.data.data );
-                    dispatch( setCategories( [ ...res.data.data[ 0 ]?.child_category ] ) )
+                    dispatch( setCategories( [ ...res.data.data ] ) )
                 }
             } )
             .catch( ( err ) => {
@@ -162,14 +165,55 @@ export default function Sidebar() {
                     </Typography> : <LanguageIcon /> }
                 </Box>
                 <Divider />
-                <Typography variant='h4' fontWeight={ 700 } display={ `flex` } justifyContent={ `space-between` } alignItems={ `center` }
+                {/* <Typography variant='h4' fontWeight={ 700 } display={ `flex` } justifyContent={ `space-between` } alignItems={ `center` }
                     className='py-3 ps-4 pe-3 font-bold'
                 >
                     { open ? <>
                         For You
                         <span className=""><ExpandMoreIcon className='' /></span>
                     </> : "" }
-                </Typography>
+                </Typography> */}
+                <Accordion className='w-full' >
+                    <AccordionSummary
+                        expandIcon={ <ExpandMoreIcon className=' text-black' /> }
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                        className='font-bold text-lg'
+                    >
+                        For You
+                    </AccordionSummary>
+                    <AccordionDetails className='pl-0' >
+                        { navdata && navdata[ 0 ]?.child_category?.map( ( el, index ) => {
+                            const slug = el.name.toLowerCase().replace( /[^a-zA-Z\s\u0900-\u097F]/g, ' ' ).replace( /\s+/g, '-' );
+                            return (
+                                <ListItem key={ el.name } disablePadding sx={ { display: 'block' } }   >
+                                    <ListItemButton
+                                        sx={ {
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
+                                        } }
+                                        onClick={ () => {
+                                            router.push( `/${ el.id }/${ slug }` )
+                                        } }
+                                    >
+                                        <ListItemIcon
+                                            sx={ {
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                            } }
+                                        >
+                                            <img src={ el?.img } alt='|' />
+                                        </ListItemIcon>
+                                        <div className={ `${ open ? "block" : "hidden" }  font-[600]` } >{ el.name }</div>
+                                    </ListItemButton>
+                                </ListItem>
+                            )
+                        }
+                        ) }
+                    </AccordionDetails>
+                </Accordion>
                 <List  >
                     { open && <ListItemText className='uppercase'
                         primary={ navdata[ 0 ]?.name }

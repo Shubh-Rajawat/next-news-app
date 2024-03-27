@@ -1,12 +1,12 @@
 "use client"
 {/* eslint-disable-next-line react/no-unescaped-entities */ }
-import { Box, FormControl, IconButton, InputAdornment, OutlinedInput, Typography, LoadingButton } from '@mui/material'
+import { Box, FormControl, IconButton, InputAdornment, OutlinedInput, Typography, LoadingButton, Chip } from '@mui/material'
 import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Baseurl from '@/lib/constants/Baseurl';
 import axios from 'axios';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setUserData, setUserId } from '@/lib/features/user/userdataSlice';
 import { setCookie } from 'cookies-next';
 
@@ -25,7 +25,11 @@ const searchModalStyle = {
 const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => {
     const dispatch = useAppDispatch();
     const [ loading, setLoading ] = useState( false )
+    const { categories } = useAppSelector( ( state ) => state.categories )
+    const [ searchTermid, setSearchTermid ] = useState( [] )
+
     const [ error, setError ] = useState( false )
+    const [ activeIndex, setActiveIndex ] = useState( 0 )
     const [ errormsg, setErrormsg ] = useState( false )
     const [ signupdata, setSignupdata ] = useState( {
         firstname: "",
@@ -39,8 +43,6 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
     const handleMouseDownPassword = ( event ) => {
         event.preventDefault();
     };
-
-
 
     const handleSignupSubmit = async ( e ) => {
         e.preventDefault();
@@ -61,7 +63,8 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                             dispatch( setUserData( res.data.user_details ) )
                             setCookie( 'user_data', res.data.user_details )
                             setLoading( false )
-                            handleSignupClose()
+                            // handleSignupClose()
+                            setActiveIndex( 1 )
                         }
                     } ).catch( err => {
                         setLoading( false );
@@ -80,6 +83,11 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
         }
     };
 
+    const updatePreferences = () => {
+        handleSignupClose();
+    }
+
+
     return (
         <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl"  >
             { handleSignupClose && <CloseIcon className=' absolute top-2 cursor-pointer right-2' onClick={ () => {
@@ -87,81 +95,115 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                 setError( false )
             } } /> }
             <Box className="text-center flex flex-col gap-2"   >
-
-                <>
-                    <Typography textAlign={ `center` } className='mb-7 font-[700] text-3xl '  >
-                        Create New Account
-                    </Typography>
-                    { error && <span className='text-red-600 text-xs truncate ' >{ errormsg }</span> }
-                    <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ ( e ) => {
-                        handleSignupSubmit( e )
-                    } }  >
-                        <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
-                            <OutlinedInput placeholder="First Name" type={ 'text' }
-                                className='bg-[#F0F2F5] rounded-3xl  py-3 px-4'
-                                value={ signupdata.firstname }
-                                onChange={ ( e ) => {
-                                    setSignupdata( { ...signupdata, firstname: e.target.value } )
-                                } }
-
-                            />
-                        </FormControl>
-                        <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
-                            <OutlinedInput placeholder="Last Name" type={ 'text' }
-                                className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
-                                value={ signupdata.lastname }
-                                onChange={ ( e ) => {
-                                    setSignupdata( { ...signupdata, lastname: e.target.value } )
-                                } }
-                            />
-                        </FormControl>
-                        <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
-                            <OutlinedInput placeholder="Email address" type={ 'email' }
-                                className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
-                                value={ signupdata.email }
-                                onChange={ ( e ) => {
-                                    setSignupdata( { ...signupdata, email: e.target.value } )
-                                } }
-                            />
-                        </FormControl>
-                        <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
-                            <OutlinedInput placeholder="Password" type={ showPassword ? 'text' : 'password' }
-                                className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
-                                value={ signupdata.password }
-                                onChange={ ( e ) => {
-                                    setSignupdata( { ...signupdata, password: e.target.value } )
-                                } }
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={ handleClickShowPassword }
-                                            onMouseDown={ handleMouseDownPassword }
-                                            edge="end"
-                                        >
-                                            { showPassword ? <VisibilityOff className='text-[#ff6d20]' /> : <Visibility className='text-[#ff6d20]' /> }
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <span className='text-sm text-[#AAA9A9]' >By registering for a NN Network account, you agree
-                            to the <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Terms of Use</a> and <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Privacy Policy</a></span>
-                        <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-4 ${ loading ? "animate-pulse" : "" } ` }
-                            type='submit' disabled={ loading }   >
-                            { loading ? "Loading..." : "Create New Account" }
-                        </button>
-
-                    </form>
-                    <Box className="text-center flex flex-col gap-2 items-center  ">
-                        <Typography variant='body1' gutterBottom className='font-[400] text-lg text-center select-none'    >
-                            You don't have an account? <span className='text-[#ff6d20] cursor-pointer' onClick={ () => {
-                                handleCloseSignup();
-                                setError( false )
-                            } } >Log in</span>
+                { activeIndex === 0 ?
+                    <>
+                        <Typography textAlign={ `center` } className='mb-7 font-[700] text-3xl '  >
+                            Create New Account
                         </Typography>
-                    </Box>
-                </>
+                        { error && <span className='text-red-600 text-xs truncate ' >{ errormsg }</span> }
+                        <form autoComplete="off" className='text-center flex flex-col gap-4  ' onSubmit={ ( e ) => {
+                            handleSignupSubmit( e )
+                        } }  >
+                            <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
+                                <OutlinedInput placeholder="First Name" type={ 'text' }
+                                    className='bg-[#F0F2F5] rounded-3xl  py-3 px-4'
+                                    value={ signupdata.firstname }
+                                    onChange={ ( e ) => {
+                                        setSignupdata( { ...signupdata, firstname: e.target.value } )
+                                    } }
+
+                                />
+                            </FormControl>
+                            <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
+                                <OutlinedInput placeholder="Last Name" type={ 'text' }
+                                    className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
+                                    value={ signupdata.lastname }
+                                    onChange={ ( e ) => {
+                                        setSignupdata( { ...signupdata, lastname: e.target.value } )
+                                    } }
+                                />
+                            </FormControl>
+                            <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
+                                <OutlinedInput placeholder="Email address" type={ 'email' }
+                                    className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
+                                    value={ signupdata.email }
+                                    onChange={ ( e ) => {
+                                        setSignupdata( { ...signupdata, email: e.target.value } )
+                                    } }
+                                />
+                            </FormControl>
+                            <FormControl sx={ { width: '1' } } className='focus:outline-none outline-none border-none '  >
+                                <OutlinedInput placeholder="Password" type={ showPassword ? 'text' : 'password' }
+                                    className='bg-[#F0F2F5] rounded-3xl py-3 px-4'
+                                    value={ signupdata.password }
+                                    onChange={ ( e ) => {
+                                        setSignupdata( { ...signupdata, password: e.target.value } )
+                                    } }
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={ handleClickShowPassword }
+                                                onMouseDown={ handleMouseDownPassword }
+                                                edge="end"
+                                            >
+                                                { showPassword ? <VisibilityOff className='text-[#ff6d20]' /> : <Visibility className='text-[#ff6d20]' /> }
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+                            <span className='text-sm text-[#AAA9A9]' >By registering for a NN Network account, you agree
+                                to the <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Terms of Use</a> and <a className='text-[#ff6d20] no-underline hover:underline' href="" target="_blank" rel="noopener noreferrer">Privacy Policy</a></span>
+                            <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-4 ${ loading ? "animate-pulse" : "" } ` }
+                                type='submit' disabled={ loading }   >
+                                { loading ? "Loading..." : "Create New Account" }
+                            </button>
+
+                        </form>
+                        <Box className="text-center flex flex-col gap-2 items-center  ">
+                            <Typography variant='body1' gutterBottom className='font-[400] text-lg text-center select-none'    >
+                                You don't have an account? <span className='text-[#ff6d20] cursor-pointer' onClick={ () => {
+                                    handleCloseSignup();
+                                    setError( false )
+                                } } >Log in</span>
+                            </Typography>
+                        </Box>
+                    </>
+                    :
+                    <>
+                        <Typography textAlign={ `center` } className='mb-7 font-[700] text-2xl '  >
+                            Select News You Want
+                        </Typography>
+                        <div className='grid grid-cols-2 gap-2'  >
+                            {
+                                categories && categories[ 0 ]?.child_category?.map( ( item, index ) => {
+                                    return (
+                                        <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ searchTermid.includes( item?.id ) ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
+                                            onClick={ ( e ) => {
+                                                if ( searchTermid.includes( item?.id ) ) {
+                                                    let filtered = searchTermid.filter( cat => cat !== item.id )
+                                                    console.log( "filtered", filtered )
+                                                    setSearchTermid( filtered )
+                                                } else {
+                                                    setSearchTermid( [ ...searchTermid, item?.id ] )
+                                                }
+                                            } }
+                                        />
+                                    )
+                                } )
+                            }
+                        </div>
+                        <button className={ `basic-button rounded-3xl text-md mx-auto px-10 py-3 my-4 ${ loading ? "animate-pulse" : "" } ` }
+                            onClick={ () => {
+                                updatePreferences()
+                            } } disabled={ loading }   >
+                            { loading ? "Loading..." : "Submit" }
+                        </button>
+                    </>
+
+
+                }
             </Box>
 
         </Box>
