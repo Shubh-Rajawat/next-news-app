@@ -60,8 +60,6 @@ const page = ( { params } ) => {
                             width={ 520 }
                             src={ postData?.img }
                             alt="NN Network"
-                            placeholder='blur'
-                            blurDataURL='Loading...'
                             className='mx-auto '
                         />
                     </div>

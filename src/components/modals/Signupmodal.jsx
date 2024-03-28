@@ -26,8 +26,8 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
     const dispatch = useAppDispatch();
     const [ loading, setLoading ] = useState( false )
     const { categories } = useAppSelector( ( state ) => state.categories )
-    const [ searchTermid, setSearchTermid ] = useState( [] )
-
+    const [ categoriesTermid, setCategoriesTermid ] = useState( [] )
+    const { userData } = useAppSelector( ( state ) => state?.userData )
     const [ error, setError ] = useState( false )
     const [ activeIndex, setActiveIndex ] = useState( 0 )
     const [ errormsg, setErrormsg ] = useState( false )
@@ -84,9 +84,19 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
     };
 
     const updatePreferences = () => {
-        handleSignupClose();
+        // handleSignupClose();
+        axios.post( `${ Baseurl }for_you_category`, {
+            categorys: categoriesTermid,
+            user_id: userData?.ID
+        } ).then( ( res ) => {
+            console.log( res.data )
+            if ( res.data.success == true ) {
+                handleSignupClose();
+            }
+        } ).catch( ( err ) => {
+            console.log( "Api-Error", err )
+        } )
     }
-
 
     return (
         <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl"  >
@@ -179,14 +189,14 @@ const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => 
                             {
                                 categories && categories[ 0 ]?.child_category?.map( ( item, index ) => {
                                     return (
-                                        <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ searchTermid.includes( item?.id ) ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
+                                        <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ categoriesTermid.includes( item?.id ) ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
                                             onClick={ ( e ) => {
-                                                if ( searchTermid.includes( item?.id ) ) {
-                                                    let filtered = searchTermid.filter( cat => cat !== item.id )
+                                                if ( categoriesTermid.includes( item?.id ) ) {
+                                                    let filtered = categoriesTermid.filter( cat => cat !== item.id )
                                                     console.log( "filtered", filtered )
-                                                    setSearchTermid( filtered )
+                                                    setCategoriesTermid( filtered )
                                                 } else {
-                                                    setSearchTermid( [ ...searchTermid, item?.id ] )
+                                                    setCategoriesTermid( [ ...categoriesTermid, item?.id ] )
                                                 }
                                             } }
                                         />

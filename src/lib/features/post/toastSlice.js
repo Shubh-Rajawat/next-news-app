@@ -2,7 +2,7 @@ const { createSlice } = require( "@reduxjs/toolkit" );
 
 
 const initialState = {
-    loginToast: false
+    loginToast: false,
 }
 
 const toastSlice = createSlice( {

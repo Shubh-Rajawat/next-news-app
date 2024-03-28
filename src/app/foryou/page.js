@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setLoginToast } from "@/lib/features/post/toastSlice";
 import CloseIcon from '@mui/icons-material/Close';
 import { setRead_id } from "@/lib/features/post/readSlice";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
@@ -53,7 +54,7 @@ export default function Home() {
 
     const [ apiData, setApiData ] = useState( [] )
     const slider = useRef( null )
-
+    const router = useRouter()
     const [ sliderWidth, setSliderWidth ] = useState( 1000 );
     const [ startPoint, setStartPoint ] = useState( -0.0001 );
 
@@ -79,8 +80,11 @@ export default function Home() {
         formData.append( 'per_page', pagination?.perPage )
         const fetchData = async () => {
             try {
-                const response = await axios.post( `${ Baseurl }home_api`, formData );
+                const response = await axios.post( `${ Baseurl }get_for_you`, formData );
                 const responseData = response.data;
+                if ( !responseData.top_news ) {
+                    router.push( "/test" )
+                }
                 setApiData( responseData.top_news );
                 setTotalPages( responseData.total_pages );
                 ScrollTrigger.refresh( { safe: true } );
@@ -203,11 +207,11 @@ export default function Home() {
                     </div>
 
                     <Snackbar
-                        anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                        anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                         open={ loginToast }
                         autoHideDuration={ 3000 }
                         onClose={ () => dispatch( setLoginToast( false ) ) }
-                        message="Login to Use this Feature"
+                        message="Login To Start Your Collection"
                         action={ action }
                     />
                 </Container>
@@ -224,11 +228,11 @@ export default function Home() {
                     ) ) }
                 </Stack>
                 <Snackbar
-                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                    anchorOrigin={ { vertical: 'top', horizontal: 'left' } }
                     open={ loginToast }
                     autoHideDuration={ 3000 }
                     onClose={ () => dispatch( setLoginToast( false ) ) }
-                    message="Login to Use this Feature"
+                    message="Login To Start Your Collection"
                     action={ action }
                 />
             </Container>

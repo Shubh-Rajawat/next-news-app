@@ -173,7 +173,8 @@ export default function Sidebar() {
                         <span className=""><ExpandMoreIcon className='' /></span>
                     </> : "" }
                 </Typography> */}
-                <Accordion className={ `w-full ${ open ? "" : "hidden" }` } >
+                {/* FOR YOU SECTION */ }
+                {/* <Accordion className={ `w-full ${ open ? "" : "hidden" }` } >
                     <AccordionSummary
                         expandIcon={ <ExpandMoreIcon className=' text-black' /> }
                         aria-controls="panel1-content"
@@ -213,7 +214,8 @@ export default function Sidebar() {
                         }
                         ) }
                     </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
+                {/* FOR YOU SECTION */ }
                 <List  >
                     { open && <ListItemText className='uppercase'
                         primary={ navdata[ 0 ]?.name }
