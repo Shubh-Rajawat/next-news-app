@@ -1,8 +1,8 @@
 
 "use client"
 {/* eslint-disable-next-line react/no-unescaped-entities */ }
-import CategoryCard from '@/components/CategoryCard'
-import CategorySlider from '@/components/CategorySlider'
+
+
 import DrawerHeader from '@/components/DrawerHeader'
 import HomeCard from '@/components/HomeCard'
 import SliderRow from '@/components/SliderRow'
@@ -16,12 +16,14 @@ import Draggable from "gsap/dist/Draggable"
 import { useGSAP } from "@gsap/react"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import SmoothCard from '@/components/SmoothCard'
+import { useAppSelector } from '@/lib/hooks'
 gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
 const page = ( { params } ) => {
     const [ categoryData, setCategoryData ] = useState( false );
     const slider = useRef( null )
     const { top_stories, term_id } = params
+    const { userData } = useAppSelector( ( state ) => state?.userData )
     // console.log( "ParentParams", params )
     const [ screenWidth, setScreenWidth ] = useState( 1500 )
 
@@ -37,7 +39,8 @@ const page = ( { params } ) => {
         ScrollTrigger.refresh()
         setCategoryData( false )
         axios.post( `${ Baseurl }category_api`, {
-            term_id: term_id
+            term_id: term_id,
+            user_id: userData?.ID
         } )
             .then( ( res ) => {
                 setCategoryData( res.data )
@@ -168,15 +171,3 @@ const page = ( { params } ) => {
 export default page
 
 
-
-// old code of this page---
-// <>
-//     <Box component="main" sx={ { flexGrow: 1, py: 4 } } className={ `bg-[#F0F2F5] h-[90vh] sm:pl-1 ${ screenWidth > 600 ? "overflow-y-hidden" : "" }  md:pl-8` }  >
-//         <DrawerHeader />
-//         <Box>
-//             <Box className="flex flex-col h-full"  >
-//                 <CategorySlider title={ top_stories.replaceAll( '-', " " ) } termId={ term_id } />
-//             </Box>
-//         </Box>
-//     </Box>
-// </>

@@ -1,6 +1,6 @@
 "use client"
 import DrawerHeader from "@/components/DrawerHeader";
-import Dashboard from "@/components/Dashboard";
+
 import { Box, Container, Grid, IconButton, Snackbar, Stack, Backdrop, CircularProgress } from '@mui/material'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import HomeCard from "@/components/HomeCard";
@@ -83,7 +83,7 @@ export default function Home() {
                 const response = await axios.post( `${ Baseurl }get_for_you`, formData );
                 const responseData = response.data;
                 if ( !responseData.top_news ) {
-                    router.push( "/test" )
+                    router.push( "/" )
                 }
                 setApiData( responseData.top_news );
                 setTotalPages( responseData.total_pages );

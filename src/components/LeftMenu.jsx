@@ -14,7 +14,7 @@ const LeftMenu = () => {
     return (
         <Box>
             <Stack direction="row" spacing={ 2 }>
-                <Link href="/test" className={ `main-link ${ pathname == '/' || pathname == '/test' ? "active-link" : "" }` }>Catalog</Link>
+                <Link href="/" className={ `main-link ${ pathname == '/' || pathname == '/test' ? "active-link" : "" }` }>Catalog</Link>
                 <span onClick={ () => {
                     if ( userData?.ID ) {
                         router.push( "/foryou" )

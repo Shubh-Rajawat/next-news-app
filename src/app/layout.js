@@ -23,7 +23,8 @@ export default function RootLayout( { children } ) {
         display: 'flex',
         height: '100%',
         width: '100%'
-      } }  >
+      } }
+        suppressHydrationWarning={ true } >
         <StoreProvider>
           <AppRouterCacheProvider options={ { enableCssLayer: true } }  >
             <Header />
@@ -31,9 +32,9 @@ export default function RootLayout( { children } ) {
             { children }
           </AppRouterCacheProvider>
         </StoreProvider>
-        <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></Script>
+        {/* <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></Script>
 
-        <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></Script>
+        <Script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></Script> */}
 
 
       </body>

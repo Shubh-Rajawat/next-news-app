@@ -26,49 +26,51 @@ const MobileNewsCard = ( { data } ) => {
     }
 
     return (
-        <Card className='w-full'>
-            <CardActionArea>
-                <div className=' text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden' >
-                    { data?.img ?
-                        <Image
-                            draggable="false"
-                            height={ 400 }
-                            width={ 520 }
-                            src={ data?.img }
-                            alt="NN Network"
-                            placeholder='blur'
-                            blurDataURL='Loading...'
-                            className=''
-                        />
-                        :
-                        <Image
-                            draggable="false"
-                            height={ 400 }
-                            width={ 520 }
-                            src="/placeholder.jpg"
-                            alt="NN Network"
-                            placeholder='blur'
-                            blurDataURL='Loading...'
-                            className=''
-                        />
-                    }
-                </div>
-                <CardContent>
-                    <Typography gutterBottom variant="subtitle1" component="div" className='font-semibold truncate'  >
-                        { data?.news_paper_name }
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content.substring( 0, 150 ) + ".." ) } ></Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" color="primary" className='text-sm font-semibold text-[#FF6D20] ms-3'
-                        onClick={ () => {
-                            openPost( data.id );
-                        } }
-                    >
-                        Read More
-                    </Button>
-                </CardActions>
-            </CardActionArea>
+        <Card className='w-full h-full flex flex-col justify-between'>
+            {/* <CardActionArea className=''> */ }
+            <div className=' text-center max-h-44 sm:w-full  md:max-h-44  overflow-hidden cursor-pointer' onClick={ () => {
+                openPost( data.id );
+            } }>
+                { data?.img ?
+                    <Image
+                        draggable="false"
+                        height={ 400 }
+                        width={ 520 }
+                        src={ data?.img }
+                        alt="NN Network"
+                        placeholder='blur'
+                        blurDataURL='Loading...'
+                        className=''
+                    />
+                    :
+                    <Image
+                        draggable="false"
+                        height={ 400 }
+                        width={ 520 }
+                        src="/placeholder.jpg"
+                        alt="NN Network"
+                        placeholder='blur'
+                        blurDataURL='Loading...'
+                        className=''
+                    />
+                }
+            </div>
+            <CardContent>
+                <Typography gutterBottom variant="subtitle1" component="div" className='font-semibold truncate'  >
+                    { data?.news_paper_name }
+                </Typography>
+                <Typography variant="body2" color="text.secondary" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content.substring( 0, 150 ) + ".." ) } ></Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" color="primary" className='text-sm font-semibold text-[#FF6D20] ms-3 justify-self-end'
+                    onClick={ () => {
+                        openPost( data.id );
+                    } }
+                >
+                    Read More
+                </Button>
+            </CardActions>
+            {/* </CardActionArea> */ }
         </Card>
     )
 }

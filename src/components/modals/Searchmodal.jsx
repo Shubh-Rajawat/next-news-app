@@ -26,7 +26,8 @@ const searchModalStyle = {
 };
 const Searchmodal = ( { handleSearchClose } ) => {
     const router = useRouter()
-    const { categories } = useAppSelector( ( state ) => state.categories )
+    // const { categories } = useAppSelector( ( state ) => state.categories )
+    const categories = JSON.parse( localStorage.getItem( 'categories' ) );
     const [ words, setWords ] = useState( "" )
     const [ searchTermid, setSearchTermid ] = useState( null )
     const {
@@ -64,9 +65,8 @@ const Searchmodal = ( { handleSearchClose } ) => {
             //         console.log( "SearchErr", err )
             //     } )
         }
-
     }
-
+    console.log( "categories from search", categories )
     return (
         <>
             <Box sx={ searchModalStyle } className="focus:outline-none rounded-2xl relative "  >
@@ -114,7 +114,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
                     </Typography>
                     <div className='flex flex-wrap gap-1'  >
                         {
-                            categories && categories[ 0 ]?.child_category?.map( ( item, index ) => {
+                            categories ? categories[ 0 ]?.child_category?.map( ( item, index ) => {
                                 return (
                                     <Chip key={ item?.id } label={ item?.name } variant="outlined" className={ `  border  border-solid rounded-3xl  ${ searchTermid == item?.id ? "border-[#FF6D20] text-[#FF6D20]" : "border-black" } ` }
                                         onClick={ ( e ) => {
@@ -123,6 +123,7 @@ const Searchmodal = ( { handleSearchClose } ) => {
                                     />
                                 )
                             } )
+                                : null
                         }
 
                         {/* <Chip label="Sports" variant="outlined" className='  border  border-solid rounded-3xl border-black'

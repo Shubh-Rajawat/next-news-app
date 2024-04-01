@@ -128,11 +128,12 @@ export default function Sidebar() {
                 // console.log( "Sidebardata", res.data.data )
                 if ( res.data ) {
                     setNavdata( res.data.data );
-                    dispatch( setCategories( [ ...res.data.data ] ) )
+                    dispatch( setCategories( res.data.data ) )
+                    localStorage.setItem( "categories", JSON.stringify( res.data.data ) );
                 }
             } )
             .catch( ( err ) => {
-                // console.log( "sidebar->>", err )
+                // console.log( "API Error->>", err )
             } )
 
     }, [] )

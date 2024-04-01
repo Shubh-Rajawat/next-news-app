@@ -25,7 +25,8 @@ const searchModalStyle = {
 const Signupmodal = ( { handleCloseSignup, handleSignupClose, loadSignup } ) => {
     const dispatch = useAppDispatch();
     const [ loading, setLoading ] = useState( false )
-    const { categories } = useAppSelector( ( state ) => state.categories )
+    // const { categories } = useAppSelector( ( state ) => state.categories )
+    const categories = JSON.parse( localStorage.getItem( 'categories' ) );
     const [ categoriesTermid, setCategoriesTermid ] = useState( [] )
     const { userData } = useAppSelector( ( state ) => state?.userData )
     const [ error, setError ] = useState( false )

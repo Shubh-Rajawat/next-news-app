@@ -1,243 +1,272 @@
 "use client"
-import CategoryCard from '@/components/CategoryCard'
-import DrawerHeader from '@/components/DrawerHeader'
-import SearchCard from '@/components/SearchCard'
-import Baseurl from '@/lib/constants/Baseurl'
-import { Box, Card, CardContent, Container, Grid, Stack, Typography } from '@mui/material'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
-import { motion, useTransform, useScroll } from "framer-motion";
+import DrawerHeader from "@/components/DrawerHeader";
 
-// import Slider from "react-slick";
-import MobileNewsCard from '@/components/mobile/MobileNewsCard'
+import { Box, Container, Grid, IconButton, Snackbar, Stack, Backdrop, CircularProgress } from '@mui/material'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import HomeCard from "@/components/HomeCard";
+import axios from "axios";
+import Baseurl from "@/lib/constants/Baseurl";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MobileNewsCard from "@/components/mobile/MobileNewsCard";
+import SmoothCard from "@/components/SmoothCard";
+//
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import Draggable from "gsap/dist/Draggable"
+import ScrollTrigger from "gsap/dist/ScrollTrigger"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setLoginToast } from "@/lib/features/post/toastSlice";
+import CloseIcon from '@mui/icons-material/Close';
+import { setRead_id } from "@/lib/features/post/readSlice";
+
+gsap.registerPlugin( ScrollTrigger, useGSAP, Draggable )
 
 
-const cards = Array.from( { length: 9 } ).fill( 1 )
-const page = ( { params } ) => {
-    const router = useRouter();
-    const [ searchData, setSearchData ] = useState( null )
-    const [ screenWidth, setScreenWidth ] = useState( 1500 )
-    console.log( "newpage", params )
+export default function page( { params } ) {
+    const [ count, setcount ] = useState( 1 )
+    const [ totalPages, setTotalPages ] = useState( null )
+    const [ previousNews, setPreviousNews ] = useState( [] )
+    const [ pagination, setPagination ] = useState( {
+
+        page: 1,
+        perPage: 5
+    } )
+    const { userData } = useAppSelector( ( state ) => state?.userData )
+    const dispatch = useAppDispatch();
+    const { loginToast } = useAppSelector( state => state.loginToast )
     const searchId = JSON.parse( localStorage.getItem( "searchId" ) );
-    // const scrollRef = useRef();
-    const sliderRef = useRef();
+    const { read_id } = useAppSelector( state => state?.read_id )
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={ () => { dispatch( setLoginToast( false ) ) } }
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
-    useEffect( () => {
-        if ( !params.search_term ) {
-            router.push( "/" )
+    //  Scrolling functions
+
+    const [ apiData, setApiData ] = useState( [] )
+    const slider = useRef( null )
+
+    const [ sliderWidth, setSliderWidth ] = useState( 1000 );
+    const [ startPoint, setStartPoint ] = useState( -0.0001 );
+
+    function getNewOffset() {
+        if ( sliderWidth > 1000 ) {
+            return "+=" + sliderWidth + "px";
         } else {
-            axios.post( `${ Baseurl }search_api`, {
-                term_id: searchId,
-                search: params?.search_term
-            } )
-                .then( ( res ) => {
-                    console.log( "New page Data ->>", res.data )
-                    setSearchData( res.data )
-                } )
-                .catch( ( err ) => {
-                    console.log( "SearchErr", err )
-                } )
+            return "+=6500px"
         }
-    }, [ params?.search_term ] )
+    }
+    const [ screenWidth, setScreenWidth ] = useState( 1500 )
+
+    // scrolling functions end
+    // useEffect( () => {
+    //     if ( !params.search_term ) {
+    //         router.push( "/" )
+    //     } else {
+    //         axios.post( `${ Baseurl }search_api`, {
+    //             term_id: searchId,
+    //             search: params?.search_term
+    //         } )
+    //             .then( ( res ) => {
+    //                 console.log( "New page Data ->>", res.data )
+    //                 setSearchData( res.data )
+    //             } )
+    //             .catch( ( err ) => {
+    //                 console.log( "SearchErr", err )
+    //             } )
+    //     }
+    // }, [ params?.search_term ] )
+
+
 
     useEffect( () => {
-        if ( window.innerWidth <= 600 ) {
-            console.log( "hola", window.innerWidth )
+        if ( window.innerWidth <= 768 ) {
             setScreenWidth( window.innerWidth )
         }
-    }, [] )
-
-    // const numSlidesToShow = Math.min( searchData?.length, 4 );
-    var settings = {
-        centerMode: false,
-        variableWidth: false,
-        dots: false,
-        infinite: false,
-        wheel: true,
-        speed: 500,
-        slidesToShow: 3.9,
-        slidesToScroll: 1,
-        arrows: false,
-        responsive: [
-            {
-                breakpoint: 1500,
-                settings: {
-                    slidesToShow: 3.5,
-                    // slidesToScroll: 1,
-                    // infinite: false,
-                    // centerMode: false,
-                    // dots: false
-                }
-            },
-            {
-                breakpoint: 1300,
-                settings: {
-                    slidesToShow: 2.3,
-                    // slidesToScroll: 1,
-                    // infinite: false,
-                    // centerMode: false,
-                    // dots: false
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    // slidesToScroll: 1,
-                    // infinite: false,
-                    // centerMode: false,
-                    // dots: false
-                }
-            },
-            {
-                breakpoint: 840,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    // infinite: false,
-                    // centerMode: false,
-                    // dots: false
-                }
-            },
-            {
-                breakpoint: 730,
-                settings: {
-                    slidesToShow: 1.5,
-                    slidesToScroll: 1,
-                    // centerMode: false,
-
-                }
-            },
-            {
-                breakpoint: 580,
-                settings: {
-                    slidesToShow: 1,
-                    // centerMode: false,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    // centerMode: false,
-                }
-            }
-        ]
-    };
-
-    const cardData = Array.from( { length: 12 }, ( _, i ) => i + 1 );
-    const handleScroll = ( event ) => {
-        const container = event.currentTarget;
-        const x = event.deltaY * 5;
-        container.scrollLeft += x;
-    };
-    const scrollContainerRef = useRef( null );
-    const [ startX, setStartX ] = useState( null );
-
-    const handleTouchStart = ( event ) => {
-        setStartX( event.touches[ 0 ].clientX );
-    };
-
-    const handleTouchMove = ( event ) => {
-        if ( !startX ) return;
-        const x = event.touches[ 0 ].clientX - startX;
-        scrollContainerRef.current.scrollLeft -= x;
-    };
-
-    const handleTouchEnd = () => {
-        setStartX( null );
-    };
-    // functions for scroll-X with cursor
-    const handleStart = ( event ) => {
-        if ( event.type === 'touchstart' ) {
-            setStartX( event.touches[ 0 ].clientX );
-        } else {
-            setStartX( event.clientX );
+        if ( !params.search_term ) {
+            router.push( "/" )
         }
-    };
-
-    const handleMove = ( event ) => {
-        if ( !startX ) return;
-        const x = event.clientX - startX;
-        scrollContainerRef.current.scrollLeft -= x;
-    };
-
-    const handleEnd = () => {
-        setStartX( null );
-    };
-    return (
-        <>
-            {/* <Box component="main" sx={ { flexGrow: 1, py: 4, pl: 4 } } className={ `bg-[#F0F2F5] px-0 w-full overflow-y-hidden` } >
-                <DrawerHeader />
-                <section className="h-full w-full   "   >
-                    <div className="slider-container text-start" onWheel={ ( e ) => {
-                        if ( window.innerHeight > 641 ) {
-                            if ( e.deltaY > 0 ) {
-                                sliderRef.current.scrollLeft -= ( e.deltaY * 10 )
-                            } else {
-                                sliderRef.current.scrollLeft += ( delta * 10 )
-                            }
-                        }
-                    } } >
-
-                        <Stack
-                            direction={ { xs: 'column', sm: 'row' } }
-                            spacing={ { xs: 1, sm: 2, md: 4 } }
-                            className=' overflow-auto'
-                            ref={ sliderRef }
-                        >
-                            {
-                                cards?.map( ( item, index ) => {
-                                    return (
-                                        <SearchCard key={ index } data={ item } />
-                                    )
-                                } )
-                            }
-                        </Stack>
-                    </div>
-                </section>
-            </Box> */}
-            { screenWidth > 600 ?
-                <Container maxWidth="xl" sx={ { overflow: 'hidden', flexGrow: 1, py: 4, pl: 4 } } className='bg-[#F0F2F5] overflow-y-hidden'
-                    onTouchStart={ handleTouchStart }
-                    onTouchMove={ handleTouchMove }
-                    onTouchEnd={ handleTouchEnd }
-                    onMouseDown={ handleStart }
-                    onMouseMove={ handleMove }
-                    onMouseUp={ handleEnd }
-                    onMouseLeave={ handleEnd }
-                >
-                    <DrawerHeader />
-                    { searchData?.top_news?.length ? <Grid container direction="row" wrap="nowrap" spacing={ 2 } style={ { overflowX: 'auto', scrollBehavior: "smooth" } }
-                        ref={ scrollContainerRef } onWheel={ handleScroll } className='hide-scroll' >
-                        { cardData.map( ( item, index ) => (
-                            <Grid key={ index }>
-                                <SearchCard key={ index } data={ searchData && searchData?.top_news[ 0 ] } />
-                            </Grid>
-                        ) ) }
-                    </Grid> :
-                        <div className="grid place-items-center w-full">
-                            No Articles Found
-                        </div>
-                    }
-                </Container>
-                :
-                <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
-                    <DrawerHeader />
-                    <Stack spacing={ 1 }>
-                        { cardData.map( ( item, index ) => (
-                            <div className="" key={ index }>
-                                <MobileNewsCard data={ searchData && searchData?.top_news[ 0 ] } />
-                            </div>
-                        ) ) }
-                    </Stack>
-                </Container>
+        const formData = new FormData();
+        formData.append( 'user_id', userData?.ID ?? '' )
+        formData.append( 'page', pagination?.page )
+        formData.append( 'per_page', pagination?.perPage )
+        const fetchData = async () => {
+            try {
+                const response = await axios.post( `${ Baseurl }search_api`, {
+                    term_id: searchId,
+                    search: params?.search_term,
+                    page: pagination?.page,
+                    per_page: pagination?.perPage,
+                    user_id: userData?.ID
+                } );
+                const responseData = response.data;
+                setApiData( responseData.top_news );
+                setTotalPages( responseData.total_pages );
+                ScrollTrigger.refresh( { safe: true } );
+                if ( previousNews.length > 0 ) {
+                    setPreviousNews( [ ...previousNews, ...responseData.top_news ] );
+                } else {
+                    setPreviousNews( responseData.top_news );
+                }
+            } catch ( error ) {
+                console.error( "Error fetching data:", error );
             }
-        </>
-    )
-}
+        };
 
-export default page
+        fetchData(); // Fetch API data
+
+        // Clean up function
+        return () => {
+            ScrollTrigger.refresh( { safe: true } );
+        };
+
+    }, [ pagination, params?.search_term ] )
+
+
+    useGSAP( () => {
+        if ( window.innerWidth > 748 ) {
+            const sections = gsap.utils.toArray( "slider-section" )
+            setSliderWidth( slider.current.offsetWidth )
+            // Scrolling with wheel
+            let tl = gsap.timeline( {
+                defaults: {
+                    ease: "power3.out",
+                    duration: 4
+                },
+                scrollTrigger: {
+                    trigger: slider.current,
+                    pin: true,
+                    scrub: 1,
+                    start: 0,
+                    invalidateOnRefresh: true,
+                    end: () => getNewOffset(),
+                    onRefresh: () => {
+                        console.log( "sliderWidth", sliderWidth )
+                    }
+
+                }
+            } )
+
+            tl.to( slider.current, {
+                // translateX: -sliderWidth,
+                xPercent: -95,
+            } )
+            // Scrolling with wheel
+            return () => {
+                tl.kill();
+            };
+        }
+    }, { dependencies: [ apiData, slider.current ?? slider, pagination, count ], revertOnUpdate: true } )
+
+
+    useEffect( () => {
+        if ( read_id ) {
+            setSliderWidth( sliderWidth + 600 )
+        }
+        ScrollTrigger.refresh( { safe: true } );
+    }, [ read_id ] )
+
+
+    // console.log( "previo", previousNews )
+    // console.log( "apidaaa", apiData )
+    // console.log( "read_id", read_id )
+
+    return (
+        screenWidth > 768 ?
+            <>
+                <Backdrop
+                    sx={ { color: '#fff', zIndex: ( theme ) => theme.zIndex.drawer + 1 } }
+                    open={ !apiData?.length }
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+                <Container maxWidth="2xl" sx={ { flexGrow: 1 } } className='h-[calc(100vh - 90px)] hide-scroll w-full pl-0'  >
+                    <div className={ `smooth-slider flex flex-nowrap h-full w-max hide-scroll ${ apiData?.length < 1 ? "hidden" : "" }` } ref={ slider }  >
+                        <DrawerHeader />
+                        { count != 1 && <section className="group cursor-pointer pt-20 slider-section h-[98vh] w-[300px] flex flex-col justify-center items-center text-xl font-bold text-gray-700  border-r-2" >
+                            Previous News <ArrowBackIcon className='cursor-pointer text-[#FF6D20] font-bold  bg-[#F0F2F5] rounded-full  text-[35px]
+                             group-hover:scale-110' onClick={ () => {
+                                    // console.log("clicked")
+                                    dispatch( setRead_id( null ) );
+                                    setApiData( previousNews?.slice( pagination?.perPage * ( count - 1 ) - pagination?.perPage, pagination?.perPage * ( count - 1 ) ) )
+                                    // console.log("data app", pagination?.perPage  (count - 1) - pagination?.perPage, pagination?.perPage  (count - 1))
+                                    // console.log("jjjj", apiData?.top_news)
+
+                                    setcount( count - 1 )
+                                } }
+                            />
+                        </section> }
+                        { apiData && apiData?.map( ( item, index ) => {
+                            // console.log("item", item)
+                            return (
+                                <section className="pt-20 slider-section h-[98vh] w-max flex justify-center items-center text-lg  border-r-2" key={ index } >
+                                    <SmoothCard data={ item } />
+                                </section>
+                            )
+                        } ) }
+                        { totalPages != count && <section className="group cursor-pointer pt-20 slider-section h-[98vh] w-[300px] flex flex-col justify-center items-center text-xl font-bold text-gray-700  border-r-2" >
+                            More News <ArrowForwardIcon className='cursor-pointer text-[#FF6D20] font-bold  bg-[#F0F2F5] rounded-full  text-[35px]
+                             group-hover:scale-110' onClick={ () => {
+                                    dispatch( setRead_id( null ) );
+                                    if ( count < pagination?.page ) {
+                                        setApiData( previousNews?.slice( pagination?.perPage * ( count + 1 ) - pagination?.perPage, pagination?.perPage * ( count + 1 ) ) )
+
+                                    } else {
+                                        setPagination( { ...pagination, page: pagination.page + 1 } )
+                                    }
+                                    setcount( count + 1 )
+                                    // console.log("jjjj", apiData?.top_news)
+                                } }
+                            />
+                        </section> }
+                    </div>
+                    {
+                        apiData?.length < 1 ?
+                            <div className="h-full w-full grid place-items-center" >
+                                <DrawerHeader />
+                                <h1 className="pt-12 text-lg" >No Article Found</h1>
+                            </div>
+                            : null
+                    }
+                    <Snackbar
+                        anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                        open={ loginToast }
+                        autoHideDuration={ 3000 }
+                        onClose={ () => dispatch( setLoginToast( false ) ) }
+                        message="Login to Use this Feature"
+                        action={ action }
+                    />
+                </Container>
+
+            </>
+            :
+            <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
+                <DrawerHeader />
+                <Stack spacing={ 1 }>
+                    { apiData && apiData?.map( ( item, index ) => (
+                        <div className="" key={ index }>
+                            <MobileNewsCard data={ item } />
+                        </div>
+                    ) ) }
+                </Stack>
+                <Snackbar
+                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                    open={ loginToast }
+                    autoHideDuration={ 3000 }
+                    onClose={ () => dispatch( setLoginToast( false ) ) }
+                    message="Login to Use this Feature"
+                    action={ action }
+                />
+            </Container>
+
+    );
+}
