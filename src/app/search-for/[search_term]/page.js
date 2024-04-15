@@ -68,6 +68,7 @@ export default function page( { params } ) {
     const [ screenWidth, setScreenWidth ] = useState( 1500 )
 
     // scrolling functions end
+
     // useEffect( () => {
     //     if ( !params.search_term ) {
     //         router.push( "/" )
@@ -95,10 +96,7 @@ export default function page( { params } ) {
         if ( !params.search_term ) {
             router.push( "/" )
         }
-        const formData = new FormData();
-        formData.append( 'user_id', userData?.ID ?? '' )
-        formData.append( 'page', pagination?.page )
-        formData.append( 'per_page', pagination?.perPage )
+
         const fetchData = async () => {
             try {
                 const response = await axios.post( `${ Baseurl }search_api`, {
@@ -152,7 +150,6 @@ export default function page( { params } ) {
                     onRefresh: () => {
                         console.log( "sliderWidth", sliderWidth )
                     }
-
                 }
             } )
 
@@ -185,8 +182,7 @@ export default function page( { params } ) {
             <>
                 <Backdrop
                     sx={ { color: '#fff', zIndex: ( theme ) => theme.zIndex.drawer + 1 } }
-                    open={ !apiData?.length }
-                >
+                    open={ !apiData?.length } >
                     <CircularProgress color="inherit" />
                 </Backdrop>
                 <Container maxWidth="2xl" sx={ { flexGrow: 1 } } className='h-[calc(100vh - 90px)] hide-scroll w-full pl-0'  >
@@ -200,11 +196,11 @@ export default function page( { params } ) {
                                     setApiData( previousNews?.slice( pagination?.perPage * ( count - 1 ) - pagination?.perPage, pagination?.perPage * ( count - 1 ) ) )
                                     // console.log("data app", pagination?.perPage  (count - 1) - pagination?.perPage, pagination?.perPage  (count - 1))
                                     // console.log("jjjj", apiData?.top_news)
-
                                     setcount( count - 1 )
                                 } }
                             />
-                        </section> }
+                        </section>
+                        }
                         { apiData && apiData?.map( ( item, index ) => {
                             // console.log("item", item)
                             return (
@@ -246,7 +242,6 @@ export default function page( { params } ) {
                         action={ action }
                     />
                 </Container>
-
             </>
             :
             <Container maxWidth="xl" sx={ { flexGrow: 1, py: 4, pl: 1 } } className='bg-[#F0F2F5]'>
@@ -267,6 +262,5 @@ export default function page( { params } ) {
                     action={ action }
                 />
             </Container>
-
     );
 }

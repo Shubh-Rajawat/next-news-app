@@ -1,6 +1,5 @@
 "use client"
 import DrawerHeader from "@/components/DrawerHeader";
-
 import { Box, Container, Grid, IconButton, Snackbar, Stack, Backdrop, CircularProgress } from '@mui/material'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import HomeCard from "@/components/HomeCard";
@@ -10,7 +9,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MobileNewsCard from "@/components/mobile/MobileNewsCard";
 import SmoothCard from "@/components/SmoothCard";
-//
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import Draggable from "gsap/dist/Draggable"
@@ -69,7 +67,6 @@ export default function Home() {
     // scrolling functions end
 
     useEffect( () => {
-
         if ( window.innerWidth <= 768 ) {
             setScreenWidth( window.innerWidth )
         }
@@ -100,7 +97,6 @@ export default function Home() {
         return () => {
             ScrollTrigger.refresh( { safe: true } );
         };
-
     }, [ pagination ] )
 
 
