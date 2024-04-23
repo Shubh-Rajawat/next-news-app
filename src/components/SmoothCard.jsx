@@ -68,9 +68,9 @@ const SmoothCard = ( { data } ) => {
     const [ saved, setSaved ] = useState( data.save_post ?? false )
     const { userData } = useAppSelector( ( state ) => state?.userData )
     const { read_id } = useAppSelector( state => state?.read_id )
-    const [ toast, setToast ] = useState( false );
+    // const [ toast, setToast ] = useState( false );
     const [ shareOpen, setShareOpen ] = useState( false );
-    // console.log( "save", saved, data.save_postsss )
+    console.log( "save", data )
 
     const handleSave = () => {
         if ( userData ) {
@@ -141,6 +141,7 @@ const SmoothCard = ( { data } ) => {
                                     <ShareIcon onClick={ () => {
                                         setShareOpen( true )
                                     } } className='cursor-pointer p-[2px]' />
+                                    {/* AUDIO FILE CODE */ }
                                     { false ? <VolumeUpIcon className=' cursor-pointer animate-pulse text-[#ff6d20]' onClick={ () => {
 
                                     } } />
@@ -180,7 +181,11 @@ const SmoothCard = ( { data } ) => {
                             </div>
                         </figure>
                     </Box>
-                    { readMore ? <div className={ ` w-[1200px] text-[16px] md:text-[18px] font-normal newspaper-structure` } dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
+                    { readMore ? <div className={ ` ${ data?.news_coloums <= 2 ? "w-[700px]" : "w-[1200px]" } text-[16px] md:text-[18px] font-normal newspaper-structure` }
+                        style={ {
+                            columnCount: data?.news_coloums,
+                        } }
+                        dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
                         {/* <p className=" w-[1200px] text-[16px] grid grid-flow-col  grid-rows-3 gap-2 md:text-[18px] h-[88svh] " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, true ) } >
                     </p> */}
                         {/* <p className="  text-[16px] md:text-[18px] max-h-[88svh] font-normal"  >
@@ -189,7 +194,6 @@ const SmoothCard = ( { data } ) => {
                     </div>
                         : <div className={ `h-[88vh] ` } >
                             <p className="w-[550px] text-[16px]  md:text-[18px] flex flex-col gap-2 leading-8 " dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } >
-
                             </p>
                             {/* <div className="flex flex-col gap-3 flex-wrap" dangerouslySetInnerHTML={ renderMarkdownToHTML( data?.content, readMore ) } ></div> */ }
                         </div>

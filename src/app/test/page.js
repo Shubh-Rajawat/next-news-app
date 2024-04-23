@@ -62,18 +62,17 @@ export default function Home() {
             return "+=6500px"
         }
     }
-    const [ screenWidth, setScreenWidth ] = useState( 1500 )
+    const [ screenWidth, setScreenWidth ] = useState( 1500 );
 
     // scrolling functions end
-
     useEffect( () => {
         if ( window.innerWidth <= 768 ) {
             setScreenWidth( window.innerWidth )
         }
         const formData = new FormData();
-        formData.append( 'user_id', userData?.ID ?? '' )
-        formData.append( 'page', pagination?.page )
-        formData.append( 'per_page', pagination?.perPage )
+        formData.append( 'user_id', userData?.ID ?? '' );
+        formData.append( 'page', pagination?.page );
+        formData.append( 'per_page', pagination?.perPage );
         const fetchData = async () => {
             try {
                 const response = await axios.post( `${ Baseurl }home_api`, formData );
@@ -92,7 +91,6 @@ export default function Home() {
         };
 
         fetchData(); // Fetch API data
-
         // Clean up function
         return () => {
             ScrollTrigger.refresh( { safe: true } );

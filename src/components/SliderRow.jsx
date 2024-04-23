@@ -90,10 +90,10 @@ const SliderRow = ( { title, newsItems } ) => {
 
     return (
         <>
-            { <Box className="text-[30px] font-[700] capitalize"  >
-                { newsItems?.length ? title : "" }
-            </Box>
-
+            {
+                <Box className="text-[30px] font-[700] capitalize"  >
+                    { newsItems?.length ? title : "" }
+                </Box>
             }
             <div className="slider-container text-start" onWheel={ ( e ) => {
                 if ( e.deltaY > 0 ) {
