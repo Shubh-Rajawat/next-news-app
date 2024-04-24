@@ -70,7 +70,8 @@ const SmoothCard = ( { data } ) => {
     const { read_id } = useAppSelector( state => state?.read_id )
     // const [ toast, setToast ] = useState( false );
     const [ shareOpen, setShareOpen ] = useState( false );
-    console.log( "save", data )
+    // console.log( "save", data )
+    const [ audioModal, setAudioModal ] = useState( false );
 
     const handleSave = () => {
         if ( userData ) {
@@ -92,6 +93,9 @@ const SmoothCard = ( { data } ) => {
 
     const handleShareClose = () => {
         setShareOpen( false )
+    }
+    const handleAudioClose = () => {
+        setAudioModal( false );
     }
 
 
@@ -147,7 +151,9 @@ const SmoothCard = ( { data } ) => {
                                     } } />
                                         :
                                         <VolumeUpOutlinedIcon className=' cursor-pointer' onClick={ () => {
-
+                                            if ( data.audio_file ) {
+                                                setAudioModal( true )
+                                            }
                                         } } /> }
                                     { saved ?
                                         <BookmarkOutlinedIcon className=' cursor-pointer' onClick={ () => {
@@ -181,7 +187,7 @@ const SmoothCard = ( { data } ) => {
                             </div>
                         </figure>
                     </Box>
-                    { readMore ? <div className={ ` ${ data?.news_coloums <= 2 ? "w-[700px]" : "w-[1200px]" } text-[16px] md:text-[18px] font-normal newspaper-structure` }
+                    { readMore ? <div className={ ` ${ data?.news_coloums <= 2 ? data?.news_coloums == 1 ? "w-[400px]" : "w-[700px]" : "w-[1200px]" } text-[16px] md:text-[18px] font-normal newspaper-structure` }
                         style={ {
                             columnCount: data?.news_coloums,
                         } }
@@ -219,6 +225,15 @@ const SmoothCard = ( { data } ) => {
                         style={ rootShareStyle }
                         onSocialButtonClicked={ data => console.log( data ) }
                     />
+                </Box>
+            </Modal>
+            <Modal
+                open={ audioModal }
+                onClose={ handleAudioClose }
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description" >
+                <Box as='div' sx={ shareModalStyle }>
+                    <audio src={ data?.audio_file } controls={ true } ></audio>
                 </Box>
             </Modal>
         </>

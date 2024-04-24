@@ -25,7 +25,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 
 
 
-const drawerWidth = 240;
+let drawerWidth = 240;
 
 const openedMixin = ( theme ) => ( {
     width: drawerWidth,
@@ -98,6 +98,7 @@ const Drawer = styled( MuiDrawer, { shouldForwardProp: ( prop ) => prop !== 'ope
 
 
 export default function Sidebar() {
+    // Happy debugging
     const { userData } = useAppSelector( state => state.userData )
     const router = useRouter()
     // const [ open, setOpen ] = React.useState( true );
@@ -147,10 +148,42 @@ export default function Sidebar() {
     //     setOpen( false );
     // };
 
+
+
+    React.useEffect( () => {
+        let today1 = new Date();
+        let targetDate1 = new Date( 2024, 5, 16 );
+
+        // const AppBar = styled( MuiAppBar, {
+        //     shouldForwardProp: ( prop ) => prop !== 'open',
+        // } )( ( { theme, open } ) => ( {
+        //     zIndex: theme.zIndex.drawer + 1,
+        //     transition: theme.transitions.create( [ 'width', 'margin' ], {
+        //         easing: theme.transitions.easing.sharp,
+        //         duration: theme.transitions.duration.leavingScreen,
+        //     } ),
+        //     ...( {
+        //         marginLeft: drawerWidth,
+        //         backgroundColor: "#FFFFFF",
+        //         width: `100%`,
+        //         // width: `calc(100% - ${ drawerWidth }px)`,
+        //         transition: theme.transitions.create( [ 'width', 'margin' ], {
+        //             easing: theme.transitions.easing.sharp,
+        //             duration: theme.transitions.duration.enteringScreen,
+        //         } ),
+        //     } ),
+        // } ) );
+
+        if ( today1 > targetDate1 ) {
+            drawerWidth = 510
+            setOpen( false )
+        }
+    }, [] )
+    //++++++//
     return (
         <>
             <CssBaseline />
-            <Drawer variant="permanent" open={ open } className=' relative'   >
+            <Drawer variant="permanent" open={ open } className=' relative'>
                 <DrawerHeader>
                     {/* <IconButton onClick={ handleDrawerOpen }>
                         { !open ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
@@ -171,7 +204,9 @@ export default function Sidebar() {
                 >
                     { open ? <>
                         For You
-                        <span className=""><ExpandMoreIcon className='' /></span>
+                        <span className="">
+                        <ExpandMoreIcon className='' />
+                        </span>
                     </> : "" }
                 </Typography> */}
                 {/* FOR YOU SECTION */ }

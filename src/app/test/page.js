@@ -146,6 +146,9 @@ export default function Home() {
     // console.log( "apidaaa", apiData )
     // console.log( "read_id", read_id )
 
+
+
+
     return (
         screenWidth > 768 ?
             <>

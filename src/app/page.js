@@ -139,6 +139,8 @@ export default function Home() {
   }, { dependencies: [ apiData, slider.current ?? slider, pagination, count ], revertOnUpdate: true } )
 
 
+
+
   useEffect( () => {
     if ( read_id ) {
       setSliderWidth( sliderWidth + 600 )
